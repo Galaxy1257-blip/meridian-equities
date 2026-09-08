@@ -1,0 +1,6 @@
+{
+  "name": "Meridian Equities — Global & GSE Stock Terminal",
+  "description": "Meridian Equities — Global & GSE Stock Terminal. Real-time Ghana Stock Exchange & NYSE/NASDAQ prices, corporate dividend schedules, biometric portfolio sandbox, Wallflake AI research, community signals, W-8BEN tax wizard, and cross-border diaspora FX tools.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

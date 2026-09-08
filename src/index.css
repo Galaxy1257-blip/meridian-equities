@@ -1,0 +1,163 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Mobile overflow and responsive stabilization */
+html, body {
+  -webkit-text-size-adjust: 100%;
+  overscroll-behavior: none;
+}
+
+/* Custom sleek terminal scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.2);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.4);
+}
+
+/* Tabular numbers for financial accuracy */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Micro-lighting and glow accents for institutional dark theme */
+.terminal-glow-cyan {
+  box-shadow: 0 0 35px -5px rgba(6, 182, 212, 0.18);
+}
+.terminal-glow-amber, .terminal-glow-bronze {
+  box-shadow: 0 0 35px -5px rgba(245, 158, 11, 0.22);
+}
+.terminal-glow-emerald {
+  box-shadow: 0 0 35px -5px rgba(16, 185, 129, 0.18);
+}
+
+/* Obsidian Terminal Surface Elevation Hierarchy */
+.surface-canvas {
+  background-color: #040814;
+}
+.surface-panel {
+  background-color: #070D1F;
+}
+.surface-card {
+  background-color: #0B132B;
+}
+.surface-card-hover:hover {
+  background-color: #0F1A3A;
+}
+.surface-modal {
+  background-color: #080E24;
+}
+.border-hairline {
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+/* Global Select & Option Dark Mode Readability Rules */
+select {
+  color-scheme: light;
+}
+.dark select {
+  color-scheme: dark;
+}
+
+/* ============================================================
+   INPUT / TEXTAREA / SELECT TEXT VISIBILITY FIX
+   Tailwind v4's dark: variant uses a high-specificity :where()
+   selector that can override plain text-* utilities in light mode,
+   causing typed text to appear white-on-white.
+   These rules enforce readable text in both modes globally.
+   ============================================================ */
+input,
+textarea,
+select {
+  color: #0f172a; /* slate-900 — always readable in light mode */
+}
+
+.dark input,
+.dark textarea,
+.dark select,
+:where(.dark, .dark *) input,
+:where(.dark, .dark *) textarea,
+:where(.dark, .dark *) select {
+  color: #f8fafc; /* slate-50 — always readable in dark mode */
+}
+
+select option,
+select optgroup {
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+.dark select option,
+.dark select optgroup,
+:where(.dark, .dark *) select option,
+:where(.dark, .dark *) select optgroup {
+  background-color: #0b132b !important;
+  color: #f1f5f9 !important;
+}
+
+
+/* ==========================================================================
+   BANK-GRADE PRINT & PDF STATEMENT ENGINE
+   Ensures ONLY #meridian-printable-statement renders on paper/PDF.
+   Completely removes navbars, buttons, modals, tabs, and dark UI backgrounds.
+   ========================================================================== */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 10mm 12mm;
+  }
+
+  /* Hide entire application shell */
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* Make ONLY the printable statement and its children visible */
+  #meridian-printable-statement,
+  #meridian-printable-statement *,
+  #meridian-printable-tax-certificate,
+  #meridian-printable-tax-certificate *,
+  .printable-statement,
+  .printable-statement * {
+    visibility: visible !important;
+  }
+
+  #meridian-printable-statement,
+  #meridian-printable-tax-certificate {
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+    display: block !important;
+    z-index: 9999999 !important;
+    box-shadow: none !important;
+    border: none !important;
+  }
+
+  /* Hide non-printable statement controls like close and print buttons */
+  .no-print,
+  .no-print * {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}
