@@ -212,7 +212,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
   }, [holdings.length, totalCostGhs, totalCurrentValueGhs, totalTodayGainGhs, rateFactor]);
 
   return (
-    <div className="space-y-6 pb-20">
+    <div className="space-y-6 pb-20 w-full max-w-full overflow-x-hidden">
       {/* 1. Executive Portfolio Standing Hero Row (Replacing GSE-CI / GSE-FSI) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Main Standing Chart Card (Spans 2 columns on lg) */}

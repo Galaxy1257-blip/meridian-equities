@@ -79,9 +79,9 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
   return (
     <nav 
       aria-label="Bottom Navigation Menu"
-      className="fixed bottom-0 left-0 right-0 z-40 bg-[#060B18]/90 backdrop-blur-xl border-t border-slate-800/80 text-slate-400 py-1 px-3 safe-area-bottom shadow-2xl transition-all md:hidden"
+      className="fixed bottom-0 left-0 right-0 z-40 bg-[#060B18]/95 backdrop-blur-xl border-t border-slate-800/80 text-slate-400 py-1 px-1 sm:px-3 safe-area-bottom shadow-2xl transition-all md:hidden w-full max-w-full overflow-hidden"
     >
-      <div className="max-w-lg mx-auto grid grid-cols-6 gap-1 items-center">
+      <div className="max-w-lg mx-auto grid grid-cols-6 gap-0.5 sm:gap-1 items-center w-full">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = item.isActive;

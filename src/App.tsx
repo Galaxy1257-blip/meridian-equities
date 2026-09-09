@@ -236,6 +236,9 @@ export default function App() {
     return [];
   });
 
+  // Ephemeral active toasts (only newly triggered events in this session; starts empty so past alerts stay in Notification History)
+  const [activeToasts, setActiveToasts] = useState<AlertNotification[]>([]);
+
   const [isAlertsModalOpen, setIsAlertsModalOpen] = useState<boolean>(false);
   const [preselectedAlertTicker, setPreselectedAlertTicker] = useState<string | null>(null);
 
@@ -372,6 +375,18 @@ export default function App() {
     setUserProfile(profile);
     localStorage.setItem(STORAGE_KEY_USER_PROFILE, JSON.stringify(profile));
     localStorage.setItem(STORAGE_KEY_ONBOARDING, 'true');
+
+    // Show only this single new message on sign-in, keeping past notifications in history
+    const welcomeToast: AlertNotification = {
+      id: `welcome-${Date.now()}`,
+      category: 'MARKET',
+      type: 'MARKET_OPEN',
+      title: `Welcome back, ${profile.name}!`,
+      message: 'Institutional GSE session active. Alerts synced.',
+      timestamp: 'Just now',
+      read: true
+    };
+    setActiveToasts([welcomeToast]);
   };
 
   const handleCloseAuthModal = () => {
@@ -615,8 +630,11 @@ export default function App() {
     if (notif.category === 'NEWS' && !notificationPrefs.majorNewsAlerts) return;
     if (notif.category === 'MARKET' && !notificationPrefs.marketHoursAlerts) return;
 
-    // 2. Prepend to active notification list & toasts (keep up to 30 active items)
+    // 2. Prepend to persistent notification history (keep up to 30 active items)
     setNotifications((prev) => [notif, ...prev.filter((n) => n.id !== notif.id)].slice(0, 30));
+
+    // 2b. Push to temporary live toast banners (only new events during active session)
+    setActiveToasts((prev) => [notif, ...prev.filter((t) => t.id !== notif.id)].slice(0, 3));
 
     // 3. Audio chime if enabled
     if (notificationPrefs.audioChime) {
@@ -897,8 +915,13 @@ export default function App() {
     );
   };
 
+  const handleDismissToast = (id: string) => {
+    setActiveToasts((prev) => prev.filter((t) => t.id !== id));
+  };
+
   const handleDismissNotification = (id: string) => {
     setNotifications((prev) => prev.filter((n) => n.id !== id));
+    setActiveToasts((prev) => prev.filter((t) => t.id !== id));
   };
 
   const handleArchiveNotification = (id: string) => {
@@ -1219,10 +1242,10 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-100 dark:bg-[#040814] flex flex-col font-sans text-slate-900 dark:text-slate-100 selection:bg-amber-500/30 selection:text-amber-950 dark:selection:text-amber-100 transition-colors duration-200 w-full">
-      {/* Toast Notification Container for Triggered Alerts & Market Session */}
+      {/* Toast Notification Container for Newly Triggered Real-Time Alerts */}
       <AlertToastContainer
-        notifications={notifications}
-        onDismiss={handleDismissNotification}
+        notifications={activeToasts}
+        onDismiss={handleDismissToast}
         onSelectStock={setSelectedStock}
         stocks={stocks}
         onOpenAlertsModal={() => setIsAlertsModalOpen(true)}
