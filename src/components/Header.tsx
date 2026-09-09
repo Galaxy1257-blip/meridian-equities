@@ -122,18 +122,16 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="bg-[#070D1F] text-white border-b border-white/[0.08] shadow-2xl sticky top-0 z-40">
       {/* 1. Top Market Ticker Tape / Indices Ribbon */}
-      <div className="bg-[#03060F] border-b border-white/[0.08] px-2.5 sm:px-6 py-1.5 overflow-x-auto no-scrollbar flex items-center justify-between gap-3 text-[11px] font-mono select-none w-full max-w-full">
+      <div className="bg-[#03060F] border-b border-white/[0.08] px-2.5 sm:px-6 py-1 overflow-x-hidden flex items-center justify-between gap-2 text-[10px] sm:text-[11px] font-mono select-none w-full max-w-full">
         {/* Left: GSE Live Clock & Status */}
-        <div className="flex items-center gap-2 shrink-0">
-          <div className="flex items-center gap-1 font-bold text-slate-300 text-[10px] sm:text-[11px]">
-            <span className={`w-1.5 h-1.5 rounded-full ${marketOpen ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`}></span>
-            <span>{currentTimeGmt || '12:00 GMT'}</span>
-          </div>
+        <div className="flex items-center gap-1.5 shrink-0">
+          <span className={`w-1.5 h-1.5 rounded-full ${marketOpen ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`}></span>
+          <span className="font-bold text-slate-300">{currentTimeGmt || '12:00 GMT'}</span>
           <span className="text-slate-700">•</span>
           <span 
-            className={`px-2 py-0.2 rounded-full text-[9px] sm:text-[10px] font-black uppercase tracking-wider flex items-center gap-1 shrink-0 ${
+            className={`px-1.5 py-0.2 rounded text-[9px] font-black uppercase tracking-wider shrink-0 ${
               marketOpen 
-                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-xs shadow-emerald-500/10' 
+                ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40' 
                 : 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
             }`}
             title={marketOpen ? "Ghana Stock Exchange Trading Floor is OPEN" : "Ghana Stock Exchange is CLOSED"}
@@ -144,21 +142,21 @@ export const Header: React.FC<HeaderProps> = ({
         </div>
 
         {/* Right: USD/GHS Rate & Macro Telemetry */}
-        <div className="flex items-center gap-3 sm:gap-6 shrink-0">
+        <div className="flex items-center gap-2 sm:gap-6 shrink-0">
           <button
             type="button"
             onClick={onOpenExchangeRateModal}
-            className="flex items-center gap-1 hover:text-amber-300 transition-colors cursor-pointer group text-[10px] sm:text-[11px]"
+            className="flex items-center gap-1 hover:text-amber-300 transition-colors cursor-pointer group text-[10px] sm:text-[11px] shrink-0"
             title="View Real-Time FX Conversion & Benchmark History"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping inline-block" />
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 inline-block shrink-0" />
             <span className="text-slate-400 group-hover:text-amber-300">USD/GHS</span>
-            <span className="text-amber-400 font-black">GH₵ {exchangeRateUsd.toFixed(2)}</span>
-            <ArrowRightLeft className="w-3 h-3 text-slate-500 group-hover:text-amber-300" />
+            <span className="text-amber-400 font-bold">GH₵ {exchangeRateUsd.toFixed(2)}</span>
+            <ArrowRightLeft className="w-2.5 h-2.5 text-slate-500 group-hover:text-amber-300 shrink-0" />
           </button>
 
           {/* Cocoa & Gold Spot (desktop only) */}
-          <div className="flex items-center gap-3 hidden sm:flex text-slate-400">
+          <div className="flex items-center gap-3 hidden sm:flex text-slate-400 shrink-0">
             <span>COCOA: <strong className="text-slate-200">$7,850/t</strong></span>
             <span>GOLD: <strong className="text-slate-200">$2,490/oz</strong></span>
           </div>
