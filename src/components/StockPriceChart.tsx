@@ -375,6 +375,9 @@ export const StockPriceChart: React.FC<StockPriceChartProps> = ({
 
       {/* Main Recharts Visualization Canvas */}
       <div className="h-64 sm:h-72 w-full bg-white dark:bg-slate-950 rounded-2xl p-3 border border-slate-200/80 dark:border-slate-800 shadow-2xs relative">
+        {chartStyle === 'candle' ? (
+          renderCandlestick()
+        ) : (
         <ResponsiveContainer width="100%" height="100%">
           {chartStyle === 'combo' ? (
             <ComposedChart data={chartData} margin={{ top: 12, right: 10, left: -10, bottom: 0 }}>
@@ -560,8 +563,6 @@ export const StockPriceChart: React.FC<StockPriceChartProps> = ({
                 />
               )}
             </LineChart>
-          ) : chartStyle === 'candle' ? (
-            renderCandlestick()
           ) : (
             <AreaChart data={chartData} margin={{ top: 12, right: 10, left: -10, bottom: 0 }}>
               <defs>
@@ -650,6 +651,7 @@ export const StockPriceChart: React.FC<StockPriceChartProps> = ({
             </AreaChart>
           )}
         </ResponsiveContainer>
+        )}
       </div>
 
       {/* Period Metrics Summary Strip */}

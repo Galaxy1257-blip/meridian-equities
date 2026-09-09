@@ -1,0 +1,22 @@
+{
+  "name": "Meridian Equities",
+  "short_name": "Meridian",
+  "description": "Global & GSE Stock Terminal",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B1329",
+  "theme_color": "#0B1329",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    }
+  ]
+}
