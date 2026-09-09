@@ -171,11 +171,11 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               type="button"
               onClick={onOpenMobileMenu}
-              className="p-1.5 rounded-xl bg-[#0B132B] border border-white/[0.08] text-slate-300 hover:text-white hover:border-amber-500/40 md:hidden flex items-center justify-center cursor-pointer shrink-0"
+              className="p-2 rounded-xl bg-[#0B132B] border border-white/[0.08] text-slate-300 hover:text-white hover:border-amber-500/40 md:hidden flex items-center justify-center cursor-pointer shrink-0"
               aria-label="Open Navigation Menu"
               title="Open Navigation Menu"
             >
-              <Menu className="w-4 h-4 text-amber-400" />
+              <Menu className="w-5 h-5 text-amber-400" />
             </button>
           )}
           <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
