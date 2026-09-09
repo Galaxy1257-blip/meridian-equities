@@ -648,9 +648,15 @@ export default function App() {
       }
     }
 
-    // 4. Browser push notification if permitted and active
+    // 4. Browser push OS notification for essential alerts only
+    const isEssentialAlert = 
+      notif.type === 'MARKET_OPEN' || 
+      notif.type === 'MARKET_CLOSE' || 
+      notif.type === 'PRICE_ALERT' || 
+      notif.category === 'NEWS';
+
     if (
-      notificationPrefs.browserPush &&
+      isEssentialAlert &&
       typeof window !== 'undefined' &&
       'Notification' in window &&
       Notification.permission === 'granted'
@@ -719,37 +725,7 @@ export default function App() {
     }
   }, [stocks, alerts, notificationPrefs]);
 
-  // Stock Surges & Dips Monitor (>= 3.0% session price movement)
-  useEffect(() => {
-    if (!notificationPrefs.stockSurgeAlerts || stocks.length === 0) return;
-
-    const todayStr = new Date().toISOString().split('T')[0];
-    const bigMovers = stocks.filter((s) => Math.abs(s.changePercent) >= 3.0);
-
-    bigMovers.forEach((stock) => {
-      const surgeKey = `notif_surge_${stock.ticker}_${todayStr}`;
-      if (!sessionStorage.getItem(surgeKey)) {
-        sessionStorage.setItem(surgeKey, 'true');
-        const isGain = stock.changePercent > 0;
-        const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-
-        triggerNotification({
-          id: `surge-${stock.ticker}-${Date.now()}`,
-          alertId: `surge-${stock.ticker}`,
-          category: 'STOCK',
-          type: 'STOCK_SURGE',
-          ticker: stock.ticker,
-          stockName: stock.name,
-          actualPrice: stock.price,
-          title: `${stock.ticker} ${isGain ? 'Surging' : 'Dipping'} ${isGain ? '+' : ''}${stock.changePercent.toFixed(2)}%`,
-          message: `${stock.name} is experiencing sharp intraday movement (${isGain ? '+' : ''}GH₵ ${stock.change.toFixed(2)}). Session volume: ${stock.volume.toLocaleString()} shares.`,
-          timestamp,
-          read: false,
-          actionLabel: 'View Chart'
-        }, false);
-      }
-    });
-  }, [stocks, notificationPrefs.stockSurgeAlerts]);
+  // Intraday STOCK_SURGE alerts removed as per user request
 
   // Portfolio Milestones & Dividend Reminders on Held Shares
   useEffect(() => {
