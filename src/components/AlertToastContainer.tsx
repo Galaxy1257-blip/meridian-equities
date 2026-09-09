@@ -33,7 +33,7 @@ export const AlertToastContainer: React.FC<AlertToastContainerProps> = ({
   const remainingCount = notifications.length - visibleNotifications.length;
 
   return (
-    <div className="fixed top-20 right-3 sm:right-4 z-50 w-[calc(100vw-1.5rem)] max-w-[340px] space-y-2 pointer-events-none select-none">
+    <div className="fixed top-20 left-3 right-3 sm:left-auto sm:right-4 sm:w-[340px] z-50 space-y-2 pointer-events-none select-none">
       {visibleNotifications.map((n) => {
         // 1. Market Open / Close notification
         if (n.type === 'MARKET_OPEN' || n.type === 'MARKET_CLOSE') {
