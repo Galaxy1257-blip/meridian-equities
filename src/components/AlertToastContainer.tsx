@@ -37,16 +37,14 @@ export const AlertToastContainer: React.FC<AlertToastContainerProps> = ({
     return () => clearTimeout(timer);
   }, [notifications, onDismiss]);
 
-  if (notifications.length === 0) return null;
-
-  // Show at most 2 toasts on desktop and 1 on small mobile to avoid obstructing the UI
-  const visibleNotifications = notifications.slice(0, 2);
+  // Show at most 1 toast on mobile, 2 on desktop to keep the workspace completely clean
+  const visibleNotifications = notifications.slice(0, 1);
   const remainingCount = notifications.length - visibleNotifications.length;
 
   return (
     <aside 
       aria-label="Real-time alerts"
-      className="fixed top-3 sm:top-4 inset-x-3 sm:inset-x-auto sm:right-4 sm:w-[370px] max-w-sm sm:max-w-md mx-auto sm:mx-0 z-50 space-y-2 pointer-events-none select-none transition-all duration-300"
+      className="fixed top-3 left-1/2 -translate-x-1/2 w-[calc(100vw-24px)] max-w-[340px] md:left-auto md:right-4 md:translate-x-0 md:w-[350px] z-50 space-y-2 pointer-events-none select-none transition-all duration-300"
     >
       {visibleNotifications.map((n) => {
         const stock = n.ticker ? stocks.find((s) => s.ticker === n.ticker) : undefined;

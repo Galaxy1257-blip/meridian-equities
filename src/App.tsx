@@ -333,7 +333,12 @@ export default function App() {
   // UI Navigation & Filters (Bottom Navigation Bar tabs: home, markets, community, portfolio, chat, news)
   const [activeTab, setActiveTab] = useState<MainNavTab>('home');
   const [stocksSubTab, setStocksSubTab] = useState<'all' | 'watchlist'>('all');
-  const [marketsViewMode, setMarketsViewMode] = useState<'grid' | 'table'>('table');
+  const [marketsViewMode, setMarketsViewMode] = useState<'grid' | 'table'>(() => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      return 'grid';
+    }
+    return 'table';
+  });
   const [searchQuery, setSearchQuery] = useState<string>('');
   const [selectedSector, setSelectedSector] = useState<SectorFilter>('ALL');
   const [sortOption, setSortOption] = useState<SortOption>(SortOption.OVERALL);
@@ -617,7 +622,7 @@ export default function App() {
   };
 
   // Central Notification Dispatcher (Honors User Category & Delivery Preferences)
-  const triggerNotification = (notif: AlertNotification) => {
+  const triggerNotification = (notif: AlertNotification, showToast: boolean = true) => {
     // 1. Check User Category Toggles
     if (notif.category === 'STOCK') {
       if (notif.type === 'STOCK_SURGE' && !notificationPrefs.stockSurgeAlerts) return;
@@ -633,12 +638,14 @@ export default function App() {
     // 2. Prepend to persistent notification history (keep up to 30 active items)
     setNotifications((prev) => [notif, ...prev.filter((n) => n.id !== notif.id)].slice(0, 30));
 
-    // 2b. Push to temporary live toast banners (only new events during active session)
-    setActiveToasts((prev) => [notif, ...prev.filter((t) => t.id !== notif.id)].slice(0, 3));
+    // 2b. Push to temporary live toast banners only when explicitly requested
+    if (showToast) {
+      setActiveToasts((prev) => [notif, ...prev.filter((t) => t.id !== notif.id)].slice(0, 1));
 
-    // 3. Audio chime if enabled
-    if (notificationPrefs.audioChime) {
-      playAlertSound();
+      // 3. Audio chime if enabled
+      if (notificationPrefs.audioChime) {
+        playAlertSound();
+      }
     }
 
     // 4. Browser push notification if permitted and active
@@ -739,7 +746,7 @@ export default function App() {
           timestamp,
           read: false,
           actionLabel: 'View Chart'
-        });
+        }, false);
       }
     });
   }, [stocks, notificationPrefs.stockSurgeAlerts]);
@@ -779,7 +786,7 @@ export default function App() {
           timestamp,
           read: false,
           actionLabel: 'View Portfolio'
-        });
+        }, false);
       }
     }
 
@@ -805,7 +812,7 @@ export default function App() {
               timestamp,
               read: false,
               actionLabel: 'Check Calendar'
-            });
+            }, false);
           }
         }
       });
@@ -836,7 +843,7 @@ export default function App() {
           timestamp,
           read: false,
           actionLabel: 'Read Filing'
-        });
+        }, false);
       }
     });
   }, [newsList, notificationPrefs.majorNewsAlerts]);
@@ -873,7 +880,7 @@ export default function App() {
             type: 'MARKET_OPEN',
             title: 'Continuous Floor Session Active',
             message: 'Official GSE continuous trading floor is OPEN. Real-time order matching active across all 39 equities.'
-          });
+          }, false);
         }
       }
     };
@@ -1728,7 +1735,7 @@ export default function App() {
           )}
 
         {activeTab === 'markets' && (
-          <div className="space-y-6 animate-in fade-in duration-200">
+          <div className="space-y-6 animate-in fade-in duration-200 w-full max-w-full overflow-x-hidden">
             {/* Market Highlights Component */}
             <MarketOverview 
               stocks={stocks} 
@@ -1825,17 +1832,17 @@ export default function App() {
               </div>
 
               {/* Bottom Row: Sector Chips & Sort Dropdown */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs">
+              <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs w-full max-w-full overflow-hidden">
                 {/* Sector filter pills */}
-                <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
-                  <span className="text-slate-600 dark:text-slate-400 font-bold uppercase tracking-wider text-[10px] mr-1 hidden sm:inline">
+                <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 w-full md:w-auto -mx-1 px-1">
+                  <span className="text-slate-600 dark:text-slate-400 font-bold uppercase tracking-wider text-[10px] mr-1 hidden sm:inline shrink-0">
                     Sectors:
                   </span>
                   {sectors.map((sec) => (
                     <button
                       key={sec}
                       onClick={() => setSelectedSector(sec)}
-                      className={`px-2.5 py-1 rounded-lg font-semibold transition-all whitespace-nowrap ${
+                      className={`px-2.5 py-1 rounded-lg font-semibold transition-all whitespace-nowrap shrink-0 ${
                         selectedSector === sec
                           ? 'bg-slate-900 dark:bg-amber-500 text-white dark:text-slate-950 shadow-2xs font-bold'
                           : 'bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700'
@@ -1846,32 +1853,34 @@ export default function App() {
                   ))}
                 </div>
 
-                {/* Sort selection */}
-                <div className="flex items-center gap-2">
-                  <SlidersHorizontal className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500" />
-                  <label htmlFor="sort-dropdown" className="text-slate-500 dark:text-slate-400 font-medium">Sort by:</label>
-                  <select
-                    id="sort-dropdown"
-                    value={sortOption}
-                    onChange={(e) => setSortOption(e.target.value as SortOption)}
-                    className="bg-slate-50 dark:bg-[#0B132B] border border-slate-200 dark:border-white/[0.1] rounded-lg px-2.5 py-1 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer"
-                  >
-                    <option value={SortOption.OVERALL} className="bg-white dark:bg-[#0B132B] text-slate-900 dark:text-slate-100">Overall Score (Best Mix)</option>
-                    <option value={SortOption.LIQUIDITY} className="bg-white dark:bg-[#0B132B] text-slate-900 dark:text-slate-100">
-                      {showPro ? 'Liquidity (Highest First)' : 'Easy to Sell (Fastest • Higher ↑)'}
-                    </option>
-                    <option value={SortOption.DIVIDEND} className="bg-white dark:bg-[#0B132B] text-slate-900 dark:text-slate-100">
-                      {showPro ? 'Dividend Yield %' : 'Cash Back (Highest Returns • Higher ↑)'}
-                    </option>
-                    <option value={SortOption.VALUE} className="bg-white dark:bg-[#0B132B] text-slate-900 dark:text-slate-100">
-                      {showPro ? 'P/E Multiple (Lowest First • Lower ↓)' : 'Bargain Score (Best Value • Higher ↑)'}
-                    </option>
-                    <option value={SortOption.GAINERS} className="bg-white dark:bg-[#0B132B] text-slate-900 dark:text-slate-100">Today's % Gainers (Higher ↑)</option>
-                    <option value={SortOption.PRICE_DESC} className="bg-white dark:bg-[#0B132B] text-slate-900 dark:text-slate-100">Price: High to Low</option>
-                    <option value={SortOption.PRICE_ASC} className="bg-white dark:bg-[#0B132B] text-slate-900 dark:text-slate-100">Price: Low to High</option>
-                  </select>
+                {/* Sort selection & View switcher */}
+                <div className="flex items-center justify-between sm:justify-end gap-2 w-full md:w-auto">
+                  <div className="flex items-center gap-1.5 min-w-0 flex-1 sm:flex-initial">
+                    <SlidersHorizontal className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 shrink-0" />
+                    <label htmlFor="sort-dropdown" className="text-slate-500 dark:text-slate-400 font-medium shrink-0 hidden xs:inline">Sort:</label>
+                    <select
+                      id="sort-dropdown"
+                      value={sortOption}
+                      onChange={(e) => setSortOption(e.target.value as SortOption)}
+                      className="bg-slate-50 dark:bg-[#0B132B] border border-slate-200 dark:border-white/[0.1] rounded-lg px-2 py-1 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer w-full max-w-[170px] sm:max-w-[200px] truncate"
+                    >
+                      <option value={SortOption.OVERALL} className="bg-white dark:bg-[#0B132B] text-slate-900 dark:text-slate-100">Overall Score</option>
+                      <option value={SortOption.LIQUIDITY} className="bg-white dark:bg-[#0B132B] text-slate-900 dark:text-slate-100">
+                        {showPro ? 'Liquidity' : 'Easy to Sell'}
+                      </option>
+                      <option value={SortOption.DIVIDEND} className="bg-white dark:bg-[#0B132B] text-slate-900 dark:text-slate-100">
+                        {showPro ? 'Dividend Yield' : 'Cash Yield'}
+                      </option>
+                      <option value={SortOption.VALUE} className="bg-white dark:bg-[#0B132B] text-slate-900 dark:text-slate-100">
+                        {showPro ? 'P/E Ratio' : 'Bargain Score'}
+                      </option>
+                      <option value={SortOption.GAINERS} className="bg-white dark:bg-[#0B132B] text-slate-900 dark:text-slate-100">Top Gainers</option>
+                      <option value={SortOption.PRICE_DESC} className="bg-white dark:bg-[#0B132B] text-slate-900 dark:text-slate-100">Price: High to Low</option>
+                      <option value={SortOption.PRICE_ASC} className="bg-white dark:bg-[#0B132B] text-slate-900 dark:text-slate-100">Price: Low to High</option>
+                    </select>
+                  </div>
                   {/* View Mode Switcher: Table vs Grid */}
-                  <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
+                  <div className="flex items-center gap-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700 shrink-0">
                     <button
                       type="button"
                       onClick={() => setMarketsViewMode('table')}
@@ -1893,7 +1902,7 @@ export default function App() {
                           ? 'bg-white dark:bg-cyan-500/20 text-slate-900 dark:text-cyan-300 shadow-xs border border-transparent dark:border-cyan-500/30 font-black'
                           : 'text-slate-600 dark:text-slate-400 hover:text-white'
                       }`}
-                      title="Visual Bento Grid Cards"
+                      title="Visual Cards (Mobile Friendly)"
                     >
                       <LayoutGrid className="w-3.5 h-3.5" />
                       <span className="hidden sm:inline">Grid</span>

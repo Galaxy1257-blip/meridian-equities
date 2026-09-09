@@ -66,9 +66,14 @@ export const StockTable: React.FC<StockTableProps> = ({
   };
 
   return (
-    <div className="w-full overflow-hidden rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0B132B] shadow-sm">
-      <div className="overflow-auto custom-scrollbar max-h-[70vh]">
-        <table className="w-full text-left border-collapse">
+    <div className="w-full max-w-full overflow-hidden rounded-2xl border border-slate-200 dark:border-white/[0.08] bg-white dark:bg-[#0B132B] shadow-sm">
+      {/* Mobile Horizontal Scroll Indicator */}
+      <div className="md:hidden bg-slate-50 dark:bg-[#070D1F] border-b border-slate-200 dark:border-white/[0.06] px-3 py-1.5 text-[11px] font-mono text-slate-500 dark:text-slate-400 flex items-center justify-between">
+        <span>👈 Swipe table sideways for all metrics 👉</span>
+        <span className="text-[10px] text-amber-500 font-bold">10 columns</span>
+      </div>
+      <div className="overflow-x-auto overflow-y-auto custom-scrollbar max-h-[70vh] w-full max-w-full">
+        <table className="w-full text-left border-collapse min-w-[760px]">
           <thead>
             <tr className="sticky top-0 z-10 border-b border-slate-200 dark:border-white/[0.08] bg-slate-100/95 dark:bg-[#070D1F]/95 backdrop-blur-md text-[11px] font-mono text-slate-500 dark:text-slate-400 uppercase tracking-wider select-none shadow-sm">
               <th className="py-3 px-4 w-10 text-center">⭐</th>
