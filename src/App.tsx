@@ -150,17 +150,37 @@ export default function App() {
   });
 
   // Portfolio Holdings state
-  const [holdings, setHoldings] = useState<PortfolioHolding[]>(() => {
-    const saved = localStorage.getItem(STORAGE_KEY_PORTFOLIO);
-    if (saved) {
-      try {
-        return JSON.parse(saved);
-      } catch (e) {
-        console.error('Failed to load saved portfolio', e);
+  const [holdings, setHoldingsState] = useState<PortfolioHolding[]>([]);
+  const [firebaseUser, setFirebaseUser] = useState<any>(null);
+
+  useEffect(() => {
+    const unsub = auth.onAuthStateChanged((user) => {
+      setFirebaseUser(user);
+      if (user) {
+        const unsubPort = onSnapshot(doc(db, 'users', user.uid, 'portfolio', 'data'), (docSnap) => {
+          if (docSnap.exists()) {
+             setHoldingsState(docSnap.data().holdings || []);
+          } else {
+             setHoldingsState([]);
+          }
+        });
+        return () => unsubPort();
+      } else {
+        setHoldingsState([]);
       }
-    }
-    return DEFAULT_SAMPLE_HOLDINGS;
-  });
+    });
+    return () => unsub();
+  }, []);
+
+  const setHoldings = (valOrFunc: any) => {
+    setHoldingsState((prev) => {
+       const updated = typeof valOrFunc === 'function' ? valOrFunc(prev) : valOrFunc;
+       if (firebaseUser) {
+          setDoc(doc(db, 'users', firebaseUser.uid, 'portfolio', 'data'), { holdings: updated }, { merge: true });
+       }
+       return updated;
+    });
+  };
 
   // Market News state
   const [newsList, setNewsList] = useState<GSEMarketNews[]>(() => {
@@ -334,7 +354,14 @@ export default function App() {
   };
 
   // UI Navigation & Filters (Bottom Navigation Bar tabs: home, markets, community, portfolio, chat, news)
-  const [activeTab, setActiveTab] = useState<MainNavTab>('home');
+  const [activeTab, setActiveTabState] = useState<MainNavTab>('home');
+  const setActiveTab = (tab: MainNavTab) => {
+    if ((tab === 'portfolio' || tab === 'community' || tab === 'chat') && !firebaseUser) {
+      setIsAuthModalOpen(true);
+      return;
+    }
+    setActiveTabState(tab);
+  };
   const [stocksSubTab, setStocksSubTab] = useState<'all' | 'watchlist'>('all');
   const [marketsViewMode, setMarketsViewMode] = useState<'grid' | 'table'>(() => {
     if (typeof window !== 'undefined' && window.innerWidth < 768) {
