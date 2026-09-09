@@ -1229,22 +1229,9 @@ export const AuthOnboardingModal: React.FC<AuthOnboardingModalProps> = ({
 
             {/* Quick Demo Login Option */}
             <div className="pt-2 border-t border-white/[0.08] flex flex-col gap-2 text-center">
-              <button
-                type="button"
-                onClick={handleQuickDemoSignIn}
-                className="w-full py-2 px-3 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold flex items-center justify-center gap-2 border border-white/[0.06] transition-all cursor-pointer"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-                <span>Instant Demo Login (Kwame Mensah • Pro Investor)</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={onClose}
-                className="text-xs text-slate-400 hover:text-slate-200 font-medium py-1 transition-colors cursor-pointer"
-              >
-                Explore Terminal as Guest without signing in
-              </button>
+              <div className="text-[10px] text-slate-500 max-w-[250px] mx-auto leading-relaxed">
+                Authentication is strictly required to protect your financial data and community identity.
+              </div>
             </div>
           </div>
         )}

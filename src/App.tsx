@@ -61,7 +61,10 @@ const STORAGE_KEY_PORTFOLIO = 'gse_tracker_portfolio_v1';
 const STORAGE_KEY_THEME = 'gse_tracker_theme_v1';
 const STORAGE_KEY_NEWS = 'gse_tracker_news_v1';
 const STORAGE_KEY_NEWS_BOOKMARKS = 'gse_tracker_news_bookmarks_v1';
-const STORAGE_KEY_ONBOARDING = 'gse_tracker_has_seen_onboarding_v1';
+import { auth, db } from './firebase';
+import { doc, onSnapshot, setDoc } from 'firebase/firestore';
+
+const STORAGE_KEY_ONBOARDING = 'meridian_onboarding_completed';
 const STORAGE_KEY_USER_PROFILE = 'gse_tracker_user_profile_v1';
 const STORAGE_KEY_NOTIFICATION_PREFS = 'gse_tracker_notification_prefs_v1';
 const STORAGE_KEY_NOTIFICATIONS = 'gse_tracker_notifications_v1';
