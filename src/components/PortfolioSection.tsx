@@ -657,15 +657,6 @@ export const PortfolioSection: React.FC<PortfolioSectionProps> = ({
                 <Plus className="w-4 h-4" />
                 <span>Log First Stock Purchase</span>
               </button>
-
-              <button
-                id="load-sample-portfolio-btn"
-                onClick={onLoadSamplePortfolio}
-                className="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold transition-all flex items-center justify-center gap-1.5"
-              >
-                <Sparkles className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-                <span>Load Sample GSE Portfolio</span>
-              </button>
             </div>
           </div>
         ) : (

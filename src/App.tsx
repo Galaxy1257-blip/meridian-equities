@@ -2051,7 +2051,6 @@ export default function App() {
             onDeleteHolding={handleDeleteHolding}
             onSelectStock={setSelectedStock}
             onViewReceipt={handleViewReceipt}
-            onLoadSamplePortfolio={handleLoadSamplePortfolio}
             onOpenJargon={handleOpenJargon}
           />
         )}
