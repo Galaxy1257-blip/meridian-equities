@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
-  <rect width="100" height="100" rx="20" fill="#6B1D2F"/>
-  <circle cx="50" cy="50" r="38" fill="#521523" stroke="#FDB913" stroke-width="2.5"/>
-  <!-- Open Book Emblem -->
-  <path d="M50 36 C44 32, 34 33, 26 36 V62 C34 59, 44 58, 50 62 C56 58, 66 59, 74 62 V36 C66 33, 56 32, 50 36 Z" fill="#FDB913"/>
-  <path d="M50 38 V60" stroke="#521523" stroke-width="2"/>
-  <text x="50" y="78" text-anchor="middle" font-family="'Arial Black', sans-serif" font-weight="900" font-size="13" fill="#FFFFFF" letter-spacing="1">SAM-WOODE</text>
-  <text x="50" y="86" text-anchor="middle" font-family="'Arial', sans-serif" font-weight="700" font-size="6" fill="#FDB913" letter-spacing="1">PUBLISHERS GHANA</text>
-</svg>

@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
-  <rect width="100" height="100" rx="20" fill="#005A36"/>
-  <circle cx="50" cy="50" r="38" fill="#004D2E" stroke="#D4AF37" stroke-width="3.5"/>
-  <path d="M50 20 L72 32 V52 C72 66 62 76 50 80 C38 76 28 66 28 52 V32 Z" fill="#006837" stroke="#FDB913" stroke-width="2.5"/>
-  <path d="M50 26 L66 35 V50 C66 61 58 70 50 73 C42 70 34 61 34 50 V35 Z" fill="#D4AF37" opacity="0.2"/>
-  <text x="50" y="55" text-anchor="middle" font-family="'Arial Black', 'Trebuchet MS', sans-serif" font-weight="900" font-size="18" fill="#FFFFFF" letter-spacing="1">SIC</text>
-  <text x="50" y="66" text-anchor="middle" font-family="'Arial', sans-serif" font-weight="700" font-size="7" fill="#FDB913" letter-spacing="0.5">INSURANCE</text>
-</svg>

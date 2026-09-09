@@ -8,3 +8,10 @@ coverage/
 !.env.example
 
 .vercel
+
+# Large binary assets (stored outside git)
+test-screenshots/
+public/stock-logos/*.png
+public/stock-logos/*.jpeg
+public/stock-logos/*.jpg
+public/stock-logos/*.webp
