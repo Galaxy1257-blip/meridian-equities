@@ -2,6 +2,10 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+@theme {
+  --color-slate-850: #151f32;
+  --color-slate-750: #293548;
+}
 /* Mobile overflow and responsive stabilization */
 html, body {
   -webkit-text-size-adjust: 100%;

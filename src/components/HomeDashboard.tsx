@@ -221,12 +221,12 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
 
           <div>
             {/* Top Bar */}
-            <div className="flex items-start justify-between relative z-10 gap-3">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between relative z-10 gap-3">
               <div>
-                <div className="flex items-center gap-2 text-xs font-mono font-bold text-cyan-400">
-                  <Briefcase className="w-3.5 h-3.5" />
+                <div className="flex items-center flex-wrap gap-1.5 sm:gap-2 text-xs font-mono font-bold text-cyan-400">
+                  <Briefcase className="w-3.5 h-3.5 shrink-0" />
                   <span>PORTFOLIO STANDING</span>
-                  <span>•</span>
+                  <span className="hidden sm:inline">•</span>
                   <span>ACCRA LIVE</span>
                   <InfoButton 
                     onClick={() => onOpenJargonGuide('portfolio')} 

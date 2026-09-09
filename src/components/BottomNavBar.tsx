@@ -94,7 +94,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
               className={`flex flex-col items-center justify-center py-1.5 px-0.5 rounded-xl transition-all relative group touch-manipulation min-h-[48px] cursor-pointer ${
                 isActive
                   ? 'text-amber-400 font-bold'
-                  : 'text-slate-400 hover:text-slate-200'
+                  : 'text-slate-300 hover:text-slate-100'
               }`}
             >
               {/* Active Indicator Backdrop Pill */}
@@ -123,7 +123,7 @@ export const BottomNavBar: React.FC<BottomNavBarProps> = ({
               {/* Label */}
               <span
                 className={`text-[9px] font-mono mt-0.5 transition-colors block truncate w-full text-center ${
-                  isActive ? 'text-amber-300 font-black' : 'text-slate-400'
+                  isActive ? 'text-amber-300 font-black' : 'text-slate-300'
                 }`}
               >
                 {item.label}

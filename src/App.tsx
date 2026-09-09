@@ -2111,7 +2111,7 @@ export default function App() {
 
       {/* Footer */}
       <footer className="bg-slate-900 dark:bg-[#070D1F] text-white border-t border-slate-800 dark:border-white/[0.08] py-8 mt-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-300">
           <div className="flex items-center gap-2">
             <div className="w-6 h-6 rounded bg-cyan-500 flex items-center justify-center font-black text-slate-950 text-[10px]">
               ME
@@ -2148,7 +2148,7 @@ export default function App() {
             <span>•</span>
             <button
               onClick={() => setIsRateModalOpen(true)}
-              className="hover:text-slate-200 transition-colors"
+              className="hover:text-slate-100 transition-colors"
             >
               FX Rate: GH₵ {exchangeRateUsd.toFixed(2)}
             </button>
@@ -2156,11 +2156,11 @@ export default function App() {
         </div>
 
         {/* Regulatory & Institutional Financial Disclaimer */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 pt-6 border-t border-slate-800/80 text-[11px] text-slate-500 leading-relaxed">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 pt-6 border-t border-slate-800/80 text-[11px] text-slate-400 leading-relaxed">
           <div className="flex items-start gap-2.5">
             <span className="text-amber-500 font-bold text-sm shrink-0">⚠️</span>
             <div>
-              <p className="font-bold text-slate-400 mb-0.5">
+              <p className="font-bold text-slate-300 mb-0.5">
                 REGULATORY DISCLAIMER — NOT FINANCIAL ADVICE
               </p>
               <p>
