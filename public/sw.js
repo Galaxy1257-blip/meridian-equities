@@ -1,8 +1,8 @@
-﻿// Meridian Equities — Offline Service Worker v1.0
+// Meridian Equities — Offline Service Worker v1.0
 // Cache-first for statics, network-first for API calls
 // Mirrors market data to IndexedDB on every successful fetch
 
-const CACHE_NAME = 'meridian-static-v1';
+const CACHE_NAME = 'meridian-static-v2';
 const DB_NAME = 'meridian-db';
 const DB_VERSION = 1;
 const MARKET_STORE = 'market-cache';
@@ -11,7 +11,6 @@ const NEWS_STORE = 'news-cache';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
-  '/src/main.tsx',
 ];
 
 function openDB() {
@@ -51,10 +50,11 @@ async function saveToIndexedDB(storeName, data) {
 }
 
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
       return cache.addAll(STATIC_ASSETS).catch(() => {});
-    }).then(() => self.skipWaiting())
+    })
   );
 });
 
@@ -69,7 +69,8 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   const isAPI = url.hostname.includes('er-api.com') || url.hostname.includes('frankfurter.app');
-  const isStatic = event.request.destination === 'document' || event.request.destination === 'script' || event.request.destination === 'style';
+  const isDocument = event.request.destination === 'document';
+  const isStatic = event.request.destination === 'script' || event.request.destination === 'style' || event.request.destination === 'image';
 
   if (isAPI) {
     event.respondWith(
@@ -79,6 +80,17 @@ self.addEventListener('fetch', (event) => {
             saveToIndexedDB(MARKET_STORE, { id: 'fx-rates', ...data, savedAt: Date.now() });
           }).catch(() => {});
         }
+        return response;
+      }).catch(() => {
+        return caches.match(event.request);
+      })
+    );
+  } else if (isDocument) {
+    // Network-First for HTML documents to ensure latest Vercel build is fetched
+    event.respondWith(
+      fetch(event.request).then(response => {
+        const clone = response.clone();
+        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
         return response;
       }).catch(() => {
         return caches.match(event.request);
