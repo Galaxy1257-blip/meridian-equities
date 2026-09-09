@@ -1,9 +1,11 @@
-﻿import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   MessageSquare, Heart, TrendingUp, Sparkles, Award, Share2,
   Filter, Plus, Send, CheckCircle2, User, Hash, Flame
 } from 'lucide-react';
 import { Stock, UserProfile } from '../types';
+import { db } from '../firebase';
+import { collection, onSnapshot, addDoc, query, orderBy, serverTimestamp, Timestamp } from 'firebase/firestore';
 
 interface MoneyTalkFeedProps {
   stocks: Stock[];
@@ -24,62 +26,8 @@ interface Post {
   likedByMe: boolean;
   replies: number;
   tag: string;
+  createdAt?: Timestamp | null;
 }
-
-const INITIAL_POSTS: Post[] = [
-  {
-    id: 'post-1',
-    authorName: 'Kwame Osei',
-    authorHandle: '@k_osei_gse',
-    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-    isVerified: true,
-    timeAgo: '15m ago',
-    content: 'Just analyzed _MTNGH quarterly figures. Solid MoMo growth across francophone integration corridors. Target dividend yield projected at 7.2% for Q4. Accumulating at current levels! #DividendSeason #MTNGhana',
-    likes: 28,
-    likedByMe: false,
-    replies: 7,
-    tag: 'Analysis',
-  },
-  {
-    id: 'post-2',
-    authorName: 'Ama Boateng',
-    authorHandle: '@ama_invests',
-    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-    isVerified: true,
-    timeAgo: '1h ago',
-    content: '_BOPP palm oil export volumes remain very high despite global commodity shifts. Book value per share looks very attractive. Who else holds _BOPP for long-term compound growth? #BOPPBreakout #GSE2026',
-    likes: 42,
-    likedByMe: true,
-    replies: 12,
-    tag: 'Discussion',
-  },
-  {
-    id: 'post-3',
-    authorName: 'David Annan',
-    authorHandle: '@annan_capital',
-    avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80',
-    isVerified: false,
-    timeAgo: '3h ago',
-    content: '_GCB and _CAL looking ripe for banking sector recovery. With inflation cooling down and domestic debt exchange dust settled, credit expansion is returning. #BankingTurnaround #CalBankDip',
-    likes: 19,
-    likedByMe: false,
-    replies: 4,
-    tag: 'Macro',
-  },
-  {
-    id: 'post-4',
-    authorName: 'Dr. Mensah K.',
-    authorHandle: '@dr_mensah',
-    avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=150&auto=format&fit=crop&q=80',
-    isVerified: true,
-    timeAgo: '5h ago',
-    content: 'Remember: 0% Capital Gains Tax on GSE listed equities + 8% final withholding on cash dividends. Don’t sleep on local equities while chasing volatile offshore instruments. #GSEWealth #FinancialFreedom',
-    likes: 64,
-    likedByMe: false,
-    replies: 15,
-    tag: 'Education',
-  },
-];
 
 export const MoneyTalkFeed: React.FC<MoneyTalkFeedProps> = ({
   stocks,
@@ -87,9 +35,33 @@ export const MoneyTalkFeed: React.FC<MoneyTalkFeedProps> = ({
   onSelectStock,
   onOpenAuthModal,
 }) => {
-  const [posts, setPosts] = useState<Post[]>(INITIAL_POSTS);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [filter, setFilter] = useState<'ALL' | 'TRENDING' | 'VERIFIED'>('ALL');
   const [newPostText, setNewPostText] = useState('');
+
+  // Fetch posts from Firestore in real-time
+  useEffect(() => {
+    const q = query(collection(db, 'posts'), orderBy('createdAt', 'desc'));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const livePosts = snapshot.docs.map((doc) => {
+        const data = doc.data();
+        // Convert Firestore Timestamp to readable time string (naive approach for now)
+        let timeAgo = 'Just now';
+        if (data.createdAt) {
+          const seconds = Math.floor(Date.now() / 1000 - data.createdAt.seconds);
+          if (seconds > 3600) timeAgo = `${Math.floor(seconds / 3600)}h ago`;
+          else if (seconds > 60) timeAgo = `${Math.floor(seconds / 60)}m ago`;
+        }
+        return {
+          id: doc.id,
+          ...data,
+          timeAgo
+        } as Post;
+      });
+      setPosts(livePosts);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const trendingHashtags = [
     '#GSE2026',
@@ -101,6 +73,7 @@ export const MoneyTalkFeed: React.FC<MoneyTalkFeedProps> = ({
   ];
 
   const handleLike = (id: string) => {
+    // For now, local optimistic UI update. In production, this should updateDoc in Firestore
     setPosts((prev) =>
       prev.map((p) => {
         if (p.id === id) {
@@ -115,7 +88,7 @@ export const MoneyTalkFeed: React.FC<MoneyTalkFeedProps> = ({
     );
   };
 
-  const handleCreatePost = (e: React.FormEvent) => {
+  const handleCreatePost = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newPostText.trim()) return;
     if (!userProfile) {
@@ -123,22 +96,24 @@ export const MoneyTalkFeed: React.FC<MoneyTalkFeedProps> = ({
       return;
     }
 
-    const created: Post = {
-      id: `post-${Date.now()}`,
-      authorName: userProfile.name,
-      authorHandle: userProfile.handle || '@investor',
-      avatar: userProfile.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
-      isVerified: userProfile.isVerified,
-      timeAgo: 'Just now',
-      content: newPostText.trim(),
-      likes: 0,
-      likedByMe: false,
-      replies: 0,
-      tag: 'Community',
-    };
-
-    setPosts([created, ...posts]);
-    setNewPostText('');
+    try {
+      await addDoc(collection(db, 'posts'), {
+        authorName: userProfile.name,
+        authorHandle: userProfile.handle || '@investor',
+        avatar: userProfile.avatarUrl || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150',
+        isVerified: userProfile.isVerified,
+        content: newPostText.trim(),
+        likes: 0,
+        likedByMe: false,
+        replies: 0,
+        tag: 'Community',
+        createdAt: serverTimestamp()
+      });
+      setNewPostText('');
+    } catch (error) {
+      console.error('Error posting to community feed', error);
+      alert('Failed to broadcast thesis. Please check your connection.');
+    }
   };
 
   // Tokenize text: _TICKER, #hashtag, @handle

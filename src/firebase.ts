@@ -8,6 +8,7 @@ import {
   ConfirmationResult,
   signOut
 } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 // Standard Firebase Client Config (supports environment variables or local developer settings)
 const getCustomConfig = () => {
@@ -36,6 +37,7 @@ const firebaseConfig = {
 // Initialize Firebase safely (avoid re-initialization in HMR)
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 const googleProvider = new GoogleAuthProvider();
 
 export const isRealFirebaseConfigured = () => {
@@ -46,6 +48,7 @@ export const isRealFirebaseConfigured = () => {
 export { 
   app, 
   auth, 
+  db,
   RecaptchaVerifier, 
   signInWithPhoneNumber, 
   googleProvider, 
@@ -53,4 +56,3 @@ export {
   signOut,
   type ConfirmationResult 
 };
-
