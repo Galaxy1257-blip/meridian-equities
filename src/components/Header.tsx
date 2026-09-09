@@ -122,34 +122,33 @@ export const Header: React.FC<HeaderProps> = ({
   return (
     <header className="bg-[#070D1F] text-white border-b border-white/[0.08] shadow-2xl sticky top-0 z-40">
       {/* 1. Top Market Ticker Tape / Indices Ribbon */}
-      <div className="bg-[#03060F] border-b border-white/[0.08] px-3 sm:px-6 py-1.5 overflow-x-auto no-scrollbar flex items-center justify-between gap-4 text-[11px] font-mono select-none">
+      <div className="bg-[#03060F] border-b border-white/[0.08] px-2.5 sm:px-6 py-1.5 overflow-x-auto no-scrollbar flex items-center justify-between gap-3 text-[11px] font-mono select-none w-full max-w-full">
         {/* Left: GSE Live Clock & Status */}
-        <div className="flex items-center gap-2.5 shrink-0">
-          <div className="flex items-center gap-1.5 font-bold text-slate-300">
-            <span className={`w-2 h-2 rounded-full ${marketOpen ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`}></span>
+        <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-1 font-bold text-slate-300 text-[10px] sm:text-[11px]">
+            <span className={`w-1.5 h-1.5 rounded-full ${marketOpen ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`}></span>
             <span>{currentTimeGmt || '12:00 GMT'}</span>
           </div>
-          <span className="text-slate-700 hidden sm:inline">•</span>
+          <span className="text-slate-700">•</span>
           <span 
-            className={`px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider flex items-center gap-1.5 ${
+            className={`px-2 py-0.2 rounded-full text-[9px] sm:text-[10px] font-black uppercase tracking-wider flex items-center gap-1 shrink-0 ${
               marketOpen 
                 ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-xs shadow-emerald-500/10' 
                 : 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
             }`}
-            title={marketOpen ? "Ghana Stock Exchange Trading Floor is OPEN (09:30 - 15:00 GMT)" : "Ghana Stock Exchange is CLOSED (Opens Mon-Fri 09:30 GMT)"}
+            title={marketOpen ? "Ghana Stock Exchange Trading Floor is OPEN" : "Ghana Stock Exchange is CLOSED"}
           >
-            <span className={`w-1.5 h-1.5 rounded-full ${marketOpen ? 'bg-emerald-400 animate-ping' : 'bg-amber-400'}`} />
-            <span>{marketOpen ? 'MARKET IS OPEN' : 'MARKET CLOSED'}</span>
+            <span className={`w-1 h-1 rounded-full ${marketOpen ? 'bg-emerald-400 animate-ping' : 'bg-amber-400'}`} />
+            <span>{marketOpen ? 'OPEN' : 'CLOSED'}</span>
           </span>
         </div>
 
-        {/* Middle: USD/GHS Rate & Key Macro Telemetry (Clean & Non-Redundant) */}
-        <div className="flex items-center gap-4 sm:gap-6 shrink-0">
-          {/* USD/GHS Rate */}
+        {/* Right: USD/GHS Rate & Macro Telemetry */}
+        <div className="flex items-center gap-3 sm:gap-6 shrink-0">
           <button
             type="button"
             onClick={onOpenExchangeRateModal}
-            className="flex items-center gap-1.5 hover:text-amber-300 transition-colors cursor-pointer group"
+            className="flex items-center gap-1 hover:text-amber-300 transition-colors cursor-pointer group text-[10px] sm:text-[11px]"
             title="View Real-Time FX Conversion & Benchmark History"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping inline-block" />
@@ -158,42 +157,40 @@ export const Header: React.FC<HeaderProps> = ({
             <ArrowRightLeft className="w-3 h-3 text-slate-500 group-hover:text-amber-300" />
           </button>
 
-          {/* Cocoa & Gold Spot */}
+          {/* Cocoa & Gold Spot (desktop only) */}
           <div className="flex items-center gap-3 hidden sm:flex text-slate-400">
             <span>COCOA: <strong className="text-slate-200">$7,850/t</strong></span>
             <span>GOLD: <strong className="text-slate-200">$2,490/oz</strong></span>
           </div>
         </div>
-
-
       </div>
 
       {/* 2. Main Executive Header Bar */}
-      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-2 sm:py-3 flex items-center justify-between gap-1.5 sm:gap-3 w-full">
+      <div className="max-w-7xl mx-auto px-2.5 sm:px-6 lg:px-8 py-2 sm:py-3 flex items-center justify-between gap-1.5 sm:gap-3 w-full overflow-hidden">
         {/* Left: Brand Identity & Mobile Menu Bar Button */}
-        <div className="flex items-center gap-1.5 sm:gap-3 shrink min-w-0">
+        <div className="flex items-center gap-1.5 sm:gap-2.5 shrink min-w-0">
           {onOpenMobileMenu && (
             <button
               type="button"
               onClick={onOpenMobileMenu}
-              className="p-1.5 sm:p-2 rounded-xl bg-[#0B132B] border border-white/[0.08] text-slate-300 hover:text-white hover:border-cyan-500/40 md:hidden flex items-center justify-center cursor-pointer shrink-0"
+              className="p-1.5 rounded-xl bg-[#0B132B] border border-white/[0.08] text-slate-300 hover:text-white hover:border-amber-500/40 md:hidden flex items-center justify-center cursor-pointer shrink-0"
               aria-label="Open Navigation Menu"
               title="Open Navigation Menu"
             >
               <Menu className="w-4 h-4 text-amber-400" />
             </button>
           )}
-          <div className="flex items-center gap-1.5 sm:gap-2.5 min-w-0">
-            <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-yellow-600 p-0.5 shadow-lg shadow-amber-500/20 flex items-center justify-center shrink-0">
-              <div className="w-full h-full bg-[#080E20] rounded-[9px] sm:rounded-[10px] flex items-center justify-center overflow-hidden p-0.5">
-                <RisingCediLogo size={22} showBadge={false} className="shrink-0" />
+          <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+            <div className="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-gradient-to-br from-amber-400 via-amber-500 to-yellow-600 p-0.5 shadow-md shadow-amber-500/20 flex items-center justify-center shrink-0">
+              <div className="w-full h-full bg-[#080E20] rounded-[8px] sm:rounded-[9px] flex items-center justify-center overflow-hidden p-0.5">
+                <RisingCediLogo size={18} showBadge={false} className="shrink-0" />
               </div>
             </div>
             <div className="min-w-0">
               <div className="flex items-center gap-1 sm:gap-2">
                 <h1 className="text-xs sm:text-lg font-black text-white tracking-tight flex items-center gap-1 truncate">
                   <span>MERIDIAN</span>
-                  <span className="text-amber-400 hidden xs:inline">EQUITIES</span>
+                  <span className="text-amber-400 hidden sm:inline">EQUITIES</span>
                 </h1>
                 <span className="text-[9px] font-mono font-black uppercase px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 hidden md:inline-block shrink-0">
                   GSE TERMINAL
@@ -206,7 +203,7 @@ export const Header: React.FC<HeaderProps> = ({
           </div>
         </div>
 
-        {/* Middle: Command Palette & Global Search */}
+        {/* Middle: Command Palette & Global Search (Desktop only) */}
         <div className="flex-1 max-w-xs sm:max-w-md mx-2 hidden md:block">
           <button
             type="button"
@@ -223,20 +220,8 @@ export const Header: React.FC<HeaderProps> = ({
           </button>
         </div>
 
-        {/* Right: Actions Cluster */}
+        {/* Right: Actions Cluster (Clean, Guaranteed Mobile Fit) */}
         <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-          {/* Mobile Command Palette Trigger */}
-          {onOpenCommandPalette && (
-            <button
-              type="button"
-              onClick={onOpenCommandPalette}
-              className="p-1.5 rounded-xl bg-slate-800/80 hover:bg-slate-700 text-slate-300 md:hidden flex items-center justify-center cursor-pointer shrink-0"
-              title="Search and Commands"
-            >
-              <Search className="w-3.5 h-3.5 text-amber-400" />
-            </button>
-          )}
-
           {/* Meridian AI Quick Launch (desktop/tablet) */}
           {onOpenMeridianAI && (
             <button
@@ -250,12 +235,12 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
           )}
 
-          {/* Visible GO PRO Upgrade Button */}
+          {/* Visible GO PRO Upgrade Button (desktop/tablet) */}
           {onOpenSubscriptionModal && (
             <button
               type="button"
               onClick={onOpenSubscriptionModal}
-              className={`p-1.5 sm:px-3 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-black flex items-center gap-1.5 transition-all shadow-md cursor-pointer active:scale-95 group shrink-0 ${
+              className={`hidden sm:flex px-2.5 sm:px-3.5 py-1 sm:py-1.5 rounded-xl text-[11px] sm:text-xs font-black items-center gap-1.5 transition-all shadow-md cursor-pointer active:scale-95 group shrink-0 ${
                 subscriptionTier && subscriptionTier !== 'FREE'
                   ? 'bg-gradient-to-r from-purple-500/20 to-indigo-500/20 border border-purple-400/40 text-purple-300 hover:border-purple-300 shadow-purple-500/10'
                   : 'bg-gradient-to-r from-amber-400 via-amber-500 to-amber-600 hover:from-amber-300 hover:to-amber-500 text-slate-950 shadow-amber-500/25 hover:shadow-amber-500/40'
@@ -267,29 +252,29 @@ export const Header: React.FC<HeaderProps> = ({
               }
             >
               <Crown className={`w-3.5 h-3.5 ${subscriptionTier && subscriptionTier !== 'FREE' ? 'text-purple-400 fill-purple-400' : 'text-slate-950 fill-slate-950'}`} />
-              <span className="tracking-tight hidden sm:inline">
+              <span className="tracking-tight">
                 {subscriptionTier && subscriptionTier !== 'FREE' ? `${subscriptionTier}` : 'GO PRO'}
               </span>
             </button>
           )}
 
-          {/* Currency Toggle (GHS / USD) */}
+          {/* 1. Currency Toggle (GHS / USD) */}
           <button
             id="currency-toggle-btn"
             type="button"
             onClick={onToggleCurrency}
-            className="px-1.5 sm:px-2.5 py-1 sm:py-1.5 rounded-xl bg-[#0B132B] border border-white/[0.08] hover:border-slate-600 text-[10px] sm:text-xs font-mono font-bold text-amber-400 flex items-center gap-0.5 sm:gap-1 transition-all cursor-pointer"
+            className="px-2 py-1 sm:py-1.5 rounded-xl bg-[#0B132B] border border-white/[0.08] hover:border-slate-600 text-[11px] sm:text-xs font-mono font-bold text-amber-400 flex items-center gap-0.5 transition-all cursor-pointer shrink-0"
             title="Toggle Base Currency (GHS ₵ / USD $)"
           >
             <span>{currency === 'GHS' ? '₵' : '$'}</span>
-            <span className="hidden xs:inline">{currency === 'GHS' ? 'GHS' : 'USD'}</span>
+            <span className="hidden sm:inline">{currency === 'GHS' ? 'GHS' : 'USD'}</span>
           </button>
 
-          {/* Price Alerts Button */}
+          {/* 2. Price Alerts Bell Button */}
           <button
             type="button"
             onClick={onOpenAlertsModal}
-            className={`p-1.5 sm:p-2 rounded-xl border transition-colors relative cursor-pointer ${
+            className={`p-1.5 sm:p-2 rounded-xl border transition-colors relative cursor-pointer shrink-0 ${
               triggeredAlertsCount > 0
                 ? 'bg-rose-500/20 border-rose-500/50 text-rose-400 animate-pulse'
                 : alertsCount > 0
@@ -298,7 +283,7 @@ export const Header: React.FC<HeaderProps> = ({
             }`}
             title="Price Alerts Center"
           >
-            <Bell className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+            <Bell className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" />
             {alertsCount > 0 && (
               <span className="absolute -top-1 -right-1 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-amber-500 text-slate-950 font-mono text-[8px] sm:text-[9px] font-black flex items-center justify-center">
                 {alertsCount}
@@ -306,12 +291,23 @@ export const Header: React.FC<HeaderProps> = ({
             )}
           </button>
 
-          {/* User Profile / Verification Button - NO CHAT USERNAME DISPLAYED */}
+          {/* 3. Refresh Button */}
+          <button
+            type="button"
+            onClick={onRefresh}
+            disabled={isRefreshing}
+            className="p-1.5 sm:p-2 rounded-xl bg-[#0B132B] border border-white/[0.08] hover:border-slate-600 text-slate-300 hover:text-white transition-colors cursor-pointer shrink-0"
+            title="Refresh Live Data"
+          >
+            <RefreshCw className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isRefreshing ? 'animate-spin text-amber-400' : 'text-slate-300'}`} />
+          </button>
+
+          {/* 4. User Profile / Verification Button */}
           {onOpenAuthModal && (
             <button
               type="button"
               onClick={onOpenAuthModal}
-              className={`p-1.5 sm:p-2 rounded-xl border transition-all cursor-pointer ${
+              className={`p-1.5 sm:p-2 rounded-xl border transition-all cursor-pointer shrink-0 ${
                 userProfile?.isVerified
                   ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-400'
                   : 'bg-[#0B132B] border-white/[0.08] text-slate-400 hover:text-white'
@@ -319,32 +315,21 @@ export const Header: React.FC<HeaderProps> = ({
               title={userProfile?.isVerified ? `${userProfile.name} • Account & Profile Settings` : 'Sign In / Create Account'}
             >
               {userProfile?.avatarUrl ? (
-                <img src={userProfile.avatarUrl} alt="" className="w-4 h-4 rounded-full object-cover" />
+                <img src={userProfile.avatarUrl} alt="" className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full object-cover" />
               ) : (
                 <User className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               )}
             </button>
           )}
 
-          {/* Theme Toggle (hidden on small phone viewports) */}
+          {/* Theme Toggle (Desktop only) */}
           <button
             type="button"
             onClick={onToggleTheme}
-            className="p-1.5 sm:p-2 rounded-xl bg-[#0B1329] border border-slate-700/80 hover:border-slate-600 text-slate-400 hover:text-white transition-colors cursor-pointer hidden sm:flex items-center justify-center"
+            className="p-1.5 sm:p-2 rounded-xl bg-[#0B132B] border border-slate-700/80 hover:border-slate-600 text-slate-400 hover:text-white transition-colors cursor-pointer hidden sm:flex items-center justify-center shrink-0"
             title="Toggle Light / Dark Mode"
           >
             {theme === 'dark' ? <Sun className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400" /> : <Moon className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-slate-300" />}
-          </button>
-
-          {/* Refresh Button */}
-          <button
-            type="button"
-            onClick={onRefresh}
-            disabled={isRefreshing}
-            className="p-1.5 sm:p-2 rounded-xl bg-[#0B1329] border border-slate-700/80 hover:border-slate-600 text-slate-400 hover:text-white transition-colors cursor-pointer"
-            title="Refresh Live Data"
-          >
-            <RefreshCw className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isRefreshing ? 'animate-spin text-amber-400' : ''}`} />
           </button>
         </div>
       </div>
