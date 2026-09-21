@@ -33,7 +33,7 @@ import {
 } from 'lucide-react';
 import { Stock, PriceAlert, AlertCondition, PortfolioHolding, GSEMarketNews } from '../types';
 import { StockPriceChart } from './StockPriceChart';
-import { SnowflakeRadar } from './SnowflakeRadar';
+import { ApexAxisRadar } from './ApexAxisRadar';
 import { StockLogo } from './StockLogo';
 import { InfoButton } from './InfoButton';
 import { BankStatementView } from './BankStatementView';
@@ -566,7 +566,7 @@ export const StockDetailModal: React.FC<StockDetailModalProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-center pt-2">
               {/* Interactive SVG Radar */}
               <div className="flex justify-center p-2 bg-slate-950/40 rounded-2xl border border-slate-800/80">
-                <SnowflakeRadar score={snowflakeScore} size={230} />
+                <ApexAxisRadar score={snowflakeScore} size={230} />
               </div>
 
               {/* Factor Breakdown Bars */}
