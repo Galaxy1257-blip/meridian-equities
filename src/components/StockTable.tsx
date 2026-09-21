@@ -119,7 +119,7 @@ export const StockTable: React.FC<StockTableProps> = ({
               const isNegative = stock.change < 0;
               const hasActiveAlert = alerts.some(a => a.ticker === stock.ticker && a.isActive && !a.triggered);
               const holdingCount = holdings.filter(h => h.ticker === stock.ticker).length;
-              const axisScore = stock.meridianAxis?.total ?? Math.round((stock.easyToSellScore + stock.bargainScore + stock.cashBackScore) / 10);
+              const axisScore = (stock.apexAxis || stock.apexAxis)?.total ?? Math.round((stock.easyToSellScore + stock.bargainScore + stock.cashBackScore) / 10);
 
               return (
                 <tr

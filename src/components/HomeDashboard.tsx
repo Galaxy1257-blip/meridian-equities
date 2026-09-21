@@ -82,7 +82,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
   const losers = [...stocks].filter(s => s.change < 0).sort((a, b) => a.changePercent - b.changePercent).slice(0, 5);
   const mostActive = [...stocks].sort((a, b) => b.volume - a.volume).slice(0, 5);
   const axisChampions = [...stocks]
-    .map(s => ({ stock: s, score: s.meridianAxis?.total ?? Math.round((s.easyToSellScore + s.bargainScore + s.cashBackScore) / 10) }))
+    .map(s => ({ stock: s, score: (s.apexAxis || s.apexAxis)?.total ?? Math.round((s.easyToSellScore + s.bargainScore + s.cashBackScore) / 10) }))
     .sort((a, b) => b.score - a.score)
     .slice(0, 5);
 

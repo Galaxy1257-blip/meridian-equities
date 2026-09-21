@@ -80,7 +80,7 @@ export const StockDetailModal: React.FC<StockDetailModalProps> = ({
   onSelectNews,
   allStocks = []
 }) => {
-  const [activeModalTab, setActiveModalTab] = useState<'overview' | 'meridian' | 'financials' | 'peers' | 'orders' | 'all'>('overview');
+  const [activeModalTab, setActiveModalTab] = useState<'overview' | 'apex' | 'financials' | 'peers' | 'orders' | 'all'>('overview');
   const [calcAmountGhs, setCalcAmountGhs] = useState<number>(500);
   const [copied, setCopied] = useState(false);
   const [isStatementOpen, setIsStatementOpen] = useState(false);
@@ -264,7 +264,7 @@ export const StockDetailModal: React.FC<StockDetailModalProps> = ({
         <div className="flex items-center gap-1 sm:gap-1.5 px-3 sm:px-6 py-1.5 sm:py-2 bg-slate-950 dark:bg-[#040814] border-b border-slate-800 dark:border-white/[0.08] overflow-x-auto no-scrollbar shrink-0 text-xs font-bold select-none whitespace-nowrap">
           {[
             { id: 'overview', label: 'Price & Overview', icon: TrendingUp },
-            { id: 'meridian', label: 'Apex 5-Axis & AI', icon: Sparkles },
+            { id: 'apex', label: 'Apex 5-Axis & AI', icon: Sparkles },
             { id: 'financials', label: 'Valuation & Multiples', icon: BarChart3 },
             { id: 'peers', label: 'Sector Peers', icon: Scale },
             { id: 'orders', label: 'Orders & Alerts', icon: Calculator },
@@ -522,7 +522,7 @@ export const StockDetailModal: React.FC<StockDetailModalProps> = ({
           )}
 
           {/* Apex 5-Axis & AI Desk: Radar & Narrative */}
-          {(activeModalTab === 'meridian' || activeModalTab === 'all') && (
+          {(activeModalTab === 'apex' || activeModalTab === 'all') && (
           <>
           <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950 text-white p-5 sm:p-6 rounded-3xl border border-slate-800 shadow-xl space-y-4">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-3">

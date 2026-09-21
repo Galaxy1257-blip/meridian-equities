@@ -68,7 +68,7 @@ export const StockCard: React.FC<StockCardProps> = ({
   const isPositive = stock.change >= 0;
 
   // Compute 5-axis score or fallback
-  const axisScore = stock.meridianAxis?.total ?? Math.round((stock.easyToSellScore + stock.bargainScore + stock.cashBackScore) / 10);
+  const axisScore = (stock.apexAxis || stock.apexAxis)?.total ?? Math.round((stock.easyToSellScore + stock.bargainScore + stock.cashBackScore) / 10);
 
   return (
     <div
@@ -265,7 +265,7 @@ export const StockCard: React.FC<StockCardProps> = ({
                 ? 'bg-amber-50 dark:bg-amber-500/15 text-amber-900 dark:text-amber-400 border border-amber-300 dark:border-amber-500/30' 
                 : 'bg-rose-50 dark:bg-rose-500/15 text-rose-800 dark:text-rose-400 border border-rose-300 dark:border-rose-500/30'
             }`}>
-              {stock.meridianAxis?.rating || (axisScore >= 22 ? 'Exceptional' : axisScore >= 16 ? 'Strong' : 'Moderate')}
+              {(stock.apexAxis || stock.apexAxis)?.rating || (axisScore >= 22 ? 'Exceptional' : axisScore >= 16 ? 'Strong' : 'Moderate')}
             </span>
           </div>
         </div>
