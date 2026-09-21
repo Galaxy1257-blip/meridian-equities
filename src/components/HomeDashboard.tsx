@@ -187,13 +187,13 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
 
   // Generate responsive trajectory points for the portfolio standing chart
   const portfolioChartData = useMemo(() => {
-    if (holdings.length === 0) {
+    if (holdings.length === 0 || totalCurrentValueGhs === 0) {
       return [
-        { label: 'Wk 1', value: 5000 },
-        { label: 'Wk 2', value: 5200 },
-        { label: 'Wk 3', value: 5150 },
-        { label: 'Wk 4', value: 5450 },
-        { label: 'Live', value: 5800 }
+        { label: 'Wk 1', value: 0 },
+        { label: 'Wk 2', value: 0 },
+        { label: 'Wk 3', value: 0 },
+        { label: 'Wk 4', value: 0 },
+        { label: 'Live Today', value: 0 }
       ];
     }
 
@@ -300,6 +300,16 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
 
           {/* Performance Area Chart */}
           <div className="mt-4 relative z-10 w-full h-36">
+            {holdings.length === 0 && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center z-20 pointer-events-none bg-slate-950/40 backdrop-blur-[1px] rounded-xl">
+                <p className="text-xs font-mono font-bold text-slate-300">
+                  Portfolio Balance: {currencySymbol} 0.00
+                </p>
+                <p className="text-[11px] text-slate-400 mt-0.5">
+                  No active holdings recorded. Add shares to track live performance.
+                </p>
+              </div>
+            )}
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={portfolioChartData} margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>
                 <defs>
