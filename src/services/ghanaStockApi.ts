@@ -166,7 +166,7 @@ function mapGhanaApiStockToLocal(apiStock: GhanaApiStockResponse, existing?: Sto
       '1W': [{ date: 'Mon', price: price - change, volume: Math.round(volume * 0.8) }, { date: 'Fri', price, volume }],
       '1M': [{ date: '1st', price: price - change, volume }, { date: '30th', price, volume }],
       '1Y': [{ date: 'Q1', price: price - change, volume }, { date: 'Q4', price, volume }],
-      'ALL': [{ date: '2023', price: price - change, volume }, { date: '2025', price, volume }],
+      'ALL': [{ date: '2024', price: price - change, volume }, { date: '2026', price, volume }],
     }
   };
 }
@@ -309,7 +309,7 @@ export async function fetchGhanaStockMarket(forceRefresh: boolean = false): Prom
             '1W': [{ date: 'Mon', price: prevPrice, volume: Math.round(volume * 0.8) }, { date: 'Fri', price, volume }],
             '1M': [{ date: '1st', price: prevPrice, volume }, { date: '30th', price, volume }],
             '1Y': [{ date: 'Q1', price: prevPrice, volume }, { date: 'Q4', price, volume }],
-            'ALL': [{ date: '2023', price: prevPrice, volume }, { date: '2025', price, volume }],
+            'ALL': [{ date: '2024', price: prevPrice, volume }, { date: '2026', price, volume }],
           }
         };
       });

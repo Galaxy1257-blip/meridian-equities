@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { 
-  Search, SlidersHorizontal, Sparkles, Heart, HelpCircle, Layers, X, TrendingUp, RefreshCw, 
+  Search, ArrowRight, SlidersHorizontal, Sparkles, Heart, HelpCircle, Layers, X, TrendingUp, RefreshCw, 
   Bell, Briefcase, Plus, Newspaper, LayoutGrid, Table, Home, Users, MessageSquare, 
   BookOpen, Zap, Shield, ShieldCheck, ArrowRightLeft, FileText, CheckCircle2, Lock, Activity,
   Calculator, Building2, Menu, User
@@ -82,41 +82,6 @@ const DEFAULT_NOTIFICATION_PREFS: NotificationPreferences = {
   browserPush: false,
 };
 
-const DEFAULT_SAMPLE_HOLDINGS: PortfolioHolding[] = [
-  {
-    id: 'holding-sample-mtn',
-    ticker: 'MTNGH',
-    stockName: 'MTN Ghana',
-    sharesCount: 1500,
-    buyPrice: 2.10,
-    startDate: '2024-01-15',
-    brokerName: 'Databank Brokerage Ltd',
-    notes: 'Long-term telecom growth & quarterly cash dividends',
-    createdAt: '2024-01-15'
-  },
-  {
-    id: 'holding-sample-gcb',
-    ticker: 'GCB',
-    stockName: 'GCB Bank PLC',
-    sharesCount: 600,
-    buyPrice: 5.20,
-    startDate: '2024-03-20',
-    brokerName: 'IC Securities Ghana',
-    notes: 'Banking sector recovery & strong book value',
-    createdAt: '2024-03-20'
-  },
-  {
-    id: 'holding-sample-bopp',
-    ticker: 'BOPP',
-    stockName: 'Benso Oil Palm Plantation',
-    sharesCount: 150,
-    buyPrice: 18.00,
-    startDate: '2024-02-10',
-    brokerName: 'CalBank Brokerage Ltd',
-    notes: 'Agric export commodity play with massive dividend yield',
-    createdAt: '2024-02-10'
-  }
-];
 
 export default function App() {
   // Stocks state
@@ -1745,38 +1710,56 @@ export default function App() {
             />
 
             {/* Search, Tabs & Filters Bar */}
-            <div className="bg-white dark:bg-[#070D1F] rounded-2xl border border-slate-200 dark:border-white/[0.08] shadow-sm p-4 sm:p-5 space-y-4 transition-colors">
-              {/* Top Row: Search Input & Subtabs */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                {/* Search Input */}
-                <div className="relative flex-1">
-                  <Search className="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+            <div className="bg-white dark:bg-[#070D1F] rounded-2xl border border-slate-200 dark:border-white/[0.08] shadow-sm p-4 sm:p-6 space-y-5 md:space-y-6 transition-colors">
+              {/* Top Row: Search Input & Subtabs (Spacious desktop layout) */}
+              <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 md:gap-6">
+                {/* Search Input with Dedicated Search Action Button */}
+                <div className="relative flex-1 max-w-full lg:max-w-2xl">
+                  <Search className="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-4 top-1/2 -translate-y-1/2" />
                   <input
                     id="search-input"
                     type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Search Ghana stocks (e.g., MTN, GCB, BOPP, TOTAL)..."
-                    className="w-full pl-10 pr-9 py-2.5 bg-slate-50 dark:bg-[#0B132B] rounded-xl border border-slate-200 dark:border-white/[0.08] text-xs sm:text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:bg-white dark:focus:bg-[#0B132B] transition-all"
+                    className="w-full pl-11 pr-28 py-3 bg-slate-50 dark:bg-[#0B132B] rounded-xl border border-slate-200 dark:border-white/[0.08] text-xs sm:text-sm font-medium text-slate-900 dark:text-white placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:bg-white dark:focus:bg-[#0B132B] transition-all shadow-2xs"
                   />
-                  {searchQuery && (
+                  {/* Action buttons on right: Clear and Submit Search */}
+                  <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+                    {searchQuery && (
+                      <button
+                        id="clear-search-btn"
+                        type="button"
+                        onClick={() => setSearchQuery('')}
+                        className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-white/10 transition-colors cursor-pointer"
+                        title="Clear search text"
+                      >
+                        <X className="w-3.5 h-3.5" />
+                      </button>
+                    )}
                     <button
-                      id="clear-search-btn"
-                      onClick={() => setSearchQuery('')}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 p-0.5"
+                      id="submit-search-btn"
+                      type="button"
+                      onClick={() => {
+                        const el = document.getElementById('stocks-display-area');
+                        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-black flex items-center gap-1 shadow-xs transition-all active:scale-95 cursor-pointer"
+                      title="Search stocks"
                     >
-                      <X className="w-4 h-4" />
+                      <ArrowRight className="w-3.5 h-3.5" />
+                      <span className="hidden xs:inline">Search</span>
                     </button>
-                  )}
+                  </div>
                 </div>
 
-                {/* Subtabs: All Listed vs Watchlist */}
-                <div className="flex items-center gap-2 flex-wrap">
+                {/* Subtabs & Alerts: Generously spaced */}
+                <div className="flex items-center gap-3 flex-wrap lg:justify-end shrink-0">
                   <div className="flex items-center bg-slate-100 dark:bg-[#0B132B] p-1 rounded-xl border border-slate-200 dark:border-white/[0.08] shrink-0">
                     <button
                       id="tab-all-stocks"
                       onClick={() => setStocksSubTab('all')}
-                      className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                      className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
                         stocksSubTab === 'all'
                           ? 'bg-white dark:bg-[#0F1A3A] text-slate-900 dark:text-white shadow-xs'
                           : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -1789,7 +1772,7 @@ export default function App() {
                     <button
                       id="tab-watchlist"
                       onClick={() => setStocksSubTab('watchlist')}
-                      className={`px-3.5 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                      className={`px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
                         stocksSubTab === 'watchlist'
                           ? 'bg-white dark:bg-[#0F1A3A] text-rose-600 dark:text-rose-400 shadow-xs'
                           : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -1807,7 +1790,7 @@ export default function App() {
                       setPreselectedAlertTicker(null);
                       setIsAlertsModalOpen(true);
                     }}
-                    className={`p-2.5 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs shrink-0 ${
+                    className={`px-3.5 py-2 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all shadow-xs shrink-0 ${
                       triggeredAlertsCount > 0
                         ? 'bg-amber-500 text-slate-950 border-amber-400 ring-2 ring-amber-300'
                         : 'bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-750 border-slate-200 dark:border-slate-700'
@@ -1815,7 +1798,7 @@ export default function App() {
                     title="Manage Stock Price Alerts"
                   >
                     <Bell className="w-4 h-4 text-amber-500" />
-                    <span className="hidden sm:inline">Price Alerts</span>
+                    <span>Price Alerts</span>
                     {alerts.length > 0 && (
                       <span className="font-mono text-[10px] px-1.5 py-0.2 bg-slate-900 text-white rounded-full">
                         {alerts.length}
@@ -1825,10 +1808,10 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Bottom Row: Sector Chips & Sort Dropdown */}
-              <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-3 pt-3 border-t border-slate-100 dark:border-slate-800 text-xs w-full max-w-full overflow-hidden">
+              {/* Bottom Row: Sector Chips & Sort Dropdown (Clean, spacious desktop separation) */}
+              <div className="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4 pt-4 md:pt-5 border-t border-slate-100 dark:border-white/[0.06] text-xs w-full max-w-full overflow-hidden">
                 {/* Sector filter pills */}
-                <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5 w-full md:w-auto -mx-1 px-1">
+                <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-1 w-full lg:w-auto -mx-1 px-1">
                   <span className="text-slate-600 dark:text-slate-400 font-bold uppercase tracking-wider text-[10px] mr-1 hidden sm:inline shrink-0">
                     Sectors:
                   </span>
@@ -1836,7 +1819,7 @@ export default function App() {
                     <button
                       key={sec}
                       onClick={() => setSelectedSector(sec)}
-                      className={`px-2.5 py-1 rounded-lg font-semibold transition-all whitespace-nowrap shrink-0 ${
+                      className={`px-3 py-1.5 rounded-lg font-semibold transition-all whitespace-nowrap shrink-0 ${
                         selectedSector === sec
                           ? 'bg-slate-900 dark:bg-amber-500 text-white dark:text-slate-950 shadow-2xs font-bold'
                           : 'bg-slate-50 dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200/80 dark:border-slate-700'
@@ -1848,15 +1831,15 @@ export default function App() {
                 </div>
 
                 {/* Sort selection & View switcher */}
-                <div className="flex items-center justify-between sm:justify-end gap-2 w-full md:w-auto">
-                  <div className="flex items-center gap-1.5 min-w-0 flex-1 sm:flex-initial">
+                <div className="flex items-center justify-between sm:justify-end gap-3 w-full lg:w-auto shrink-0">
+                  <div className="flex items-center gap-2 min-w-0 flex-1 sm:flex-initial">
                     <SlidersHorizontal className="w-3.5 h-3.5 text-slate-400 dark:text-slate-500 shrink-0" />
                     <label htmlFor="sort-dropdown" className="text-slate-500 dark:text-slate-400 font-medium shrink-0 hidden xs:inline">Sort:</label>
                     <select
                       id="sort-dropdown"
                       value={sortOption}
                       onChange={(e) => setSortOption(e.target.value as SortOption)}
-                      className="bg-slate-50 dark:bg-[#0B132B] border border-slate-200 dark:border-white/[0.1] rounded-lg px-2 py-1 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer w-full max-w-[170px] sm:max-w-[200px] truncate"
+                      className="bg-slate-50 dark:bg-[#0B132B] border border-slate-200 dark:border-white/[0.1] rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-1 focus:ring-amber-500 cursor-pointer w-full max-w-[170px] sm:max-w-[200px] truncate"
                     >
                       <option value={SortOption.OVERALL} className="bg-white dark:bg-[#0B132B] text-slate-900 dark:text-slate-100">Overall Score</option>
                       <option value={SortOption.LIQUIDITY} className="bg-white dark:bg-[#0B132B] text-slate-900 dark:text-slate-100">
@@ -1878,7 +1861,7 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => setMarketsViewMode('table')}
-                      className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer ${
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                         marketsViewMode === 'table'
                           ? 'bg-white dark:bg-cyan-500/20 text-slate-900 dark:text-cyan-300 shadow-xs border border-transparent dark:border-cyan-500/30 font-black'
                           : 'text-slate-600 dark:text-slate-400 hover:text-white'
@@ -1891,12 +1874,12 @@ export default function App() {
                     <button
                       type="button"
                       onClick={() => setMarketsViewMode('grid')}
-                      className={`px-2.5 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1 cursor-pointer ${
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                         marketsViewMode === 'grid'
-                          ? 'bg-white dark:bg-cyan-500/20 text-slate-900 dark:text-cyan-300 shadow-xs border border-transparent dark:border-cyan-500/30 font-black'
+                          ? 'bg-white dark:bg-amber-500/20 text-slate-900 dark:text-amber-300 shadow-xs border border-transparent dark:border-amber-500/30 font-black'
                           : 'text-slate-600 dark:text-slate-400 hover:text-white'
                       }`}
-                      title="Visual Cards (Mobile Friendly)"
+                      title="Card Grid View"
                     >
                       <LayoutGrid className="w-3.5 h-3.5" />
                       <span className="hidden sm:inline">Grid</span>
@@ -1904,7 +1887,6 @@ export default function App() {
                   </div>
                 </div>
               </div>
-
               {/* Easy Mode Guidance Helper Banner */}
               {!showPro && (
                 <div className="mt-3 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/25 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-xs">
@@ -1924,6 +1906,8 @@ export default function App() {
                 </div>
               )}
             </div>
+
+            <div id="stocks-display-area" className="scroll-mt-6"></div>
 
             {/* Stock List / Grid / Table */}
             {sortedStocks.length === 0 ? (
