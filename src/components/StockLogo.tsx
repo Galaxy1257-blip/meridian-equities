@@ -1,3 +1,4 @@
+import { CUSTOM_LOGO_MAP } from './CustomStockLogos';
 import React, { useState, useEffect } from 'react';
 
 interface StockLogoProps {
@@ -187,7 +188,10 @@ export const StockLogo: React.FC<StockLogoProps> = ({
 
   // If all image sources failed, show custom SVG from CustomStockLogos or styled monogram squircle
   if (!currentSrc || failStep >= candidateSources.length) {
-
+    const CustomLogo = CUSTOM_LOGO_MAP[normTicker];
+    if (CustomLogo) {
+      return <CustomLogo size={size} className={className} />;
+    }
 
     const bgColor = SECTOR_COLORS[sector] || '#334155';
     const initials = normTicker ? normTicker.slice(0, 4) : 'GSE';

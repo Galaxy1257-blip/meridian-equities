@@ -198,12 +198,11 @@ export const StockPriceChart: React.FC<StockPriceChartProps> = ({
   const renderCandlestick = () => {
     const candleData = chartData.map((pt, i) => {
       const prev = chartData[i - 1]?.displayPrice ?? pt.displayPrice;
-      const jitter = pt.displayPrice * 0.005;
       const isGreen = pt.displayPrice >= prev;
-      const open = Number((prev + (isGreen ? -jitter : jitter)).toFixed(2));
+      const open = prev;
       const close = pt.displayPrice;
-      const high = Number((Math.max(open, close) + jitter * 1.8).toFixed(2));
-      const low = Number((Math.min(open, close) - jitter * 1.4).toFixed(2));
+      const high = Math.max(open, close);
+      const low = Math.min(open, close);
       return { ...pt, open, close, high, low, isGreen };
     });
     const allPrices = candleData.flatMap(c => [c.high, c.low]);

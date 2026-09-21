@@ -95,7 +95,7 @@ export type NotificationCategory = 'STOCK' | 'PORTFOLIO' | 'NEWS' | 'MARKET';
 
 export interface AlertNotification {
   id: string;
-  alertId: string;
+  alertId?: string;
   ticker?: string;
   stockName?: string;
   targetPrice?: number;

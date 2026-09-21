@@ -10,7 +10,7 @@ import {
   BookOpen, Zap, Shield, ShieldCheck, ArrowRightLeft, FileText, CheckCircle2, Lock, Activity,
   Calculator, Building2, Menu, User
 } from 'lucide-react';
-import { Stock, SortOption, SectorFilter, PriceAlert, AlertNotification, NotificationPreferences, PortfolioHolding, GSEMarketNews, MainNavTab, UserProfile } from './types';
+import { Stock, MarketIndex, SortOption, SectorFilter, PriceAlert, AlertNotification, NotificationPreferences, PortfolioHolding, GSEMarketNews, MainNavTab, UserProfile } from './types';
 import { INITIAL_STOCKS, INITIAL_INDICES } from './data/stocksData';
 import { INITIAL_GSE_NEWS } from './data/newsData';
 import { Header } from './components/Header';
@@ -52,7 +52,7 @@ import { useSignals } from './hooks/useSignals';
 import { SubscriptionTier } from './types';
 import { fetchGhanaStockMarket, ApiStatus } from './services/ghanaStockApi';
 
-const STORAGE_KEY_STOCKS = 'gse_tracker_stocks_v1';
+const STORAGE_KEY_STOCKS = 'gse_tracker_stocks_v2';
 const STORAGE_KEY_VOTES = 'gse_tracker_user_votes_v1';
 const STORAGE_KEY_RATE = 'gse_tracker_usd_rate_v1';
 const STORAGE_KEY_PRO = 'gse_tracker_show_pro_v1';
@@ -131,6 +131,9 @@ export default function App() {
     }
     return INITIAL_STOCKS;
   });
+
+  // GSE Market Indices state (GSE-CI & GSE-FSI)
+  const [indices, setIndices] = useState<MarketIndex[]>(INITIAL_INDICES);
 
   // Ghana Stock Market API live status
   const [apiStatus, setApiStatus] = useState<ApiStatus>('CONNECTING');
@@ -552,6 +555,9 @@ export default function App() {
           const formatTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
           setLastUpdated(`Last updated: Today at ${formatTime}`);
         }
+        if (res.indices && res.indices.length > 0) {
+          setIndices(res.indices);
+        }
       })
       .catch((err) => {
         console.warn('Ghana Stock API sync notice:', err);
@@ -572,6 +578,9 @@ export default function App() {
           const now = new Date();
           const formatTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
           setLastUpdated(`Last updated: Today at ${formatTime}`);
+        }
+        if (res.indices && res.indices.length > 0) {
+          setIndices(res.indices);
         }
       } catch (err) {
         // Keep active cache on network error
@@ -751,7 +760,7 @@ export default function App() {
 
     if (hasChanges) {
       setAlerts(updatedAlerts);
-      newNotifications.forEach(triggerNotification);
+      newNotifications.forEach((n) => triggerNotification(n));
     }
   }, [stocks, alerts, notificationPrefs]);
 
@@ -1107,24 +1116,7 @@ export default function App() {
       }
     } catch (err) {
       console.warn('Ghana API refresh error:', err);
-      // local price jitter as fallback
-      setStocks((prev) =>
-        prev.map((s) => {
-          const delta = (Math.random() - 0.49) * 0.04;
-          const newPrice = Math.max(0.1, Number((s.price + delta).toFixed(2)));
-          const change = Number((newPrice - (s.price - s.change)).toFixed(2));
-          const changePercent = Number(((change / (newPrice - change)) * 100).toFixed(2));
-          const volumeIncrement = Math.floor(Math.random() * 2500);
-
-          return {
-            ...s,
-            price: newPrice,
-            change,
-            changePercent,
-            volume: s.volume + volumeIncrement
-          };
-        })
-      );
+      setApiStatus('STANDBY_FALLBACK');
     } finally {
       const now = new Date();
       const formatTime = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -1284,7 +1276,7 @@ export default function App() {
         onRefresh={handleRefresh}
         exchangeRateUsd={exchangeRateUsd}
         onOpenExchangeRateModal={() => setIsRateModalOpen(true)}
-        indices={INITIAL_INDICES}
+        indices={indices}
         onOpenJargon={handleOpenJargon}
         onOpenDividendCalendar={() => setIsDividendModalOpen(true)}
         currency={currency}
@@ -1718,7 +1710,7 @@ export default function App() {
               onOpenAddHolding={() => handleOpenAddHoldingModal()}
               currency={currency}
               exchangeRateUsd={exchangeRateUsd}
-              indices={INITIAL_INDICES}
+              indices={indices}
               showPro={showPro}
               onSelectStock={setSelectedStock}
               onNavigateTab={setActiveTab}
@@ -2363,7 +2355,7 @@ export default function App() {
         isOpen={isMarketCloseModalOpen}
         onClose={() => setIsMarketCloseModalOpen(false)}
         stocks={stocks}
-        indices={INITIAL_INDICES}
+        indices={indices}
         onSelectStock={setSelectedStock}
         currency={currency}
         exchangeRateUsd={exchangeRateUsd}

@@ -370,10 +370,7 @@ export const AuthOnboardingModal: React.FC<AuthOnboardingModalProps> = ({
             verifiedContact = credential.user.phoneNumber;
           }
         } catch (confirmErr: any) {
-          // If real confirmation fails and not test code
-          if (code !== '123456') {
-            throw confirmErr;
-          }
+          throw confirmErr;
         }
       }
 
@@ -398,7 +395,7 @@ export const AuthOnboardingModal: React.FC<AuthOnboardingModalProps> = ({
         kycStatus: 'unverified',
         subscriptionTier: 'PRO',
       };
-
+      
       onSaveProfile(updatedProfile);
       setIsLoading(false);
       setCurrentView('SUCCESS');
@@ -407,7 +404,7 @@ export const AuthOnboardingModal: React.FC<AuthOnboardingModalProps> = ({
       }, 1200);
     } catch (err: any) {
       setIsLoading(false);
-      setErrorMessage('Invalid verification code. Please check your SMS or enter 123456 for instant testing.');
+      setErrorMessage('Invalid verification code. Please check your SMS and try again.');
     }
   };
 
@@ -1293,10 +1290,6 @@ export const AuthOnboardingModal: React.FC<AuthOnboardingModalProps> = ({
                   Resend Code
                 </button>
               )}
-            </div>
-
-            <div className="p-3 rounded-xl bg-cyan-500/10 border border-cyan-500/20 text-[11px] text-cyan-300 text-center">
-              💡 Development Tip: You can also enter <strong className="font-mono text-white">123456</strong> for instant demo verification.
             </div>
 
             <button

@@ -58,7 +58,7 @@ export const printGhanaTaxCertificate = (data: TaxCertificateData) => {
   const holdingsRowsHtml = holdings.length > 0
     ? holdings.map((h) => {
         const stockName = h.stock?.name || h.ticker;
-        const shares = h.shares || 0;
+        const shares = (h as any).sharesCount ?? (h as any).shares ?? 0;
         const buyPrice = (h.costBasis / (shares || 1)) || 0;
         const currentPrice = h.currentPrice || (h.currentValue / (shares || 1)) || 0;
         const gain = h.totalGain;

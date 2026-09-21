@@ -182,7 +182,7 @@ export const INITIAL_GSE_NEWS: GSEMarketNews[] = [
   // 5. BLOCK TRADES - Institutional Mega Cross in MTNGH & GCB
   {
     id: 'news-trade-block-mtn-gcb-2026',
-    title: 'Block Trade Alert: GH₵ 10.7 Million Institutional Cross Trades Executed in MTNGH & GCB',
+    title: 'Block Trade Alert: GH₵ 39.7 Million Institutional Cross Trades Executed in MTNGH & GCB',
     category: 'TRADES',
     timestamp: 'Today at 11:15 GMT',
     date: '2026-08-23',
@@ -190,8 +190,8 @@ export const INITIAL_GSE_NEWS: GSEMarketNews[] = [
     summary: 'High-volume block trades crossed the GSE trading engine today as offshore frontier funds took down 3.2M shares of MTNGH and 450k shares of GCB Bank.',
     content: [
       'Trading activity on the Ghana Stock Exchange surged during the mid-morning session today with two massive off-market negotiated block crosses.',
-      'In MTNGH, a single transaction of 3,200,000 shares crossed at GH₵ 2.54 per share, valued at GH₵ 8,128,000. Market sources confirm the buyer was an offshore African equity fund increasing overweight allocation.',
-      'Simultaneously, 450,000 shares of GCB Bank PLC were matched at GH₵ 5.90 per share (GH₵ 2,655,000) between local Tier-2 pension fund managers.',
+      'In MTNGH, a single transaction of 3,200,000 shares crossed at GH₵ 6.69 per share, valued at GH₵ 21,408,000. Market sources confirm the buyer was an offshore African equity fund increasing overweight allocation.',
+      'Simultaneously, 450,000 shares of GCB Bank PLC were matched at GH₵ 40.79 per share (GH₵ 18,355,500) between local Tier-2 pension fund managers.',
       'The block crosses lifted the daily GSE Composite Index turnover above GH₵ 15 Million, demonstrating strong institutional liquidity and foreign portfolio inflows.'
     ],
     keyHighlights: [
@@ -221,18 +221,18 @@ export const INITIAL_GSE_NEWS: GSEMarketNews[] = [
   // 6. BLOCK TRADES - TotalEnergies Marketing Ghana
   {
     id: 'news-trade-total-cross-2026',
-    title: 'Trade Flow: Energy Sector Cross Trade of 220,000 TOTAL Shares at GH₵ 10.45',
+    title: 'Trade Flow: Energy Sector Cross Trade of 220,000 TOTAL Shares at GH₵ 37.80',
     category: 'TRADES',
     timestamp: '1 day ago',
     date: '2026-08-22',
     relatedTickers: ['TOTAL'],
     summary: 'A negotiated cross trade in TotalEnergies Marketing Ghana signals renewed institutional appetite for high-dividend downstream energy distributors.',
     content: [
-      'A cross trade of 220,000 shares of TotalEnergies Marketing Ghana (TOTAL) was executed yesterday at GH₵ 10.45, representing total trade value of GH₵ 2,299,000.',
+      'A cross trade of 220,000 shares of TotalEnergies Marketing Ghana (TOTAL) was executed yesterday at GH₵ 37.80, representing total trade value of GH₵ 8,316,000.',
       'The trade was arranged by SBG Securities on behalf of a statutory institutional trust, absorbing local retail offer overhang with zero market price disruption.'
     ],
     keyHighlights: [
-      '220,000 shares crossed at GH₵ 10.45.',
+      '220,000 shares crossed at GH₵ 37.80.',
       'Trade completed without price slippage, affirming order book depth.'
     ],
     source: 'GSE Floor Operations Bulletin',
@@ -245,8 +245,8 @@ export const INITIAL_GSE_NEWS: GSEMarketNews[] = [
     tradeDetails: {
       ticker: 'TOTAL',
       volumeTraded: 220000,
-      executionPrice: 10.45,
-      totalValueGhs: 2299000,
+      executionPrice: 37.80,
+      totalValueGhs: 8316000,
       buyerType: 'Statutory Pension Trust',
       sellerType: 'Corporate Portfolio Realignment',
       tradeType: 'Off-Market Cross'
