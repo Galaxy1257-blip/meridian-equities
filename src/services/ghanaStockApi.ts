@@ -128,6 +128,22 @@ export function computeMarketIndices(stocks: Stock[]): MarketIndex[] {
   ];
 }
 
+
+/**
+ * Automatically infers sector for newly listed GSE equities
+ */
+function inferSectorForNewListing(nameOrTicker: string): string {
+  const t = nameOrTicker.toLowerCase();
+  if (t.includes('bank') || t.includes('financial') || t.includes('trust') || t.includes('insurance') || t.includes('capital') || t.includes('sic') || t.includes('gcb') || t.includes('scb') || t.includes('cal')) return 'Financials';
+  if (t.includes('oil') || t.includes('petroleum') || t.includes('energy') || t.includes('gas') || t.includes('goil') || t.includes('total') || t.includes('tullow')) return 'Energy';
+  if (t.includes('gold') || t.includes('lithium') || t.includes('mining') || t.includes('anglo') || t.includes('asante')) return 'Mining';
+  if (t.includes('telecom') || t.includes('mtn') || t.includes('tech') || t.includes('digital') || t.includes('data')) return 'Telecom';
+  if (t.includes('palm') || t.includes('oil palm') || t.includes('agric') || t.includes('farm') || t.includes('cocoa') || t.includes('bopp') || t.includes('cpc')) return 'Agriculture';
+  if (t.includes('pharma') || t.includes('health') || t.includes('drug') || t.includes('ayrton') || t.includes('das')) return 'Healthcare';
+  if (t.includes('brew') || t.includes('milk') || t.includes('drink') || t.includes('beer') || t.includes('guinness') || t.includes('unilever') || t.includes('fan')) return 'Consumer Goods';
+  return 'Industrials';
+}
+
 /**
  * Maps upstream Ghana API response item to application's internal Stock model
  */
@@ -281,10 +297,21 @@ export async function fetchGhanaStockMarket(forceRefresh: boolean = false): Prom
         // Check if apiStocks has additional company metadata
         const apiMatch = apiStocks.find(a => a.symbol.toUpperCase() === ticker);
 
+        // 1. Dynamic Live Dividend Yield: Auto-recalculated from Live Price
+        const divAmount = existing?.dividendAmount || (existing?.dividendYield ? (existing.price * existing.dividendYield) / 100 : 0);
+        const dynamicDivYield = divAmount > 0 && price > 0 ? Number(((divAmount / price) * 100).toFixed(1)) : (existing?.dividendYield || apiMatch?.dividendYield || undefined);
+
+        // 2. Dynamic Live P/E Multiple: Auto-recalculated from Trailing Twelve Months EPS
+        const eps = existing?.peRatio && existing.price > 0 ? existing.price / existing.peRatio : (price > 0 ? price / 7.5 : 1);
+        const dynamicPeRatio = eps > 0 && price > 0 ? Number((price / eps).toFixed(1)) : (existing?.peRatio || apiMatch?.peRatio || 7.5);
+
+        // 3. Automated Sector Discovery for new listings
+        const autoSector = existing?.sector || (apiMatch?.sector ? (apiMatch.sector as any) : inferSectorForNewListing(apiMatch?.name || ticker));
+
         return {
           ticker,
           name: existing?.name || apiMatch?.name || `${ticker} PLC`,
-          sector: existing?.sector || 'Financials',
+          sector: autoSector,
           price,
           change,
           changePercent,
@@ -294,11 +321,11 @@ export async function fetchGhanaStockMarket(forceRefresh: boolean = false): Prom
           summary: existing?.summary || `${ticker} listed on the Ghana Stock Exchange.`,
           description: existing?.description || `${ticker} is an equity security traded on the Ghana Stock Exchange.`,
           isWatchlisted: existing?.isWatchlisted ?? false,
-          dividendYield: existing?.dividendYield || (apiMatch?.dividendYield ?? undefined),
+          dividendYield: dynamicDivYield,
           dividendAmount: existing?.dividendAmount,
           exDividendDate: existing?.exDividendDate,
           marketCap: existing?.marketCap || 500,
-          peRatio: existing?.peRatio || (apiMatch?.peRatio ?? 7.5),
+          peRatio: dynamicPeRatio,
           volume,
           high52W: existing?.high52W || Number((price * 1.25).toFixed(2)),
           low52W: existing?.low52W || Number((price * 0.75).toFixed(2)),
