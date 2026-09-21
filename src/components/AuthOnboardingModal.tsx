@@ -195,9 +195,9 @@ export const AuthOnboardingModal: React.FC<AuthOnboardingModalProps> = ({
         }
         window.recaptchaVerifier = undefined;
       }
-      const container = document.getElementById('meridian-recaptcha-container');
+      const container = document.getElementById('apex-recaptcha-container');
       if (!container) return null;
-      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'meridian-recaptcha-container', {
+      window.recaptchaVerifier = new RecaptchaVerifier(auth, 'apex-recaptcha-container', {
         size: 'invisible',
       });
       return window.recaptchaVerifier;
@@ -422,18 +422,18 @@ export const AuthOnboardingModal: React.FC<AuthOnboardingModalProps> = ({
 
       const profile: UserProfile = {
         id: user.uid,
-        name: user.displayName || 'Meridian Investor',
+        name: user.displayName || 'Apex Investor',
         handle: cleanHandle,
         avatarUrl:
           user.photoURL ||
           `https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80`,
         method: 'EMAIL',
-        contact: user.email || 'investor@meridian.com',
+        contact: user.email || 'investor@apexequities.app',
         isVerified: true,
         verifiedAt: new Date().toISOString(),
         investorLevel: 'Pro',
         tradingGoal: 'Dividends & Monthly Cash Flow',
-        bio: `Google Verified Investor • Meridian Institutional Terminal`,
+        bio: `Google Verified Investor • Apex Institutional Terminal`,
         baseCountry: selectedCountry.code,
         currencyCode: selectedCountry.currency,
         currencySymbol: selectedCountry.symbol,
@@ -469,7 +469,7 @@ export const AuthOnboardingModal: React.FC<AuthOnboardingModalProps> = ({
         handle: '@kwame.mensah',
         avatarUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
         method: 'EMAIL',
-        contact: 'kwame.mensah@meridian.com',
+        contact: 'kwame.mensah@apexequities.app',
         isVerified: true,
         verifiedAt: new Date().toISOString(),
         investorLevel: 'Pro',
@@ -574,7 +574,7 @@ export const AuthOnboardingModal: React.FC<AuthOnboardingModalProps> = ({
   return (
     <div className="fixed inset-0 z-50 bg-[#040814]/85 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-6 overflow-y-auto animate-in fade-in duration-150 font-sans">
       {/* Hidden container for Firebase Invisible reCAPTCHA */}
-      <div id="meridian-recaptcha-container"></div>
+      <div id="apex-recaptcha-container"></div>
 
       <div 
         className="bg-[#070D1F] border border-white/[0.08] text-slate-100 w-full max-w-lg rounded-t-3xl sm:rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[94dvh] sm:h-auto sm:max-h-[94vh] my-0 sm:my-auto ring-1 ring-white/10"
@@ -610,7 +610,7 @@ export const AuthOnboardingModal: React.FC<AuthOnboardingModalProps> = ({
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5">
                 <h2 className="text-sm sm:text-base font-black text-white tracking-tight truncate">
-                  {currentView === 'PROFILE' ? 'Investor Account' : 'Meridian Equities'}
+                  {currentView === 'PROFILE' ? 'Investor Account' : 'Apex Equities'}
                 </h2>
                 <span className="text-[9px] sm:text-[10px] font-mono font-bold uppercase bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 px-1.5 py-0.5 rounded shrink-0">
                   {currentView === 'PROFILE' ? 'Verified Profile' : 'Secure Access'}
@@ -1395,7 +1395,7 @@ export const AuthOnboardingModal: React.FC<AuthOnboardingModalProps> = ({
               <Check className="w-8 h-8 stroke-3" />
             </div>
             <h3 className="text-lg font-black text-white tracking-tight">
-              Welcome to Meridian Equities!
+              Welcome to Apex Equities!
             </h3>
             <p className="text-xs text-slate-300 max-w-xs leading-relaxed">
               Your investor session is active with access to Ghana Stock Exchange real-time quotes, portfolio analytics, and AI market research.
@@ -1415,7 +1415,7 @@ export const AuthOnboardingModal: React.FC<AuthOnboardingModalProps> = ({
           <span className="mx-2">•</span>
           <span>SEC Regulated GSE Feeds</span>
           <span className="mx-2">•</span>
-          <span>Meridian Equities Terminal</span>
+          <span>Apex Equities Terminal</span>
         </div>
       </div>
     </div>

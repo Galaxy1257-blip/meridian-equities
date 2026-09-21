@@ -111,7 +111,7 @@ export const StockDetailModal: React.FC<StockDetailModalProps> = ({
 
   const handleShare = () => {
     navigator.clipboard.writeText(
-      `📊 GSE Stock: ${stock.name} (${stock.ticker}) currently trading at GH₵ ${stock.price.toFixed(2)} on the Ghana Stock Exchange! Check on Meridian Equities.`
+      `📊 GSE Stock: ${stock.name} (${stock.ticker}) currently trading at GH₵ ${stock.price.toFixed(2)} on the Ghana Stock Exchange! Check on Apex Equities.`
     );
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -264,7 +264,7 @@ export const StockDetailModal: React.FC<StockDetailModalProps> = ({
         <div className="flex items-center gap-1 sm:gap-1.5 px-3 sm:px-6 py-1.5 sm:py-2 bg-slate-950 dark:bg-[#040814] border-b border-slate-800 dark:border-white/[0.08] overflow-x-auto no-scrollbar shrink-0 text-xs font-bold select-none whitespace-nowrap">
           {[
             { id: 'overview', label: 'Price & Overview', icon: TrendingUp },
-            { id: 'meridian', label: 'Meridian 5-Axis & AI', icon: Sparkles },
+            { id: 'meridian', label: 'Apex 5-Axis & AI', icon: Sparkles },
             { id: 'financials', label: 'Valuation & Multiples', icon: BarChart3 },
             { id: 'peers', label: 'Sector Peers', icon: Scale },
             { id: 'orders', label: 'Orders & Alerts', icon: Calculator },
@@ -521,7 +521,7 @@ export const StockDetailModal: React.FC<StockDetailModalProps> = ({
           </div>
           )}
 
-          {/* Meridian 5-Axis & AI Desk: Radar & Narrative */}
+          {/* Apex 5-Axis & AI Desk: Radar & Narrative */}
           {(activeModalTab === 'meridian' || activeModalTab === 'all') && (
           <>
           <div className="bg-gradient-to-br from-slate-900 via-slate-900 to-indigo-950 text-white p-5 sm:p-6 rounded-3xl border border-slate-800 shadow-xl space-y-4">
@@ -533,10 +533,10 @@ export const StockDetailModal: React.FC<StockDetailModalProps> = ({
                 <div>
                   <div className="flex items-center gap-2">
                     <h3 className="font-extrabold text-base text-white">
-                      Meridian 5-Axis Diagnostics
+                      Apex 5-Axis Diagnostics
                     </h3>
                     <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
-                      Meridian Pro
+                      Apex Pro
                     </span>
                   </div>
                   <p className="text-xs text-slate-400">
@@ -1043,7 +1043,7 @@ export const StockDetailModal: React.FC<StockDetailModalProps> = ({
                 Disclaimer: Not Financial Advice
               </strong>
               <span>
-                All market data, Meridian Axis diagnostic ratings, and predictive ratios displayed are for informational and educational analysis only. Past financial performance does not guarantee future results on the Ghana Stock Exchange. Always consult an SEC-licensed stockbroker or certified financial advisor before executing trades.
+                All market data, Apex Axis diagnostic ratings, and predictive ratios displayed are for informational and educational analysis only. Past financial performance does not guarantee future results on the Ghana Stock Exchange. Always consult an SEC-licensed stockbroker or certified financial advisor before executing trades.
               </span>
             </div>
           </div>

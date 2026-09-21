@@ -54,7 +54,7 @@ interface HomeDashboardProps {
   onOpenOnboardingTour?: () => void;
   latestNews?: GSEMarketNews;
   onSelectNews?: (news: GSEMarketNews) => void;
-  onOpenMeridianAI?: () => void;
+  onOpenApexAI?: () => void;
 }
 
 export const HomeDashboard: React.FC<HomeDashboardProps> = ({
@@ -75,7 +75,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
   onOpenOnboardingTour,
   latestNews,
   onSelectNews,
-  onOpenMeridianAI
+  onOpenApexAI
 }) => {
   // Sort stocks into categorized groupings
   const gainers = [...stocks].filter(s => s.change > 0).sort((a, b) => b.changePercent - a.changePercent).slice(0, 5);
@@ -88,13 +88,13 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
 
   const quickActions = [
     {
-      id: 'meridian-ai',
-      label: 'Meridian AI',
+      id: 'apex-ai',
+      label: 'Apex AI',
       sublabel: 'GSE Research Desk',
       icon: Zap,
       badge: 'PRO',
       color: 'bg-cyan-500/15 text-cyan-400 border border-cyan-500/30',
-      action: onOpenMeridianAI || (() => onNavigateTab('chat'))
+      action: onOpenApexAI || (() => onNavigateTab('chat'))
     },
     {
       id: 'market-close',
@@ -510,7 +510,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
         </div>
       )}
 
-      {/* 4. Top Movers & Meridian Champions Matrix */}
+      {/* 4. Top Movers & Apex Champions Matrix */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         {/* Column 1: Top Session Gainers */}
         <div className="bg-white dark:bg-[#0B132B] rounded-2xl border border-slate-200 dark:border-white/[0.08] p-4 sm:p-5 shadow-sm space-y-3">
@@ -630,7 +630,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
           </div>
         </div>
 
-        {/* Column 3: Meridian 5-Axis Champions */}
+        {/* Column 3: Apex 5-Axis Champions */}
         <div className="bg-white dark:bg-[#0B132B] rounded-2xl border border-slate-200 dark:border-white/[0.08] p-4 sm:p-5 shadow-sm space-y-3">
           <div className="flex items-center justify-between border-b border-slate-100 dark:border-white/[0.06] pb-3">
             <div className="flex items-center gap-2">
@@ -640,9 +640,9 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
               <div>
                 <div className="flex items-center gap-1.5">
                   <h3 className="text-sm font-black text-slate-900 dark:text-white font-mono">
-                    MERIDIAN AXIS PICKS
+                    APEX AXIS PICKS
                   </h3>
-                  <InfoButton onClick={() => onOpenJargonGuide('axis')} title="Meridian Axis: Scale 0-30. Higher is better!" />
+                  <InfoButton onClick={() => onOpenJargonGuide('axis')} title="Apex Axis: Scale 0-30. Higher is better!" />
                 </div>
                 <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono">Top Health Scores • Scale 0-30 ↑</span>
               </div>

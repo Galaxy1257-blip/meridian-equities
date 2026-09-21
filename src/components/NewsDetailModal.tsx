@@ -61,7 +61,7 @@ export const NewsDetailModal: React.FC<NewsDetailModalProps> = ({
   const handleAlertClick = onOpenAlertModalForStock || onOpenAlertModal;
 
   const handleShare = () => {
-    const text = `📰 [GSE News] ${news.title}\n\nKey Takeaway: ${news.summary}\n\nRead more on Meridian Equities.`;
+    const text = `📰 [GSE News] ${news.title}\n\nKey Takeaway: ${news.summary}\n\nRead more on Apex Equities.`;
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2200);
@@ -124,8 +124,8 @@ export const NewsDetailModal: React.FC<NewsDetailModalProps> = ({
           ${news.content.map(p => `<p>${p}</p>`).join('')}
           
           <div class="footer">
-            Source: ${news.source} • Downloaded from Meridian Equities (independent platform, not affiliated with GSE or SEC)<br/>
-            Generated via Meridian Equities
+            Source: ${news.source} • Downloaded from Apex Equities (independent platform, not affiliated with GSE or SEC)<br/>
+            Generated via Apex Equities
           </div>
         </body>
       </html>

@@ -154,7 +154,7 @@ export const BankStatementView: React.FC<BankStatementViewProps> = ({
           
           {/* THE OFFICIAL PRINTABLE STATEMENT CONTAINER (Strict white paper layout) */}
           <div 
-            id="meridian-printable-statement"
+            id="apex-printable-statement"
             ref={statementRef}
             className="w-full max-w-[210mm] bg-white text-slate-900 p-8 sm:p-12 font-sans shadow-xl text-[12px] leading-normal border border-slate-200"
             style={{ minHeight: '297mm' }}
@@ -170,7 +170,7 @@ export const BankStatementView: React.FC<BankStatementViewProps> = ({
                     </div>
                     <div>
                       <h1 className="font-sans font-black text-xl tracking-tight text-slate-950 uppercase">
-                        Meridian Equities
+                        Apex Equities
                       </h1>
                       <p className="text-[10px] text-slate-500 font-mono uppercase tracking-wider font-semibold">
                         GSE Equity Portfolio Tracker • Accra, Ghana
@@ -462,7 +462,7 @@ export const BankStatementView: React.FC<BankStatementViewProps> = ({
               <div className="font-mono text-[9px] text-slate-500">
                 <p className="font-bold text-slate-900 uppercase">Personal Record ID:</p>
                 <p className="tracking-widest font-black text-slate-800 text-xs mt-0.5">{statementRefId}</p>
-                <p className="text-[8px] text-slate-400 mt-0.5">Generated for personal record-keeping via Meridian Equities Tracker</p>
+                <p className="text-[8px] text-slate-400 mt-0.5">Generated for personal record-keeping via Apex Equities Tracker</p>
               </div>
 
               <div className="text-left sm:text-right font-mono text-[9px] text-slate-500 max-w-sm">
@@ -475,7 +475,7 @@ export const BankStatementView: React.FC<BankStatementViewProps> = ({
 
             {/* Footer watermark note */}
             <div className="text-center text-[8px] font-mono text-slate-400 mt-6 pt-2 border-t border-slate-100">
-              Generated via Meridian Equities on {docTimestamp} • For Personal Tracking
+              Generated via Apex Equities on {docTimestamp} • For Personal Tracking
             </div>
           </div>
         </div>

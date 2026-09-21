@@ -35,7 +35,7 @@ export const RisingCediLogo: React.FC<RisingCediLogoProps> = ({
   return (
     <div 
       className={`inline-flex items-center gap-2.5 select-none shrink-0 ${className}`}
-      title="Meridian Equities - Research & Analytics"
+      title="Apex Equities - Research & Analytics"
     >
       {/* The Equity Pulse App Icon Vector Squircle */}
       <div 
@@ -169,7 +169,7 @@ export const RisingCediLogo: React.FC<RisingCediLogoProps> = ({
         <div className="flex flex-col text-left">
           <div className="flex items-center gap-1.5">
             <span className="text-base sm:text-lg font-black text-white tracking-tight flex items-center gap-1">
-              <span>Meridian</span>
+              <span>Apex</span>
               <span className="text-cyan-400">Equities</span>
             </span>
             <span className="text-[9px] uppercase font-extrabold tracking-wider px-1.5 py-0.5 rounded bg-cyan-950/80 text-cyan-300 border border-cyan-500/40 shadow-2xs">

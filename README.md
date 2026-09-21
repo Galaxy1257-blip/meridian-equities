@@ -1,20 +1,20 @@
-# Meridian Equities 🇬🇭 📈
+# Apex Equities 🇬🇭 📈
 
 > **Next-Generation Ghana Stock Exchange (GSE) & Global Equities Intelligence Platform**
 
-[![Live on Vercel](https://img.shields.io/badge/Vercel-Live%20Deployment-black?style=flat&logo=vercel)](https://meridian-equities.vercel.app/)
+[![Live on Vercel](https://img.shields.io/badge/Vercel-Live%20Deployment-black?style=flat&logo=vercel)](https://apex-equities.vercel.app/)
 [![Vite 6](https://img.shields.io/badge/Vite-6.2.3-646CFF?style=flat&logo=vite)](https://vitejs.dev/)
 [![React 19](https://img.shields.io/badge/React-19.0.1-61DAFB?style=flat&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8.2-3178C6?style=flat&logo=typescript)](https://www.typescriptlang.org/)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.1.14-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 
-**Meridian Equities** is an institutional-grade financial analytics and market intelligence web application designed for investors in the Ghana Stock Exchange (GSE) and major global equity markets (NYSE, NASDAQ). It provides real-time and resilient market quotes, deterministic 5-factor valuation models, curated market news, interactive portfolio tracking, an AI financial analyst, and a financial jargon translator.
+**Apex Equities** is an institutional-grade financial analytics and market intelligence web application designed for investors in the Ghana Stock Exchange (GSE) and major global equity markets (NYSE, NASDAQ). It provides real-time and resilient market quotes, deterministic 5-factor valuation models, curated market news, interactive portfolio tracking, an AI financial analyst, and a financial jargon translator.
 
 ---
 
 ## 🚀 Live Demo
 
-- **Production URL:** [https://meridian-equities.vercel.app/](https://meridian-equities.vercel.app/)
+- **Production URL:** [https://apex-equities.vercel.app/](https://apex-equities.vercel.app/)
 - **Live Bundle:** `assets/index-BDLgahgk.js`
 
 ---
@@ -60,7 +60,7 @@
 ## 🛠️ Architecture & Tech Stack
 
 ```
-meridian-equities/
+apex-equities/
 ├── public/                 # Static assets & stock logo master files
 │   └── stock-logos/        # Official PNG/JPEG/SVG corporate brand assets
 ├── src/
@@ -95,8 +95,8 @@ meridian-equities/
 ### Installation
 ```bash
 # 1. Clone repository
-git clone https://github.com/your-repo/meridian-equities.git
-cd meridian-equities
+git clone https://github.com/your-repo/apex-equities.git
+cd apex-equities
 
 # 2. Install dependencies
 npm install
@@ -130,7 +130,7 @@ Generates production-optimized static files in `dist/`.
 
 ## ⚖️ Financial & Data Disclaimer
 
-*Meridian Equities is an independent financial analytics, market intelligence, and portfolio tracking platform. Quotes displayed may be delayed in accordance with exchange regulations. The platform does not provide licensed investment advice, nor does it act as an SEC-licensed broker-dealer. Users are advised to consult a licensed broker or investment advisor prior to executing financial trades.*
+*Apex Equities is an independent financial analytics, market intelligence, and portfolio tracking platform. Quotes displayed may be delayed in accordance with exchange regulations. The platform does not provide licensed investment advice, nor does it act as an SEC-licensed broker-dealer. Users are advised to consult a licensed broker or investment advisor prior to executing financial trades.*
 
 ---
 

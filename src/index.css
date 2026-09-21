@@ -117,7 +117,7 @@ select optgroup {
 
 /* ==========================================================================
    BANK-GRADE PRINT & PDF STATEMENT ENGINE
-   Ensures ONLY #meridian-printable-statement renders on paper/PDF.
+   Ensures ONLY #apex-printable-statement renders on paper/PDF.
    Completely removes navbars, buttons, modals, tabs, and dark UI backgrounds.
    ========================================================================== */
 @media print {
@@ -139,17 +139,17 @@ select optgroup {
   }
 
   /* Make ONLY the printable statement and its children visible */
-  #meridian-printable-statement,
-  #meridian-printable-statement *,
-  #meridian-printable-tax-certificate,
-  #meridian-printable-tax-certificate *,
+  #apex-printable-statement,
+  #apex-printable-statement *,
+  #apex-printable-tax-certificate,
+  #apex-printable-tax-certificate *,
   .printable-statement,
   .printable-statement * {
     visibility: visible !important;
   }
 
-  #meridian-printable-statement,
-  #meridian-printable-tax-certificate {
+  #apex-printable-statement,
+  #apex-printable-tax-certificate {
     position: absolute !important;
     left: 0 !important;
     top: 0 !important;

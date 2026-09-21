@@ -279,7 +279,7 @@ export interface ChatChannel {
   membersCount?: number;
 }
 
-export interface MeridianAxisScore {
+export interface ApexAxisScore {
   value: number; // 0-6
   future: number; // 0-6
   past: number; // 0-6
@@ -288,7 +288,7 @@ export interface MeridianAxisScore {
   total: number; // 0-30
   rating: 'Exceptional' | 'Strong' | 'Moderate' | 'Speculative';
 }
-export type SnowflakeScore = MeridianAxisScore;
+export type SnowflakeScore = ApexAxisScore;
 
 export interface AiStockNarrative {
   ticker: string;

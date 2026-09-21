@@ -106,8 +106,8 @@ export const StockTable: React.FC<StockTableProps> = ({
               </th>
               <th className="py-3 px-4 font-bold text-center">
                 <div className="inline-flex items-center justify-center gap-1">
-                  <span>Meridian Axis</span>
-                  {onOpenJargon && <InfoButton onClick={() => onOpenJargon('axis')} title="Meridian Axis: Scale 0-30. Higher is better!" />}
+                  <span>Apex Axis</span>
+                  {onOpenJargon && <InfoButton onClick={() => onOpenJargon('axis')} title="Apex Axis: Scale 0-30. Higher is better!" />}
                 </div>
               </th>
               <th className="py-3 px-4 font-bold text-center w-28">Actions</th>
@@ -230,7 +230,7 @@ export const StockTable: React.FC<StockTableProps> = ({
                     )}
                   </td>
 
-                  {/* Meridian Axis Diagnostic Score */}
+                  {/* Apex Axis Diagnostic Score */}
                   <td className="py-3 px-4 text-center">
                     <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-50 dark:bg-amber-500/10 text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-500/20 font-mono text-[11px] font-bold">
                       <Zap className="w-3 h-3 text-amber-600 dark:text-amber-400" />

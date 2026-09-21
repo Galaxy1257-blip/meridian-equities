@@ -38,7 +38,7 @@ import { CalculatorsSection } from './components/CalculatorsSection';
 import { LearnInvestingSection } from './components/LearnInvestingSection';
 import { MarketCloseReportModal } from './components/MarketCloseReportModal';
 import { AuthOnboardingModal } from './components/AuthOnboardingModal';
-import { MeridianAI } from './components/MeridianAI';
+import { ApexAI } from './components/ApexAI';
 import { SubscriptionPlansModal } from './components/SubscriptionPlansModal';
 import { BiometricSandbox } from './components/BiometricSandbox';
 
@@ -64,12 +64,12 @@ const STORAGE_KEY_NEWS_BOOKMARKS = 'gse_tracker_news_bookmarks_v1';
 import { auth, db } from './firebase';
 import { doc, onSnapshot, setDoc } from 'firebase/firestore';
 
-const STORAGE_KEY_ONBOARDING = 'meridian_onboarding_completed';
+const STORAGE_KEY_ONBOARDING = 'apex_onboarding_completed';
 const STORAGE_KEY_USER_PROFILE = 'gse_tracker_user_profile_v1';
 const STORAGE_KEY_NOTIFICATION_PREFS = 'gse_tracker_notification_prefs_v1';
 const STORAGE_KEY_NOTIFICATIONS = 'gse_tracker_notifications_v1';
 const STORAGE_KEY_NOTIFICATIONS_ARCHIVED = 'gse_tracker_notifications_archived_v1';
-const STORAGE_KEY_PRO_PASS_EXPIRY = 'meridian_pro_pass_expiry';
+const STORAGE_KEY_PRO_PASS_EXPIRY = 'apex_pro_pass_expiry';
 
 const DEFAULT_NOTIFICATION_PREFS: NotificationPreferences = {
   stockPriceAlerts: true,
@@ -235,7 +235,7 @@ export default function App() {
 
   // Subscription & Pro Pass State
   const [subscriptionTier, setSubscriptionTier] = useState<SubscriptionTier>(() => {
-    return (localStorage.getItem('meridian_subscription_tier') as SubscriptionTier) || 'FREE';
+    return (localStorage.getItem('apex_subscription_tier') as SubscriptionTier) || 'FREE';
   });
 
   const [proPassExpiry, setProPassExpiry] = useState<number | null>(() => {
@@ -288,7 +288,7 @@ export default function App() {
 
   // Mode: Easy vs Pro (Requires active subscription or Pro pass to remain active)
   const [showPro, setShowPro] = useState<boolean>(() => {
-    const savedTier = localStorage.getItem('meridian_subscription_tier');
+    const savedTier = localStorage.getItem('apex_subscription_tier');
     const savedExpiry = localStorage.getItem(STORAGE_KEY_PRO_PASS_EXPIRY);
     const hasValidPass = savedExpiry ? parseInt(savedExpiry, 10) > Date.now() : false;
     const hasProTier = savedTier === 'PRO' || savedTier === 'INSTITUTIONAL';
@@ -408,8 +408,8 @@ export default function App() {
   const [isDividendModalOpen, setIsDividendModalOpen] = useState<boolean>(false);
   const [isMarketCloseModalOpen, setIsMarketCloseModalOpen] = useState<boolean>(false);
 
-  // Meridian Equities Advanced Terminal Modals & State
-  const [isWallflakeOpen, setIsWallflakeOpen] = useState<boolean>(false);
+  // Apex Equities Advanced Terminal Modals & State
+  const [isApexOpen, setIsApexOpen] = useState<boolean>(false);
   const [isSubscriptionOpen, setIsSubscriptionOpen] = useState<boolean>(false);
 
   const [isFXShieldOpen, setIsFXShieldOpen] = useState<boolean>(false);
@@ -417,7 +417,7 @@ export default function App() {
   const [isMobileLeftPaneOpen, setIsMobileLeftPaneOpen] = useState<boolean>(false);
   const [isBrokersModalOpen, setIsBrokersModalOpen] = useState<boolean>(false);
   const [isBiometricLocked, setIsBiometricLocked] = useState<boolean>(() => {
-    return localStorage.getItem('meridian_biometric_enabled') === 'true';
+    return localStorage.getItem('apex_biometric_enabled') === 'true';
   });
 
   // Check Pro pass expiration periodically
@@ -461,7 +461,7 @@ export default function App() {
 
   // Sync FX rate when live real-time rate updates (unless user explicitly locked a custom rate)
   useEffect(() => {
-    const isManualOverride = localStorage.getItem('meridian_fx_manual_override') === 'true';
+    const isManualOverride = localStorage.getItem('apex_fx_manual_override') === 'true';
     if (!isManualOverride && liveUsdRate && Math.abs(liveUsdRate - exchangeRateUsd) > 0.001) {
       setExchangeRateUsd(Number(liveUsdRate.toFixed(2)));
     }
@@ -474,7 +474,7 @@ export default function App() {
     isRateModalOpen ||
     isDividendModalOpen ||
     isMarketCloseModalOpen ||
-    isWallflakeOpen ||
+    isApexOpen ||
     isSubscriptionOpen ||
     isFXShieldOpen ||
     isCommandPaletteOpen ||
@@ -662,7 +662,7 @@ export default function App() {
       Notification.permission === 'granted'
     ) {
       try {
-        new Notification(notif.title || notif.stockName || 'Meridian Equities Alert', {
+        new Notification(notif.title || notif.stockName || 'Apex Equities Alert', {
           body: notif.message || `${notif.ticker}: GH₵ ${notif.actualPrice?.toFixed(2)}`,
           icon: '/favicon.ico',
         });
@@ -961,7 +961,7 @@ export default function App() {
       actualPrice: 2.45,
       targetPrice: 2.40,
       condition: 'ABOVE',
-      title: '🔔 Meridian Equities Push Alert',
+      title: '🔔 Apex Equities Push Alert',
       message: 'Real-time OS Push Alert is working! MTNGH crossed target at GH₵ 2.45.',
       timestamp: nowTime,
       read: false
@@ -996,7 +996,7 @@ export default function App() {
 
   const handleSelectTier = (tier: SubscriptionTier) => {
     setSubscriptionTier(tier);
-    localStorage.setItem('meridian_subscription_tier', tier);
+    localStorage.setItem('apex_subscription_tier', tier);
     if (tier !== 'FREE') {
       setShowPro(true);
     } else {
@@ -1258,7 +1258,7 @@ export default function App() {
         onOpenOnboardingTour={handleOpenOnboarding}
         theme={theme}
         onToggleTheme={handleToggleTheme}
-        onOpenMeridianAI={() => setIsWallflakeOpen(true)}
+        onOpenApexAI={() => setIsApexOpen(true)}
         onOpenAuthModal={() => setIsAuthModalOpen(true)}
         userProfile={userProfile}
         searchQuery={searchQuery}
@@ -1294,7 +1294,7 @@ export default function App() {
                 </div>
                 <div>
                   <h3 className="text-xs font-black tracking-tight flex items-center gap-1">
-                    <span>MERIDIAN</span>
+                    <span>APEX</span>
                     <span className="text-cyan-400">EQUITIES</span>
                   </h3>
                   <p className="text-[10px] font-mono text-slate-400">Navigation & Tools</p>
@@ -1423,12 +1423,12 @@ export default function App() {
                   type="button"
                   onClick={() => {
                     setIsMobileLeftPaneOpen(false);
-                    setIsWallflakeOpen(true);
+                    setIsApexOpen(true);
                   }}
                   className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-cyan-300 bg-cyan-500/10 hover:bg-cyan-500/20 border border-cyan-500/30 transition-all cursor-pointer"
                 >
                   <Zap className="w-4 h-4 text-cyan-400" />
-                  <span>Meridian AI Desk</span>
+                  <span>Apex AI Desk</span>
                 </button>
                 <button
                   type="button"
@@ -1439,7 +1439,7 @@ export default function App() {
                   className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-purple-300 hover:bg-purple-500/15 border border-transparent hover:border-purple-500/30 transition-all cursor-pointer"
                 >
                   <Sparkles className="w-4 h-4 text-purple-400" />
-                  <span>Meridian Pro Desk</span>
+                  <span>Apex Pro Desk</span>
                 </button>
                 <button
                   type="button"
@@ -1559,11 +1559,11 @@ export default function App() {
               <div className="space-y-1">
                 <button
                   type="button"
-                  onClick={() => setIsWallflakeOpen(true)}
+                  onClick={() => setIsApexOpen(true)}
                   className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-amber-900 dark:text-amber-300 bg-amber-50 dark:bg-amber-500/10 hover:bg-amber-100 dark:hover:bg-amber-500/20 border border-amber-300 dark:border-amber-500/30 transition-all cursor-pointer"
                 >
                   <Zap className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-                  <span>Meridian AI Desk</span>
+                  <span>Apex AI Desk</span>
                 </button>
                 <button
                   type="button"
@@ -1571,7 +1571,7 @@ export default function App() {
                   className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-purple-600 dark:text-purple-300 hover:bg-purple-500/10 border border-transparent hover:border-purple-500/30 transition-all cursor-pointer"
                 >
                   <Sparkles className="w-4 h-4 text-purple-400" />
-                  <span>Meridian Pro Desk</span>
+                  <span>Apex Pro Desk</span>
                 </button>
                 <button
                   type="button"
@@ -1689,7 +1689,7 @@ export default function App() {
                 setSelectedNews(news);
                 setIsNewsModalOpen(true);
               }}
-              onOpenMeridianAI={() => setIsWallflakeOpen(true)}
+              onOpenApexAI={() => setIsApexOpen(true)}
             />
           )}
 
@@ -2118,7 +2118,7 @@ export default function App() {
               ME
             </div>
             <span>
-              <strong>Meridian Equities</strong> • Global & GSE Stock Terminal
+              <strong>Apex Equities</strong> • Global & GSE Stock Terminal
             </span>
           </div>
 
@@ -2165,7 +2165,7 @@ export default function App() {
                 REGULATORY DISCLAIMER — NOT FINANCIAL ADVICE
               </p>
               <p>
-                All data, market quotes, Meridian Axis diagnostics, and algorithmic simulations presented by Meridian Equities are strictly for informational and educational purposes. Meridian Equities is not a registered investment advisor or SEC-licensed broker-dealer. Past performance of Ghana Stock Exchange (GSE) or international equities is not indicative of future results. Always consult a certified financial planner or SEC-licensed broker before making investment decisions.
+                All data, market quotes, Apex Axis diagnostics, and algorithmic simulations presented by Apex Equities are strictly for informational and educational purposes. Apex Equities is not a registered investment advisor or SEC-licensed broker-dealer. Past performance of Ghana Stock Exchange (GSE) or international equities is not indicative of future results. Always consult a certified financial planner or SEC-licensed broker before making investment decisions.
               </p>
             </div>
           </div>
@@ -2265,7 +2265,7 @@ export default function App() {
         currentRate={exchangeRateUsd}
         onSaveRate={(newRate) => {
           setExchangeRateUsd(newRate);
-          localStorage.setItem('meridian_fx_manual_override', 'true');
+          localStorage.setItem('apex_fx_manual_override', 'true');
         }}
         liveRate={liveUsdRate}
         isLive={isLiveFx}
@@ -2274,10 +2274,10 @@ export default function App() {
         onRefreshLive={refetchFx}
         onToggleAutoSync={(autoSync) => {
           if (autoSync) {
-            localStorage.removeItem('meridian_fx_manual_override');
+            localStorage.removeItem('apex_fx_manual_override');
             if (liveUsdRate) setExchangeRateUsd(Number(liveUsdRate.toFixed(2)));
           } else {
-            localStorage.setItem('meridian_fx_manual_override', 'true');
+            localStorage.setItem('apex_fx_manual_override', 'true');
           }
         }}
       />
@@ -2350,11 +2350,11 @@ export default function App() {
         onLogout={handleLogoutUserProfile}
       />
 
-      {/* Meridian AI Local Assistant Modal */}
-      <MeridianAI
+      {/* Apex AI Local Assistant Modal */}
+      <ApexAI
         stocks={stocks}
-        isOpen={isWallflakeOpen}
-        onClose={() => setIsWallflakeOpen(false)}
+        isOpen={isApexOpen}
+        onClose={() => setIsApexOpen(false)}
         userProfile={userProfile}
         onSelectStock={setSelectedStock}
       />
@@ -2420,7 +2420,7 @@ export default function App() {
         theme={theme}
         onSelectStock={(stock) => setSelectedStock(stock)}
         onNavigateTab={(tab) => setActiveTab(tab)}
-        onOpenMeridianAI={() => setIsWallflakeOpen(true)}
+        onOpenApexAI={() => setIsApexOpen(true)}
         onOpenFXShield={() => setIsFXShieldOpen(true)}
 
         onLockBiometric={() => setIsBiometricLocked(true)}

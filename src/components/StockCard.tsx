@@ -249,12 +249,12 @@ export const StockCard: React.FC<StockCardProps> = ({
           </div>
         </div>
 
-        {/* Meridian Axis Diagnostic Rating */}
+        {/* Apex Axis Diagnostic Rating */}
         <div className="mt-2.5 flex items-center justify-between text-xs px-1">
           <div className="flex items-center gap-1 text-slate-700 dark:text-slate-400 font-medium">
             <Zap className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
-            <span className="text-[11px] font-mono font-bold">Meridian Axis</span>
-            <InfoButton onClick={() => onOpenJargon('axis')} title="Meridian Axis: Comprehensive health score. Scale 0-30. Higher is better!" />
+            <span className="text-[11px] font-mono font-bold">Apex Axis</span>
+            <InfoButton onClick={() => onOpenJargon('axis')} title="Apex Axis: Comprehensive health score. Scale 0-30. Higher is better!" />
           </div>
           <div className="flex items-center gap-1.5 font-mono text-[11px]">
             <span className="font-black text-amber-900 dark:text-amber-400">{axisScore}/30</span>

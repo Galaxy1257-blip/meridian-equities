@@ -22,10 +22,10 @@ interface InvestorChatSectionProps {
   onOpenAuthModal?: () => void;
 }
 
-const STORAGE_KEY_COPILOT_MESSAGES = 'meridian_quant_copilot_messages_v2';
-const STORAGE_KEY_FLOOR_MESSAGES = 'meridian_floor_chat_messages_v2';
-const STORAGE_KEY_USER_NAME = 'meridian_chat_username_v2';
-const STORAGE_KEY_USER_VAULT_PREFIX = 'meridian_chat_vault_v2_';
+const STORAGE_KEY_COPILOT_MESSAGES = 'apex_quant_copilot_messages_v2';
+const STORAGE_KEY_FLOOR_MESSAGES = 'apex_floor_chat_messages_v2';
+const STORAGE_KEY_USER_NAME = 'apex_chat_username_v2';
+const STORAGE_KEY_USER_VAULT_PREFIX = 'apex_chat_vault_v2_';
 
 const EXTENDED_CHANNELS: ChatChannel[] = [
   {
@@ -95,10 +95,10 @@ export const InvestorChatSection: React.FC<InvestorChatSectionProps> = ({
       {
         id: 'copilot-welcome-1',
         channelId: 'copilot',
-        senderName: 'Meridian Research',
+        senderName: 'Apex Research',
         senderRole: 'ai',
         senderAvatar: '🏛️',
-        content: `### Welcome to Meridian Research Desk 🇬🇭
+        content: `### Welcome to Apex Research Desk 🇬🇭
 I am your GSE market research assistant, helping you explore Ghana Stock Exchange data and investment concepts.
 
 **What I can help with**:
@@ -402,7 +402,7 @@ ${tableRows}
           const aiMsg: ChatMessage = {
             id: `copilot-ai-${Date.now()}`,
             channelId: 'copilot',
-            senderName: isGeminiConfigured() ? 'Meridian AI (Gemini)' : 'Meridian Research',
+            senderName: isGeminiConfigured() ? 'Apex AI (Gemini)' : 'Apex Research',
             senderRole: 'ai',
             senderAvatar: '🏛️',
             content: analysis,
@@ -484,13 +484,13 @@ ${tableRows}
   };
 
   const handleClearCopilot = () => {
-    if (confirm('Clear your Meridian Research research trajectory?')) {
+    if (confirm('Clear your Apex Research research trajectory?')) {
       localStorage.removeItem(STORAGE_KEY_COPILOT_MESSAGES);
       setCopilotMessages([
         {
           id: `copilot-reset-${Date.now()}`,
           channelId: 'copilot',
-          senderName: 'Meridian Research',
+          senderName: 'Apex Research',
           senderRole: 'ai',
           senderAvatar: '🏛️',
           content: 'Session cleared. Enter a stock ticker (e.g. `$MTNGH`, `$GCB`, `$BOPP`) or select a research query below to begin analysis.',
@@ -699,7 +699,7 @@ ${tableRows}
             <div>
               <div className="flex items-center gap-2 flex-wrap">
                 <h2 className="text-base sm:text-lg font-black text-slate-900 dark:text-white tracking-tight">
-                  Meridian Investor Live Desk
+                  Apex Investor Live Desk
                 </h2>
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-black bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
                   REAL-TIME
@@ -816,7 +816,7 @@ ${tableRows}
           <div className="px-4 py-2 bg-amber-500/10 border-b border-amber-500/20 flex items-start gap-2 shrink-0">
             <AlertTriangle className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400 mt-0.5 shrink-0" />
             <p className="text-[11px] text-amber-800 dark:text-amber-300/90 leading-tight">
-              <strong>Disclaimer:</strong> This is a research tool, not financial advice. Always consult a qualified adviser before investing. Meridian Equities is not a broker or investment adviser.
+              <strong>Disclaimer:</strong> This is a research tool, not financial advice. Always consult a qualified adviser before investing. Apex Equities is not a broker or investment adviser.
             </p>
           </div>
         )}

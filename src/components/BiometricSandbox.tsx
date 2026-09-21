@@ -12,7 +12,7 @@ interface BiometricSandboxProps {
   isLocked: boolean;
 }
 
-const PIN_STORAGE_KEY = 'meridian_pin_hash_v1';
+const PIN_STORAGE_KEY = 'apex_pin_hash_v1';
 
 export const BiometricSandbox: React.FC<BiometricSandboxProps> = ({
   isEnabled,
@@ -105,7 +105,7 @@ export const BiometricSandbox: React.FC<BiometricSandboxProps> = ({
         {/* Brand Lock Header */}
         <RisingCediLogo size="md" showBadge={false} />
         <div className="space-y-1">
-          <h2 className="text-lg font-black text-white tracking-tight">Meridian Equities</h2>
+          <h2 className="text-lg font-black text-white tracking-tight">Apex Equities</h2>
           <p className="text-xs text-slate-400">Terminal Protected by Biometric Sandbox</p>
         </div>
 

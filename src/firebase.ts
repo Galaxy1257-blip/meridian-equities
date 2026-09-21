@@ -13,7 +13,7 @@ import { getFirestore } from 'firebase/firestore';
 // Standard Firebase Client Config (supports environment variables or local developer settings)
 const getCustomConfig = () => {
   try {
-    const saved = localStorage.getItem('meridian_firebase_config');
+    const saved = localStorage.getItem('apex_firebase_config');
     if (saved) return JSON.parse(saved);
   } catch (e) {
     // ignore

@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 
-const FX_STORAGE_KEY = 'meridian_fx_rate_usd_ghs_v1';
-const FX_TIMESTAMP_KEY = 'meridian_fx_rate_timestamp_v1';
-const FX_SOURCE_KEY = 'meridian_fx_source_v1';
+const FX_STORAGE_KEY = 'apex_fx_rate_usd_ghs_v1';
+const FX_TIMESTAMP_KEY = 'apex_fx_rate_timestamp_v1';
+const FX_SOURCE_KEY = 'apex_fx_source_v1';
 const CACHE_DURATION_MS = 10 * 60 * 1000; // 10 minutes cache for responsive real-time data
 const AUTO_REFRESH_INTERVAL_MS = 5 * 60 * 1000; // 5 minutes periodic live poll
 const DEFAULT_RATE = 11.46; // Current realistic interbank benchmark fallback

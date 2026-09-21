@@ -226,7 +226,7 @@ export const KYCPipeline: React.FC<KYCPipelineProps> = ({
                 </div>
                 <div className="flex justify-between text-slate-400">
                   <span>Verification Engine:</span>
-                  <span className="font-bold text-emerald-400">Meridian Local KYC Sandbox</span>
+                  <span className="font-bold text-emerald-400">Apex Local KYC Sandbox</span>
                 </div>
               </div>
 

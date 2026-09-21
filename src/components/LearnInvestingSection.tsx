@@ -263,7 +263,7 @@ const GSE_KNOWLEDGE_BASE: QAItem[] = [
     category: 'valuation',
     question: 'What are the 3 most important metrics to check before buying any GSE stock?',
     shortAnswer: 'The 3 golden metrics on the GSE are: 1) Liquidity (Easy to Sell Score), 2) Dividend Yield % (Cash Back), and 3) P/E Valuation Ratio (Bargain Score).',
-    detailedAnswer: 'Because the Accra market has varying daily trading volumes, always examine: 1) Liquidity (ensure the stock trades frequently so you can sell quickly if needed), 2) Dividend History & Yield (look for consistent annual payouts above 8%), and 3) P/E Ratio (compare how cheap the company is relative to its annual earnings). Meridian Equities combines these into an Overall Quality Score to simplify your research.',
+    detailedAnswer: 'Because the Accra market has varying daily trading volumes, always examine: 1) Liquidity (ensure the stock trades frequently so you can sell quickly if needed), 2) Dividend History & Yield (look for consistent annual payouts above 8%), and 3) P/E Ratio (compare how cheap the company is relative to its annual earnings). Apex Equities combines these into an Overall Quality Score to simplify your research.',
     keyTakeaways: [
       'Liquidity prevents getting locked into illiquid shares.',
       'High dividend yields act as cash flow cushions against inflation.',

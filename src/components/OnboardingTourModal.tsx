@@ -111,12 +111,12 @@ const TOUR_STEPS: TourStep[] = [
   },
   {
     id: 3,
-    title: 'Meridian Axis: 5-Point Quantitative Radar',
+    title: 'Apex Axis: 5-Point Quantitative Radar',
     subtitle: 'Institutional algorithmic health score rated out of 30',
     targetTab: 'markets',
     tabLabel: 'Stock Details',
     visualPreview: {
-      title: 'MERIDIAN AXIS RADAR DIAGNOSTIC',
+      title: 'APEX AXIS RADAR DIAGNOSTIC',
       mockBadge: 'ALGORITHMIC SCORE: 26/30',
       mockMetrics: [
         { label: 'VALUE', value: '5/6 (Very Cheap)', highlight: false },
@@ -144,7 +144,7 @@ const TOUR_STEPS: TourStep[] = [
         badge: 'GLOSSARY'
       }
     ],
-    keyTakeaway: 'Stocks with a Meridian Axis score above 20/30 represent strong fundamental candidates for long-term holding.'
+    keyTakeaway: 'Stocks with a Apex Axis score above 20/30 represent strong fundamental candidates for long-term holding.'
   },
   {
     id: 4,
@@ -185,7 +185,7 @@ const TOUR_STEPS: TourStep[] = [
   },
   {
     id: 5,
-    title: 'Investor Community & Meridian AI Copilot',
+    title: 'Investor Community & Apex AI Copilot',
     subtitle: 'Engage in multi-channel trading rooms and ask quantitative market queries',
     targetTab: 'chat',
     tabLabel: 'Investor Chat',
@@ -213,7 +213,7 @@ const TOUR_STEPS: TourStep[] = [
       },
       {
         number: '3',
-        title: 'Meridian AI Research Desk',
+        title: 'Apex AI Research Desk',
         description: 'Ask deep valuation questions: "Top dividend stocks on GSE", "Explain RSI & MACD", or "Evaluate MTN Ghana".',
         badge: 'AI ANALYST'
       }
@@ -418,7 +418,7 @@ export const OnboardingTourModal: React.FC<OnboardingTourModalProps> = ({
         {viewMode === 'cheat_sheet' && (
           <div className="p-4 sm:p-6 overflow-y-auto space-y-4 flex-1">
             <div className="text-xs text-slate-300">
-              Quick sitemap of every tool available on the Meridian Equities terminal:
+              Quick sitemap of every tool available on the Apex Equities terminal:
             </div>
 
             <div className="space-y-2.5">

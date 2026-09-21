@@ -182,7 +182,7 @@ export const JargonBottomSheet: React.FC<JargonBottomSheetProps> = ({
         {/* Footer */}
         <div className="bg-slate-100 dark:bg-slate-950 p-4 px-6 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between shrink-0">
           <span className="text-xs text-slate-500 dark:text-slate-400">
-            Meridian Equities Education Hub
+            Apex Equities Education Hub
           </span>
           <button
             onClick={onClose}

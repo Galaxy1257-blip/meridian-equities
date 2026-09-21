@@ -26,7 +26,7 @@ function buildStockContext(stocks: Stock[]): string {
     .join('\n');
 }
 
-const SYSTEM_PROMPT = `You are Meridian AI, a market intelligence assistant for the Ghana Stock Exchange (GSE). You help investors understand GSE stocks, financial ratios, tax rules, and investment concepts.
+const SYSTEM_PROMPT = `You are Apex AI, a market intelligence assistant for the Ghana Stock Exchange (GSE). You help investors understand GSE stocks, financial ratios, tax rules, and investment concepts.
 
 Rules:
 - Be concise and use markdown formatting (bold, bullet points, tables).

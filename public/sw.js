@@ -1,9 +1,9 @@
-// Meridian Equities — Offline Service Worker v1.0
+// Apex Equities — Offline Service Worker v1.0
 // Cache-first for statics, network-first for API calls
 // Mirrors market data to IndexedDB on every successful fetch
 
-const CACHE_NAME = 'meridian-static-v2';
-const DB_NAME = 'meridian-db';
+const CACHE_NAME = 'apex-static-v2';
+const DB_NAME = 'apex-db';
 const DB_VERSION = 1;
 const MARKET_STORE = 'market-cache';
 const NEWS_STORE = 'news-cache';

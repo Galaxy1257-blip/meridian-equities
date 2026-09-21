@@ -59,7 +59,7 @@ export const printW8BENSummary = (data: W8BENPrintData) => {
         <div class="w8-box">
           <div class="header">
             <h1>Certificate of Foreign Status of Beneficial Owner (Form W-8BEN)</h1>
-            <p>United States Internal Revenue Service (IRS) Compliance Record • Meridian Global Brokerage Services</p>
+            <p>United States Internal Revenue Service (IRS) Compliance Record • Apex Global Brokerage Services</p>
             <div class="badge">CERTIFIED • ACTIVE VALIDITY THROUGH DEC 31, ${expiryYear}</div>
           </div>
           <div class="grid">

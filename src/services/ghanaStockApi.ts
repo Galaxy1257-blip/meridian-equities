@@ -16,7 +16,7 @@ import { INITIAL_STOCKS, INITIAL_INDICES } from '../data/stocksData';
 export const GHANA_API_BASE_URL = 'https://api.ghana-api.dev/api/v1/stock-market';
 export const KWAYISI_GSE_API_URL = 'https://dev.kwayisi.org/apis/gse/live';
 
-const CACHE_KEY = 'meridian_ghana_api_cache_v2';
+const CACHE_KEY = 'apex_ghana_api_cache_v2';
 const CACHE_EXPIRY_MS = 5 * 60 * 1000; // 5 minutes fresh cache
 
 export interface GhanaApiStockResponse {

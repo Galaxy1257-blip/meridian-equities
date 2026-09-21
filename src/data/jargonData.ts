@@ -63,10 +63,10 @@ export const JARGON_LIST: JargonInfo[] = [
   },
   {
     id: 'axis',
-    title: 'Meridian Axis Rating',
+    title: 'Apex Axis Rating',
     easyTitle: 'Overall Financial Health',
     summary: 'A comprehensive 30-point score evaluating profitability, debt safety, dividend consistency, and trading stability.',
-    explanation: 'The Meridian Axis combines fundamental audit metrics into a clear 30-point rating. Companies scoring 22-30 are exceptional blue chips, 16-21 are solid growers, and below 15 indicates caution.',
+    explanation: 'The Apex Axis combines fundamental audit metrics into a clear 30-point rating. Companies scoring 22-30 are exceptional blue chips, 16-21 are solid growers, and below 15 indicates caution.',
     analogy: 'Like a comprehensive medical checkup score for a company—it checks heart rate, blood pressure, and strength before you invest.',
     whyItMatters: 'Quickly filters out struggling companies and highlights financially rock-solid Ghanaian enterprises.',
     exampleGSE: 'BOPP and MTNGH score 24/30 and 26/30 (Exceptional), reflecting zero net debt and strong cash flow.',

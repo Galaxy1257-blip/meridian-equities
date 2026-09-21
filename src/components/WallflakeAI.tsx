@@ -1,2 +1,2 @@
-// Re-export from MeridianAI to avoid code duplication
-export { MeridianAI as WallflakeAI } from './MeridianAI';
+// Re-export from ApexAI to avoid code duplication
+ from './ApexAI';

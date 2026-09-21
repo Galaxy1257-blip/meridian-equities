@@ -95,7 +95,7 @@ export const SubscriptionPlansModal: React.FC<SubscriptionPlansModalProps> = ({
     e.preventDefault();
     onSelectTier('PRO');
     setIsActivatingSuccess(true);
-    setSuccessNotice(`🎉 Subscription Activated! Welcome to Meridian Pro.`);
+    setSuccessNotice(`🎉 Subscription Activated! Welcome to Apex Pro.`);
     setTimeout(() => {
       setIsActivatingSuccess(false);
       onClose();
@@ -116,7 +116,7 @@ export const SubscriptionPlansModal: React.FC<SubscriptionPlansModalProps> = ({
     'Unlimited Portfolio Holdings & PDF Statement Export',
     'Institutional Pro Mode (SMA 20/50 trendlines & Volume Turnover)',
     '52-Week High / Low Range bars on all stocks',
-    'Meridian AI Quant Research Assistant (Unrestricted)',
+    'Apex AI Quant Research Assistant (Unrestricted)',
     'Full Dividend Calendar & Ex-Dividend Reminders',
     'Money Transfer Charges Calculator',
     'Verified Investor checkmark in Investor Chat',
@@ -136,7 +136,7 @@ export const SubscriptionPlansModal: React.FC<SubscriptionPlansModalProps> = ({
             </div>
             <div className="min-w-0 flex-1">
               <h2 className="text-sm sm:text-lg font-black text-white tracking-tight truncate">
-                Meridian Equities Plans
+                Apex Equities Plans
               </h2>
               <p className="text-[11px] text-slate-400 truncate">
                 Free access, watch an ad for a pass, or upgrade to Pro
@@ -352,7 +352,7 @@ export const SubscriptionPlansModal: React.FC<SubscriptionPlansModalProps> = ({
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="text-sm font-black text-amber-400 flex items-center gap-1.5">
                     <Crown className="w-4 h-4" />
-                    <span>Meridian Pro</span>
+                    <span>Apex Pro</span>
                   </h4>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold border border-amber-500/30">
                     FULL DESK
@@ -398,7 +398,7 @@ export const SubscriptionPlansModal: React.FC<SubscriptionPlansModalProps> = ({
           <span>No lock-in contract</span>
           <span className="mx-2">•</span>
           <span>Ad rewards refresh automatically</span>
-          <div className="mt-1 text-[9px] text-slate-500 max-w-md mx-auto leading-tight">Meridian Equities is an independent market research tool and is not registered with or endorsed by the Ghana Securities and Exchange Commission (SEC).</div>
+          <div className="mt-1 text-[9px] text-slate-500 max-w-md mx-auto leading-tight">Apex Equities is an independent market research tool and is not registered with or endorsed by the Ghana Securities and Exchange Commission (SEC).</div>
         </div>
       </div>
     </div>

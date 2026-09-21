@@ -1,13 +1,13 @@
 ﻿import React from 'react';
-import { MeridianAxisScore, SnowflakeScore } from '../types';
+import { ApexAxisScore, SnowflakeScore } from '../types';
 
-interface MeridianAxisRadarProps {
-  score: MeridianAxisScore;
+interface ApexAxisRadarProps {
+  score: ApexAxisScore;
   size?: number;
   showLabels?: boolean;
 }
 
-export const MeridianAxisRadar: React.FC<MeridianAxisRadarProps> = ({
+export const ApexAxisRadar: React.FC<ApexAxisRadarProps> = ({
   score,
   size = 220,
   showLabels = true
@@ -15,7 +15,7 @@ export const MeridianAxisRadar: React.FC<MeridianAxisRadarProps> = ({
   const center = size / 2;
   const maxRadius = (size / 2) - (showLabels ? 32 : 10);
 
-  // 5 Meridian Axes: Value (top), Future Growth (top right), Past (bottom right), Health (bottom left), Dividend (top left)
+  // 5 Apex Axes: Value (top), Future Growth (top right), Past (bottom right), Health (bottom left), Dividend (top left)
   const axes = [
     { name: 'Value', key: 'value', value: score.value, angle: -Math.PI / 2 },
     { name: 'Future', key: 'future', value: score.future, angle: -Math.PI / 2 + (2 * Math.PI / 5) },
@@ -46,12 +46,12 @@ export const MeridianAxisRadar: React.FC<MeridianAxisRadarProps> = ({
     <div className="flex flex-col items-center justify-center select-none">
       <svg width={size} height={size} className="overflow-visible">
         <defs>
-          <linearGradient id="meridianAxisGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id="apexAxisGlow" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#10b981" stopOpacity="0.75" />
             <stop offset="50%" stopColor="#06b6d4" stopOpacity="0.7" />
             <stop offset="100%" stopColor="#3b82f6" stopOpacity="0.8" />
           </linearGradient>
-          <linearGradient id="meridianAxisStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+          <linearGradient id="apexAxisStroke" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#34d399" />
             <stop offset="50%" stopColor="#22d3ee" />
             <stop offset="100%" stopColor="#60a5fa" />
@@ -92,11 +92,11 @@ export const MeridianAxisRadar: React.FC<MeridianAxisRadarProps> = ({
           );
         })}
 
-        {/* Score Meridian Axis Polygon */}
+        {/* Score Apex Axis Polygon */}
         <polygon
           points={polygonPoints}
-          fill="url(#meridianAxisGlow)"
-          stroke="url(#meridianAxisStroke)"
+          fill="url(#apexAxisGlow)"
+          stroke="url(#apexAxisStroke)"
           strokeWidth="2.5"
           className="transition-all duration-500 ease-out filter drop-shadow-md"
         />
@@ -139,5 +139,5 @@ export const MeridianAxisRadar: React.FC<MeridianAxisRadarProps> = ({
   );
 };
 
-export const SnowflakeRadar = MeridianAxisRadar;
-export type SnowflakeRadarProps = MeridianAxisRadarProps;
+export const SnowflakeRadar = ApexAxisRadar;
+export type SnowflakeRadarProps = ApexAxisRadarProps;

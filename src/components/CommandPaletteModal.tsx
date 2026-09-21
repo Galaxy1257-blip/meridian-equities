@@ -39,7 +39,7 @@ interface CommandPaletteModalProps {
   theme: 'dark' | 'light';
   onSelectStock: (stock: Stock) => void;
   onNavigateTab: (tab: MainNavTab) => void;
-  onOpenMeridianAI: () => void;
+  onOpenApexAI: () => void;
   onOpenFXShield: () => void;
 
   onLockBiometric: () => void;
@@ -72,7 +72,7 @@ export const CommandPaletteModal: React.FC<CommandPaletteModalProps> = ({
   theme,
   onSelectStock,
   onNavigateTab,
-  onOpenMeridianAI,
+  onOpenApexAI,
   onOpenFXShield,
 
   onLockBiometric,
@@ -178,11 +178,11 @@ export const CommandPaletteModal: React.FC<CommandPaletteModalProps> = ({
     {
       id: 'tool-ai',
       category: 'Terminal Engines & Tools',
-      label: 'Meridian AI Research Assistant',
+      label: 'Apex AI Research Assistant',
       subtitle: 'Local instant financial intelligence & stock explanations',
       icon: Sparkles,
       iconColor: 'text-cyan-400',
-      action: onOpenMeridianAI
+      action: onOpenApexAI
     },
     {
       id: 'tool-fx-shield',
@@ -261,7 +261,7 @@ export const CommandPaletteModal: React.FC<CommandPaletteModalProps> = ({
     },
   ], [
     currency, exchangeRateUsd, showPro, theme, 
-    onNavigateTab, onOpenMeridianAI, onOpenFXShield, 
+    onNavigateTab, onOpenApexAI, onOpenFXShield, 
     onLockBiometric, onOpenDividendCalendar, onOpenJargon, onToggleCurrency, 
     onTogglePro, onToggleTheme
   ]);

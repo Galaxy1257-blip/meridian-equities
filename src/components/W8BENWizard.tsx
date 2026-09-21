@@ -209,7 +209,7 @@ export const W8BENWizard: React.FC<W8BENWizardProps> = ({
 
               <div className="p-3 rounded-2xl bg-slate-950 border border-slate-800 text-[11px] text-slate-400 space-y-1">
                 <div className="font-bold text-slate-300">Reference Number:</div>
-                <div className="font-mono text-cyan-400">MERIDIAN-W8BEN-{Date.now().toString().slice(-6)}</div>
+                <div className="font-mono text-cyan-400">APEX-W8BEN-{Date.now().toString().slice(-6)}</div>
               </div>
 
               <button

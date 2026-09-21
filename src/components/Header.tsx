@@ -52,7 +52,7 @@ interface HeaderProps {
   onOpenOnboardingTour?: () => void;
   theme: 'light' | 'dark';
   onToggleTheme: () => void;
-  onOpenMeridianAI?: () => void;
+  onOpenApexAI?: () => void;
   onOpenAuthModal?: () => void;
   userProfile?: UserProfile | null;
   searchQuery?: string;
@@ -88,7 +88,7 @@ export const Header: React.FC<HeaderProps> = ({
   onOpenOnboardingTour,
   theme,
   onToggleTheme,
-  onOpenMeridianAI,
+  onOpenApexAI,
   onOpenAuthModal,
   userProfile,
   searchQuery = '',
@@ -187,7 +187,7 @@ export const Header: React.FC<HeaderProps> = ({
             <div className="min-w-0">
               <div className="flex items-center gap-1 sm:gap-2">
                 <h1 className="text-xs sm:text-lg font-black text-white tracking-tight flex items-center gap-1 truncate">
-                  <span>MERIDIAN</span>
+                  <span>APEX</span>
                   <span className="text-amber-400 hidden sm:inline">EQUITIES</span>
                 </h1>
                 <span className="text-[9px] font-mono font-black uppercase px-1.5 py-0.2 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 hidden md:inline-block shrink-0">
@@ -220,13 +220,13 @@ export const Header: React.FC<HeaderProps> = ({
 
         {/* Right: Actions Cluster (Clean, Guaranteed Mobile Fit) */}
         <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-          {/* Meridian AI Quick Launch (desktop/tablet) */}
-          {onOpenMeridianAI && (
+          {/* Apex AI Quick Launch (desktop/tablet) */}
+          {onOpenApexAI && (
             <button
               type="button"
-              onClick={onOpenMeridianAI}
+              onClick={onOpenApexAI}
               className="hidden sm:flex px-2.5 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/40 hover:border-amber-400 text-amber-300 text-xs font-black items-center gap-1.5 transition-all shadow-sm cursor-pointer active:scale-95 group shrink-0"
-              title="Launch Meridian AI Research Desk"
+              title="Launch Apex AI Research Desk"
             >
               <Zap className="w-3.5 h-3.5 text-amber-400 group-hover:rotate-12 transition-transform" />
               <span className="font-mono">AI DESK</span>
@@ -246,7 +246,7 @@ export const Header: React.FC<HeaderProps> = ({
               title={
                 subscriptionTier && subscriptionTier !== 'FREE'
                   ? `Active Plan: ${subscriptionTier} • Click to manage`
-                  : 'Upgrade to Meridian PRO for advanced tools, statement export & real-time alerts'
+                  : 'Upgrade to Apex PRO for advanced tools, statement export & real-time alerts'
               }
             >
               <Crown className={`w-3.5 h-3.5 ${subscriptionTier && subscriptionTier !== 'FREE' ? 'text-purple-400 fill-purple-400' : 'text-slate-950 fill-slate-950'}`} />

@@ -291,7 +291,7 @@ export const MACLogo: React.FC<LogoProps> = ({ size = 40, className = '' }) => (
 );
 
 export const MMHLogo: React.FC<LogoProps> = ({ size = 40, className = '' }) => (
-  <svg width={size} height={size} viewBox="0 0 100 100" className={className} aria-label="Meridian Marshalls logo">
+  <svg width={size} height={size} viewBox="0 0 100 100" className={className} aria-label="Apex Marshalls logo">
     <rect width="100" height="100" rx={getRx(100)} fill="#1565C0" />
     <path d="M50 24 L68 36 L50 48 L32 36 Z" fill="#F59E0B" />
     <line x1="68" y1="36" x2="68" y2="54" stroke="#F59E0B" strokeWidth="3" />

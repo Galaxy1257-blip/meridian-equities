@@ -1,7 +1,7 @@
-# Meridian Equities — Production Readiness & Data Accuracy Audit
+# Apex Equities — Production Readiness & Data Accuracy Audit
 
 **Audit Date:** September 21, 2026  
-**Target URL:** [https://meridian-equities.vercel.app/](https://meridian-equities.vercel.app/)  
+**Target URL:** [https://apex-equities.vercel.app/](https://apex-equities.vercel.app/)  
 **Live Bundle:** `assets/index-BDLgahgk.js`  
 **Target Platforms:** Desktop Web, Mobile Web, Android PWA/APK  
 
@@ -63,7 +63,7 @@
 
 ### 2. Live Deployment Health: **PASSED**
 - **Hosting Provider:** Vercel (Global Edge Network)
-- **Production URL:** [https://meridian-equities.vercel.app/](https://meridian-equities.vercel.app/)
+- **Production URL:** [https://apex-equities.vercel.app/](https://apex-equities.vercel.app/)
 - **SSL/TLS:** Automated A+ rated Let's Encrypt / Vercel certificate.
 - **Auto-Deployment:** Connected to GitHub `origin/main` with automated build triggers on every commit.
 
@@ -92,4 +92,4 @@
 
 ## 5. Conclusion
 
-**Meridian Equities is fully ready for production deployment.** The web application is live, stable, visually polished, and backed by a resilient multi-tier data architecture.
+**Apex Equities is fully ready for production deployment.** The web application is live, stable, visually polished, and backed by a resilient multi-tier data architecture.

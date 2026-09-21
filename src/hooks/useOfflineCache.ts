@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Stock } from '../types';
 
-const DB_NAME = 'meridian-db';
+const DB_NAME = 'apex-db';
 const DB_VERSION = 1;
 const STORE_NAME = 'market-cache';
 

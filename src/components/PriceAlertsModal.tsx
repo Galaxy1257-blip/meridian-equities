@@ -132,7 +132,7 @@ export const PriceAlertsModal: React.FC<PriceAlertsModalProps> = ({
       setBrowserPermState(perm);
       if (perm === 'granted') {
         onUpdatePreferences({ browserPush: true });
-        new Notification('🔔 Meridian Equities Push Active', {
+        new Notification('🔔 Apex Equities Push Active', {
           body: 'You will receive real-time push alerts for Ghana stock price triggers, dividend cutoffs, and session updates.',
           icon: '/favicon.ico'
         });
@@ -153,7 +153,7 @@ export const PriceAlertsModal: React.FC<PriceAlertsModalProps> = ({
     }
     if (typeof window !== 'undefined' && 'Notification' in window) {
       if (Notification.permission === 'granted') {
-        new Notification('🔔 Meridian GSE Test Notification', {
+        new Notification('🔔 Apex GSE Test Notification', {
           body: 'Push alerts are working perfectly! You will receive live alerts for stock moves and market filings.',
           icon: '/favicon.ico'
         });
