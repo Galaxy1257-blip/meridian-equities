@@ -6,37 +6,32 @@ export const CHAT_CHANNELS: ChatChannel[] = [
     name: 'GSE Floor Lounge',
     topic: 'General discussions on market sentiment, daily turnover, and cedi movements',
     iconName: 'MessageSquare',
-    unreadCount: 2,
-    membersCount: 1420
+    unreadCount: 0,
   },
   {
     id: 'ipo',
     name: 'IPO & Listings Radar',
     topic: 'Atlantic Lithium, GAX SME listings, subscription lot sizes and broker allocations',
     iconName: 'Sparkles',
-    unreadCount: 1,
-    membersCount: 890
+    unreadCount: 0,
   },
   {
     id: 'dividends',
     name: 'Dividend Hunters Club',
     topic: 'Ex-dividend dates, qualification cutoffs, and dividend reinvestment strategies',
     iconName: 'Coins',
-    membersCount: 1140
   },
   {
     id: 'banking',
     name: 'Banking & Tech (GCB / MTNGH)',
     topic: 'Deep dives on banking balance sheets, FinTech data revenues, and Q2 earnings',
     iconName: 'Briefcase',
-    membersCount: 760
   },
   {
     id: 'knowledge-desk',
     name: 'GSE Research & Knowledge Desk',
-    topic: 'Instant rule-based answers on GSE tax laws, dividend yield math, MoMo brokers & valuations (0 Tokens / 100% Offline)',
+    topic: 'Instant answers on GSE tax laws, dividend yield math, MoMo brokers & valuations',
     iconName: 'Bot',
-    membersCount: 1
   }
 ];
 

@@ -84,7 +84,7 @@ export const SubscriptionPlansModal: React.FC<SubscriptionPlansModalProps> = ({
     }
     setVideoCompleted(false);
     setIsActivatingSuccess(true);
-    setSuccessNotice(`🎉 2-Hour Pro Pass Unlocked! Full institutional analytics are now active.`);
+    setSuccessNotice(`🎉 2-Hour Pro Pass Unlocked! Full Pro market analytics are now active.`);
     setTimeout(() => {
       setIsActivatingSuccess(false);
       onClose();
@@ -212,7 +212,7 @@ export const SubscriptionPlansModal: React.FC<SubscriptionPlansModalProps> = ({
                     </span>
                   </h3>
                   <p className="text-xs text-slate-300 mt-0.5">
-                    Watch a 10-second sponsor clip to unlock full institutional Pro access.
+                    Watch a 10-second sponsor clip to unlock full Pro market research access.
                   </p>
                 </div>
               </div>
@@ -398,6 +398,7 @@ export const SubscriptionPlansModal: React.FC<SubscriptionPlansModalProps> = ({
           <span>No lock-in contract</span>
           <span className="mx-2">•</span>
           <span>Ad rewards refresh automatically</span>
+          <div className="mt-1 text-[9px] text-slate-500 max-w-md mx-auto leading-tight">Meridian Equities is an independent market research tool and is not registered with or endorsed by the Ghana Securities and Exchange Commission (SEC).</div>
         </div>
       </div>
     </div>

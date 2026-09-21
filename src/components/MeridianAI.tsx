@@ -1,9 +1,10 @@
-﻿import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import {
   Brain, Send, X, Bot, Sparkles, TrendingUp, HelpCircle,
-  ShieldCheck, RefreshCw, Zap, Award, BookOpen
+  ShieldCheck, RefreshCw, Zap, Award, BookOpen, AlertTriangle
 } from 'lucide-react';
 import { Stock, UserProfile } from '../types';
+import { askGeminiAI, isGeminiConfigured } from '../services/geminiAI';
 
 interface MeridianAIProps {
   stocks: Stock[];
@@ -19,6 +20,7 @@ interface Message {
   text: string;
   timestamp: string;
   suggestedTickers?: string[];
+  source?: 'gemini' | 'local';
 }
 
 export const MeridianAI: React.FC<MeridianAIProps> = ({
@@ -32,14 +34,18 @@ export const MeridianAI: React.FC<MeridianAIProps> = ({
     {
       id: 'm-1',
       sender: 'ai',
-      text: `Hello ${userProfile?.name ? userProfile.name : 'Investor'}! I am Meridian AI — your institutional market intelligence engine. I analyze GSE and global equities, calculate financial ratios, evaluate dividend sustainability, and assist your portfolio allocation with 100% private on-device edge computation.`,
+      text: `Hello ${userProfile?.name ? userProfile.name : 'Investor'}! I am Meridian AI — your GSE market research assistant. Ask me about Ghana Stock Exchange stocks, dividends, valuations, or how to invest.`,
       timestamp: 'Just now',
+      source: isGeminiConfigured() ? 'gemini' : 'local',
     },
     {
       id: 'm-2',
       sender: 'ai',
-      text: 'Ask me anything: "What is P/E ratio?", "Top dividend stocks on GSE", "Tell me about MTNGH", "How do I buy shares in Ghana?", or "Explain RSI & MACD".',
+      text: isGeminiConfigured()
+        ? 'Powered by Gemini AI with live GSE market context. Ask anything about Ghanaian equities.'
+        : 'Running in offline mode with local GSE data. Ask about stock prices, dividends, P/E ratios, or how to buy shares.',
       timestamp: 'Just now',
+      source: isGeminiConfigured() ? 'gemini' : 'local',
     },
   ]);
   const [inputValue, setInputValue] = useState('');
@@ -60,10 +66,10 @@ export const MeridianAI: React.FC<MeridianAIProps> = ({
     'What is RSI indicator?',
   ];
 
+  // Local keyword-based fallback (used when Gemini is not configured or fails)
   const generateLocalAnswer = (query: string): { text: string; suggestedTickers?: string[] } => {
     const q = query.toLowerCase();
 
-    // Check specific stock query
     const matchedStock = stocks.find(
       (s) =>
         q.includes(s.ticker.toLowerCase()) ||
@@ -78,58 +84,50 @@ export const MeridianAI: React.FC<MeridianAIProps> = ({
       };
     }
 
-    // Dividends
     if (q.includes('dividend') || q.includes('yield') || q.includes('cash back')) {
       const topDiv = [...stocks]
         .filter((s) => s.dividendYield && s.dividendYield > 0)
         .sort((a, b) => (b.dividendYield || 0) - (a.dividendYield || 0))
         .slice(0, 3);
-
       const listStr = topDiv
         .map((s) => `• **${s.ticker}** (${s.name}): ${s.dividendYield}% yield, next ex-div ~${s.exDividendDate || 'Annual'}`)
         .join('\n');
-
       return {
         text: `💰 **Top GSE Dividend Yield Champions**:\n${listStr}\n\n*Pro tip*: In Ghana, dividend income from GSE-listed equities attracts a reduced withholding tax of only 8%, with 0% capital gains tax.`,
         suggestedTickers: topDiv.map((s) => s.ticker),
       };
     }
 
-    // P/E ratio
     if (q.includes('p/e') || q.includes('pe ratio') || q.includes('valuation') || q.includes('price to earnings')) {
       return {
         text: `📈 **Price-to-Earnings (P/E) Ratio Explained**:\n\nThe P/E ratio tells you how many Ghana Cedis you are paying for each GH₵1 of corporate annual profit.\n\n• **P/E < 5**: Common on GSE for banks (e.g. GCB, CAL). Extremely cheap, but verify balance sheet health.\n• **P/E 6 - 12**: Healthy blue-chip territory (e.g. MTNGH, TOTAL).\n• **P/E > 15**: Growth premium or temporary earnings depression.\n\n*Rule of Thumb*: Compare a company's P/E to its sector peers, not across unrelated industries!`,
       };
     }
 
-    // RSI
     if (q.includes('rsi') || q.includes('relative strength') || q.includes('oversold')) {
       return {
-        text: `📉 **Relative Strength Index (RSI)**:\n\nRSI measures momentum on a 0 to 100 scale based on 14 recent price sessions:\n\n• **Below 30 (Oversold)**: Selling has been aggressive. Often precedes a technical bounce.\n• **Above 70 (Overbought)**: Euphoric rally. Risk of short-term profit taking.\n• **40 - 60 (Neutral)**: Trend consolidation.\n\n*Check our Meridian Axis signals bar on any stock for live computed RSI!*`,
+        text: `📉 **Relative Strength Index (RSI)**:\n\nRSI measures momentum on a 0 to 100 scale based on 14 recent price sessions:\n\n• **Below 30 (Oversold)**: Selling has been aggressive. Often precedes a technical bounce.\n• **Above 70 (Overbought)**: Euphoric rally. Risk of short-term profit taking.\n• **40 - 60 (Neutral)**: Trend consolidation.`,
       };
     }
 
-    // How to buy / Broker
     if (q.includes('buy') || q.includes('broker') || q.includes('start') || q.includes('how to invest') || q.includes('csd')) {
       return {
         text: `🏛️ **How to Buy Shares on the Ghana Stock Exchange**:\n\n1. **Get a CSD Account**: Open a Central Securities Depository (CSD) account via any SEC-licensed broker (e.g., IC Securities, Databank, CalBank Brokerage, Stanbic).\n2. **Fund via MoMo/Bank**: Most modern Ghanaian brokers accept instant deposits via MTN MoMo, Telecel Cash, or direct bank EFT.\n3. **Place Limit Orders**: GSE trading sessions run Monday to Friday from 10:00 AM to 3:00 PM GMT.\n4. **Settlement**: Trades settle on a T+2 basis (two business days).`,
       };
     }
 
-    // T-Bills vs Stocks
     if (q.includes('t-bill') || q.includes('treasury') || q.includes('risk') || q.includes('bond')) {
       return {
         text: `⚖️ **GoG Treasury Bills vs. GSE Equities**:\n\n• **91-Day / 182-Day T-Bills**: Government-backed fixed nominal yield (~24-28% range). Great for short-term principal safety.\n• **GSE Dividend Stocks**: Equity ownership offering dividend cashflow (7-12%) PLUS long-term capital appreciation that compounds and outpaces currency inflation.\n\n*Smart Investor Allocation*: Keep 3-6 months cash reserve in T-bills/FD, and allocate surplus long-term wealth into dividend-growing equities like MTN, GCB, or BOPP.`,
       };
     }
 
-    // Default fallback
     return {
-      text: `🤖 **Meridian AI Insight**:\n\nRegarding "${query}": The Ghana Stock Exchange offers a unique landscape with high dividend yields (averaging 6-10%), zero capital gains tax for listed equities, and resilient domestic demand.\n\nCheck our **Meridian Axis Radar** or **Historical Strategy Backtester** to cross-validate your thesis against real financial metrics.`,
+      text: `🤖 **Meridian AI Insight**:\n\nRegarding "${query}": The Ghana Stock Exchange offers a unique landscape with high dividend yields (averaging 6-10%), zero capital gains tax for listed equities, and resilient domestic demand.\n\nCheck individual stock cards for live metrics and signals.`,
     };
   };
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (!inputValue.trim()) return;
 
     const userText = inputValue.trim();
@@ -144,18 +142,51 @@ export const MeridianAI: React.FC<MeridianAIProps> = ({
     setInputValue('');
     setIsTyping(true);
 
-    setTimeout(() => {
-      const response = generateLocalAnswer(userText);
+    try {
+      let responseText: string;
+      let source: 'gemini' | 'local' = 'local';
+
+      if (isGeminiConfigured()) {
+        try {
+          responseText = await askGeminiAI(userText, stocks);
+          source = 'gemini';
+        } catch {
+          const local = generateLocalAnswer(userText);
+          responseText = local.text;
+          source = 'local';
+        }
+      } else {
+        const local = generateLocalAnswer(userText);
+        responseText = local.text;
+        source = 'local';
+      }
+
+      const tickerMatches = userText.match(/\$?([A-Z]{3,6})/g);
+      const suggestedTickers = tickerMatches
+        ?.map((t) => t.replace('$', '').toUpperCase())
+        .filter((t) => stocks.some((s) => s.ticker === t));
+
       const aiMsg: Message = {
         id: `ai-${Date.now()}`,
         sender: 'ai',
-        text: response.text,
+        text: responseText,
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        suggestedTickers: response.suggestedTickers,
+        suggestedTickers: suggestedTickers?.length ? suggestedTickers : undefined,
+        source,
       };
       setMessages((prev) => [...prev, aiMsg]);
+    } catch {
+      const aiMsg: Message = {
+        id: `ai-${Date.now()}`,
+        sender: 'ai',
+        text: 'Sorry, I encountered an error. Please try again.',
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+        source: 'local',
+      };
+      setMessages((prev) => [...prev, aiMsg]);
+    } finally {
       setIsTyping(false);
-    }, 600);
+    }
   };
 
   return (
@@ -174,10 +205,12 @@ export const MeridianAI: React.FC<MeridianAIProps> = ({
               <div className="flex items-center gap-1.5">
                 <h2 className="text-base font-black text-white tracking-tight">Meridian AI</h2>
                 <span className="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">
-                  Institutional Edge AI
+                  {isGeminiConfigured() ? 'Gemini Powered' : 'Offline Mode'}
                 </span>
               </div>
-              <p className="text-xs text-slate-400">Zero token costs • Instant private research desk</p>
+              <p className="text-xs text-slate-400">
+                {isGeminiConfigured() ? 'AI-assisted GSE market research' : 'Local GSE data lookup'}
+              </p>
             </div>
           </div>
 
@@ -187,6 +220,14 @@ export const MeridianAI: React.FC<MeridianAIProps> = ({
           >
             <X className="w-5 h-5" />
           </button>
+        </div>
+
+        {/* Disclaimer Banner */}
+        <div className="px-4 py-2 bg-amber-500/10 border-b border-amber-500/20 flex items-start gap-2 shrink-0">
+          <AlertTriangle className="w-3.5 h-3.5 text-amber-400 mt-0.5 shrink-0" />
+          <p className="text-[10px] text-amber-300/80 leading-tight">
+            This is a research tool, not financial advice. Always consult a qualified adviser before investing. Meridian Equities is not a broker or investment adviser.
+          </p>
         </div>
 
         {/* Message Area */}
@@ -204,6 +245,11 @@ export const MeridianAI: React.FC<MeridianAIProps> = ({
                 }`}
               >
                 <div className="whitespace-pre-line">{m.text}</div>
+                {m.source && m.sender === 'ai' && (
+                  <div className="text-[9px] text-slate-500 mt-1 pt-1 border-t border-slate-700/40">
+                    {m.source === 'gemini' ? 'Generated by Gemini AI' : 'Local GSE data'}
+                  </div>
+                )}
                 {m.suggestedTickers && m.suggestedTickers.length > 0 && onSelectStock && (
                   <div className="flex flex-wrap gap-1.5 pt-1 border-t border-slate-700">
                     {m.suggestedTickers.map((t) => {
@@ -233,7 +279,9 @@ export const MeridianAI: React.FC<MeridianAIProps> = ({
           {isTyping && (
             <div className="flex items-center gap-1.5 text-slate-400 text-xs py-1">
               <Bot className="w-4 h-4 text-cyan-400 animate-pulse" />
-              <span className="italic">Meridian AI is analyzing local market data...</span>
+              <span className="italic">
+                {isGeminiConfigured() ? 'Meridian AI is thinking...' : 'Looking up GSE data...'}
+              </span>
             </div>
           )}
 
@@ -262,12 +310,12 @@ export const MeridianAI: React.FC<MeridianAIProps> = ({
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-            placeholder="Ask Meridian AI about GSE stocks, ratios, P/E..."
+            placeholder="Ask about GSE stocks, ratios, dividends..."
             className="flex-1 bg-slate-900 border border-slate-700 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder:text-slate-500 focus:outline-none focus:border-cyan-400"
           />
           <button
             onClick={handleSend}
-            disabled={!inputValue.trim()}
+            disabled={!inputValue.trim() || isTyping}
             className="px-4 py-2.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 disabled:opacity-40 text-slate-950 text-xs font-black flex items-center justify-center transition-all cursor-pointer shadow-md shadow-cyan-500/20"
           >
             <Send className="w-4 h-4" />
@@ -277,4 +325,5 @@ export const MeridianAI: React.FC<MeridianAIProps> = ({
     </div>
   );
 };
+
 export { MeridianAI as WallflakeAI };

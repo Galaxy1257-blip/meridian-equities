@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { 
-  MessageSquare, Send, Sparkles, Bot, ThumbsUp, Hash, Users, Coins, 
+  AlertTriangle, MessageSquare, Send, Sparkles, Bot, ThumbsUp, Hash, Users, Coins, 
   Briefcase, Plus, User, Info, ShieldCheck, ArrowRight, CornerDownLeft, 
   HelpCircle, RefreshCw, Trash2, Download, Printer, ExternalLink, Zap,
   TrendingUp, TrendingDown, Layers, Scale, DollarSign, Check, FileText,
@@ -10,6 +10,7 @@ import {
 import { ChatChannel, ChatMessage, Stock, UserProfile } from '../types';
 import { CHAT_CHANNELS, INITIAL_CHAT_MESSAGES, AI_QUICK_PROMPTS, generateAIAdvisorResponse } from '../data/chatData';
 import { StockLogo } from './StockLogo';
+import { askGeminiAI, isGeminiConfigured } from '../services/geminiAI';
 
 interface InvestorChatSectionProps {
   stocks: Stock[];
@@ -33,38 +34,33 @@ const EXTENDED_CHANNELS: ChatChannel[] = [
     topic: 'Daily trading flow, market sentiment, and macroeconomic trends',
     iconName: 'MessageSquare',
     unreadCount: 0,
-    membersCount: 1420
   },
   {
     id: 'dividends',
     name: 'Dividend Club',
     topic: 'High-yield payouts, ex-dividend cutoff dates, and yield compounding',
     iconName: 'Coins',
-    unreadCount: 2,
-    membersCount: 1140
+    unreadCount: 0,
   },
   {
     id: 'banking',
     name: 'Banking & Financials',
     topic: 'Balance sheets, loan recovery, CAR ratios, and dividend track records',
     iconName: 'Briefcase',
-    unreadCount: 1,
-    membersCount: 780
+    unreadCount: 0,
   },
   {
     id: 'telecom',
     name: 'MTN Ghana & Tech',
     topic: 'MoMo transaction volumes, 5G rollouts, data revenues, and free cash flows',
     iconName: 'Zap',
-    unreadCount: 3,
-    membersCount: 950
+    unreadCount: 0,
   },
   {
     id: 'ipo',
     name: 'IPO & Listings Radar',
     topic: 'Upcoming listings, rights issues, GAX expansion, and institutional blocks',
     iconName: 'Sparkles',
-    membersCount: 890
   }
 ];
 
@@ -99,19 +95,19 @@ export const InvestorChatSection: React.FC<InvestorChatSectionProps> = ({
       {
         id: 'copilot-welcome-1',
         channelId: 'copilot',
-        senderName: 'Meridian Quant Copilot',
+        senderName: 'Meridian Research',
         senderRole: 'ai',
         senderAvatar: '🏛️',
-        content: `### Welcome to Meridian Quant Intelligence Desk 🇬🇭
-I am your institutional financial equity copilot, grounded in live Ghana Stock Exchange (GSE) market telemetry and audited statutory filings.
+        content: `### Welcome to Meridian Research Desk 🇬🇭
+I am your GSE market research assistant, helping you explore Ghana Stock Exchange data and investment concepts.
 
-**Quantitative Intelligence Capabilities**:
-• **Head-to-Head Comparative Valuation**: Compare P/E multiples, Dividend Yields, and Return on Equity between $MTNGH, $GCB, $BOPP, and $TOTAL.
-• **Dividend Sustainability**: Cash distribution coverage and historical payout dependability.
-• **Statutory Tax Framework**: Guidance under Ghana Income Tax Act 896 (0% Capital Gains Tax, 8% final Dividend WHT).
-• **Ghana Broker Execution**: How to purchase shares through SEC-licensed brokerages and Mobile Money.
+**What I can help with**:
+• **Stock Comparisons**: Compare P/E multiples, Dividend Yields, and fundamentals between $MTNGH, $GCB, $BOPP, and more.
+• **Dividend Research**: Historical payouts, ex-dividend dates, and yield calculations.
+• **Tax Information**: Ghana Income Tax Act 896 (0% Capital Gains Tax, 8% final Dividend WHT).
+• **Getting Started**: How to open a CSD account and buy shares through licensed brokers.
 
-Tap any quick prompt below, tag stocks with **$TICKER**, or ask any investment question.`,
+Tap any quick prompt below, tag stocks with **$TICKER**, or ask any question. This is not financial advice.`,
         timestamp: 'Real-time',
         tickerTags: ['MTNGH', 'GCB', 'BOPP', 'TOTAL'],
         likes: 12
@@ -229,7 +225,7 @@ Tap any quick prompt below, tag stocks with **$TICKER**, or ask any investment q
   }, [copilotMessages, floorMessages, activeMode, selectedChannelId, isAITyping]);
 
   // Comprehensive Institutional AI Analyst Response Generator
-  const generateInstitutionalAnalysis = (query: string): string => {
+  const generateStockAnalysis = (query: string): string => {
     const q = query.toLowerCase();
 
     // 1. Ticker specific analysis
@@ -243,7 +239,7 @@ Tap any quick prompt below, tag stocks with **$TICKER**, or ask any investment q
       const annualDivPayout = foundStock.dividendAmount ? `GH₵ ${foundStock.dividendAmount.toFixed(2)} / share` : `~GH₵ ${(foundStock.price * (foundStock.dividendYield || 5) / 100).toFixed(2)}`;
       const isProfitable = foundStock.change >= 0;
 
-      return `### 📊 Institutional Equity Dossier: ${foundStock.name} ($${foundStock.ticker})
+      return `### 📊 Stock Analysis: ${foundStock.name} ($${foundStock.ticker})
 **Exchange**: Ghana Stock Exchange (Main Board) • **Sector**: ${foundStock.sector}
 
 | Fundamental Metric | Recorded Value | GSE Benchmark | Analyst Verdict |
@@ -264,7 +260,7 @@ Tap any quick prompt below, tag stocks with **$TICKER**, or ask any investment q
 • **Monetary & Macro**: Bank of Ghana policy rate shifts and currency fluctuations impact operating cost margins.
 • **Trading Velocity**: Institutional blocks can create short-term volume clusters.
 
-**Strategic Verdict**: $${foundStock.ticker} is an institutional cornerstone for long-term equity accumulation and compounding cash flow.`;
+**Summary**: $${foundStock.ticker} shows ${peRating.toLowerCase()} fundamentals on the GSE with a ${divYieldStr} dividend yield. This is not financial advice — always do your own research.`;
     }
 
     // 2. Comparative Analysis (e.g. MTN vs GCB)
@@ -273,7 +269,7 @@ Tap any quick prompt below, tag stocks with **$TICKER**, or ask any investment q
       const gcb = stocks.find(s => s.ticker === 'GCB') || stocks[1];
       const bopp = stocks.find(s => s.ticker === 'BOPP') || stocks[2];
 
-      return `### ⚖️ GSE Comparative Head-to-Head Analysis
+      return `### ⚖️ GSE Stock Comparison
 
 | Metric | $MTNGH (MTN Ghana) | $GCB (GCB Bank PLC) | $BOPP (Benso Oil Palm) |
 | :--- | :--- | :--- | :--- |
@@ -385,25 +381,42 @@ ${tableRows}
       setSelectedSentiment('none');
       setIsAITyping(true);
 
-      setTimeout(() => {
-        const analysis = generateInstitutionalAnalysis(content);
-        const aiMsg: ChatMessage = {
-          id: `copilot-ai-${Date.now()}`,
-          channelId: 'copilot',
-          senderName: 'Meridian Quant Copilot',
-          senderRole: 'ai',
-          senderAvatar: '🏛️',
-          content: analysis,
-          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' GMT',
-          tickerTags: tags.length > 0 ? tags : ['MTNGH', 'GCB', 'BOPP'],
-          likes: 2,
-          likedByMe: false,
-          reactions: { '❤️': 1, '🚀': 1, '🔥': 0, '🐂': 0 }
-        };
-        setCopilotMessages(prev => [...prev, aiMsg]);
-        setIsAITyping(false);
-      }, 500);
+      (async () => {
+        try {
+          let analysis: string;
+          if (isGeminiConfigured()) {
+            try {
+              analysis = await askGeminiAI(content, stocks);
+            } catch (err) {
+              console.warn('Gemini request failed, using local analysis:', err);
+              analysis = generateStockAnalysis(content);
+            }
+          } else {
+            analysis = generateStockAnalysis(content);
+          }
 
+          if (!analysis.includes('not financial advice')) {
+            analysis += '\n\n*Disclaimer: This is not financial advice. Always do your own research.*';
+          }
+
+          const aiMsg: ChatMessage = {
+            id: `copilot-ai-${Date.now()}`,
+            channelId: 'copilot',
+            senderName: isGeminiConfigured() ? 'Meridian AI (Gemini)' : 'Meridian Research',
+            senderRole: 'ai',
+            senderAvatar: '🏛️',
+            content: analysis,
+            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) + ' GMT',
+            tickerTags: tags.length > 0 ? tags : ['MTNGH', 'GCB', 'BOPP'],
+            likes: 2,
+            likedByMe: false,
+            reactions: { '❤️': 1, '🚀': 1, '🔥': 0, '🐂': 0 }
+          };
+          setCopilotMessages(prev => [...prev, aiMsg]);
+        } finally {
+          setIsAITyping(false);
+        }
+      })();
     } else {
       setFloorMessages(prev => [...prev, userMsg]);
       if (!customText) setInputMessage('');
@@ -413,7 +426,7 @@ ${tableRows}
       if (selectedChannelId === 'knowledge-desk' || content.toLowerCase().includes('?')) {
         setIsAITyping(true);
         setTimeout(() => {
-          const aiResponseText = generateInstitutionalAnalysis(content);
+          const aiResponseText = generateStockAnalysis(content);
           const aiMessage: ChatMessage = {
             id: `ai-msg-${Date.now()}`,
             channelId: selectedChannelId,
@@ -471,16 +484,16 @@ ${tableRows}
   };
 
   const handleClearCopilot = () => {
-    if (confirm('Clear your Meridian Quant Copilot research trajectory?')) {
+    if (confirm('Clear your Meridian Research research trajectory?')) {
       localStorage.removeItem(STORAGE_KEY_COPILOT_MESSAGES);
       setCopilotMessages([
         {
           id: `copilot-reset-${Date.now()}`,
           channelId: 'copilot',
-          senderName: 'Meridian Quant Copilot',
+          senderName: 'Meridian Research',
           senderRole: 'ai',
           senderAvatar: '🏛️',
-          content: 'Session cleared. Enter a stock ticker (e.g. `$MTNGH`, `$GCB`, `$BOPP`) or select an institutional query below to begin analysis.',
+          content: 'Session cleared. Enter a stock ticker (e.g. `$MTNGH`, `$GCB`, `$BOPP`) or select a research query below to begin analysis.',
           timestamp: 'Just now'
         }
       ]);
@@ -675,7 +688,7 @@ ${tableRows}
         </div>
       </div>
 
-      {/* 2. INSTITUTIONAL TERMINAL HEADER */}
+      {/* 2. INVESTOR TERMINAL HEADER */}
       <div className="bg-white dark:bg-[#0B132B] rounded-2xl border border-slate-200 dark:border-white/[0.08] p-4 sm:p-5 shadow-sm space-y-4">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
           
@@ -714,6 +727,9 @@ ${tableRows}
               >
                 <Bot className="w-3.5 h-3.5" />
                 <span>AI Copilot</span>
+                <span className="text-[9px] font-mono px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-300 font-bold border border-cyan-500/30">
+                  {isGeminiConfigured() ? 'Gemini' : 'Offline'}
+                </span>
               </button>
 
               <button
@@ -795,6 +811,16 @@ ${tableRows}
       {/* 3. CHAT FEED CONTAINER */}
       <div className="bg-white dark:bg-[#070D1F] rounded-2xl border border-slate-200 dark:border-white/[0.08] shadow-sm flex flex-col h-[600px] overflow-hidden">
         
+        {/* Copilot Disclaimer Banner */}
+        {activeMode === 'copilot' && (
+          <div className="px-4 py-2 bg-amber-500/10 border-b border-amber-500/20 flex items-start gap-2 shrink-0">
+            <AlertTriangle className="w-3.5 h-3.5 text-amber-500 dark:text-amber-400 mt-0.5 shrink-0" />
+            <p className="text-[11px] text-amber-800 dark:text-amber-300/90 leading-tight">
+              <strong>Disclaimer:</strong> This is a research tool, not financial advice. Always consult a qualified adviser before investing. Meridian Equities is not a broker or investment adviser.
+            </p>
+          </div>
+        )}
+
         {/* Messages Scroll Area */}
         <div className="flex-1 p-4 sm:p-6 overflow-y-auto space-y-4">
           {filteredMessages.length === 0 ? (
@@ -965,7 +991,7 @@ ${tableRows}
         {/* 5. PROMPT CHIPS & INPUT BOX */}
         <div className="p-3 sm:p-4 bg-slate-50 dark:bg-[#0B132B] border-t border-slate-200 dark:border-white/[0.08] space-y-2.5">
           
-          {/* Quick Institutional Query Chips */}
+          {/* Quick Research Query Chips */}
           <div className="flex items-center gap-2 overflow-x-auto pb-1 text-[11px] no-scrollbar">
             <span className="text-slate-400 text-[10px] uppercase font-mono font-bold shrink-0">Quick Queries:</span>
             {[

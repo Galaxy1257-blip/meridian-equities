@@ -276,7 +276,7 @@ export interface ChatChannel {
   topic: string;
   iconName: string;
   unreadCount?: number;
-  membersCount: number;
+  membersCount?: number;
 }
 
 export interface MeridianAxisScore {

@@ -103,7 +103,7 @@ export const NewsDetailModal: React.FC<NewsDetailModalProps> = ({
           </style>
         </head>
         <body>
-          <h1>Ghana Stock Exchange & SEC Regulatory Filing</h1>
+          <h1>GSE Market News & Company Announcement</h1>
           <div class="meta">
             <strong>Document:</strong> ${filename}<br/>
             <strong>Title:</strong> ${news.title}<br/>
@@ -124,8 +124,8 @@ export const NewsDetailModal: React.FC<NewsDetailModalProps> = ({
           ${news.content.map(p => `<p>${p}</p>`).join('')}
           
           <div class="footer">
-            Ghana Stock Exchange • Central Securities Depository • SEC Ghana<br/>
-            Generated via Meridian Equities Terminal
+            Source: ${news.source} • Downloaded from Meridian Equities (independent platform, not affiliated with GSE or SEC)<br/>
+            Generated via Meridian Equities
           </div>
         </body>
       </html>

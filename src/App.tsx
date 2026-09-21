@@ -381,7 +381,7 @@ export default function App() {
       category: 'MARKET',
       type: 'MARKET_OPEN',
       title: `Welcome back, ${profile.name}!`,
-      message: 'Institutional GSE session active. Alerts synced.',
+      message: 'GSE session active. Alerts synced.',
       timestamp: 'Just now',
       read: true
     };
@@ -1642,7 +1642,7 @@ export default function App() {
               </div>
               <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-tight font-mono">
                 {showPro 
-                  ? 'Institutional metrics (Beta, P/E, 52W) active.' 
+                  ? 'Advanced metrics (Beta, P/E, 52W) active.' 
                   : 'Beginner terms & (i) guides active.'}
               </p>
             </div>
@@ -1866,7 +1866,7 @@ export default function App() {
                           ? 'bg-white dark:bg-cyan-500/20 text-slate-900 dark:text-cyan-300 shadow-xs border border-transparent dark:border-cyan-500/30 font-black'
                           : 'text-slate-600 dark:text-slate-400 hover:text-white'
                       }`}
-                      title="Institutional Table View"
+                      title="Advanced Table View"
                     >
                       <Table className="w-3.5 h-3.5" />
                       <span className="hidden sm:inline">Table</span>
@@ -2409,7 +2409,7 @@ export default function App() {
         onClose={() => setIsBrokersModalOpen(false)}
       />
 
-      {/* Linear-Style Institutional Command Palette */}
+      {/* Linear-Style Command Palette */}
       <CommandPaletteModal
         isOpen={isCommandPaletteOpen}
         onClose={() => setIsCommandPaletteOpen(false)}
