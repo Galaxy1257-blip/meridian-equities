@@ -20,7 +20,7 @@ export const ExchangeRateModal: React.FC<ExchangeRateModalProps> = ({
   onClose,
   currentRate,
   onSaveRate,
-  liveRate = 11.36,
+  liveRate = 11.46,
   isLive = true,
   lastUpdated,
   source = 'Open ER-API (Live Interbank)',
@@ -178,7 +178,7 @@ export const ExchangeRateModal: React.FC<ExchangeRateModalProps> = ({
                   value={rateInput}
                   onChange={(e) => setRateInput(e.target.value)}
                   className="w-full pl-14 pr-4 py-2.5 bg-slate-50 dark:bg-slate-800/80 rounded-xl border border-slate-300 dark:border-slate-700 font-mono font-bold text-slate-900 dark:text-white text-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                  placeholder="11.36"
+                  placeholder="11.46"
                 />
               </div>
               <div className="flex items-center gap-1.5 mt-2 text-[11px] text-slate-500 dark:text-slate-400">

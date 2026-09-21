@@ -27,8 +27,8 @@ export const CalculatorsSection: React.FC<CalculatorsSectionProps> = ({
   // 1. Stock Return & Dividend Calculator State
   // ==========================================
   const [srTicker, setSrTicker] = useState<string>('MTNGH');
-  const [srBuyPrice, setSrBuyPrice] = useState<number>(2.40);
-  const [srSellPrice, setSrSellPrice] = useState<number>(3.10);
+  const [srBuyPrice, setSrBuyPrice] = useState<number>(5.50);
+  const [srSellPrice, setSrSellPrice] = useState<number>(6.69);
   const [srQuantity, setSrQuantity] = useState<number>(1000);
   const [srDividendPerShare, setSrDividendPerShare] = useState<number>(0.18);
   const [srYearsHeld, setSrYearsHeld] = useState<number>(1.5);
@@ -131,9 +131,9 @@ export const CalculatorsSection: React.FC<CalculatorsSectionProps> = ({
   // ==========================================
   const [dcaMonthlyGhs, setDcaMonthlyGhs] = useState<number>(300);
   const [dcaMonths, setDcaMonths] = useState<number>(24); // 2 years
-  const [dcaStockPriceStart, setDcaStockPriceStart] = useState<number>(2.00);
-  const [dcaStockPriceEnd, setDcaStockPriceEnd] = useState<number>(3.20);
-  const [dcaAveragePrice, setDcaAveragePrice] = useState<number>(2.45);
+  const [dcaStockPriceStart, setDcaStockPriceStart] = useState<number>(4.80);
+  const [dcaStockPriceEnd, setDcaStockPriceEnd] = useState<number>(6.69);
+  const [dcaAveragePrice, setDcaAveragePrice] = useState<number>(5.60);
 
   const dcaTotalInvested = dcaMonthlyGhs * dcaMonths;
   const dcaEstimatedShares = dcaTotalInvested / dcaAveragePrice;

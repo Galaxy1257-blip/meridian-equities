@@ -114,7 +114,7 @@ export const JARGON_LIST: JargonInfo[] = [
     explanation: 'The GSE-CI measures the general health of the Ghanaian equity market. When the index goes up, the total market value of listed companies is expanding.',
     analogy: 'Like taking the average temperature of the whole country rather than just checking Accra or Kumasi.',
     whyItMatters: 'Tells you if the Ghanaian stock market is in a bull run (growing) or experiencing a general pullback.',
-    exampleGSE: 'The GSE Composite Index recently crossed 4,600 points with year-to-date gains over +30%.',
+    exampleGSE: 'The GSE Composite Index is trading above 14,300 points with robust year-to-date gains.',
     category: 'basics',
     metricScale: 'Index Points & Daily Change %',
     higherOrLower: 'higher_better',
