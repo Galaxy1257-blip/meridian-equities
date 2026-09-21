@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <rect width="100" height="100" rx="20" fill="#FFFFFF"/>
+  <text x="50" y="52" text-anchor="middle" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-size="17" fill="#E31837" letter-spacing="0.5">COSTCO</text>
+  <rect x="24" y="60" width="52" height="4" fill="#005DAA"/>
+  <text x="50" y="76" text-anchor="middle" font-family="'Arial Black', sans-serif" font-weight="900" font-size="8" fill="#005DAA" letter-spacing="1.5">WHOLESALE</text>
+</svg>

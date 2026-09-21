@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <rect width="100" height="100" rx="20" fill="#0A1128"/>
+  <text x="50" y="62" text-anchor="middle" font-family="'Arial Black', Impact, sans-serif" font-weight="900" font-size="28" fill="#1F70C1" letter-spacing="2">IBM</text>
+  <line x1="20" y1="40" x2="80" y2="40" stroke="#0A1128" stroke-width="2"/>
+  <line x1="20" y1="46" x2="80" y2="46" stroke="#0A1128" stroke-width="2"/>
+  <line x1="20" y1="52" x2="80" y2="52" stroke="#0A1128" stroke-width="2"/>
+  <line x1="20" y1="58" x2="80" y2="58" stroke="#0A1128" stroke-width="2"/>
+</svg>

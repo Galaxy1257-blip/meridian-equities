@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <rect width="100" height="100" rx="20" fill="#005B60"/>
+  <circle cx="50" cy="46" r="32" fill="#00474B"/>
+  <path d="M32 42 C36 30, 50 28, 64 30 C58 35, 50 38, 42 40 C56 40, 68 44, 74 50 C64 50, 52 48, 40 50 C52 54, 62 60, 66 68 C52 64, 40 58, 32 48 Z" fill="#00A3E0"/>
+  <path d="M30 39 C35 28, 48 24, 61 26 C55 31, 46 34, 38 36 C51 36, 63 40, 69 46 C59 46, 48 44, 36 46 C47 50, 57 56, 61 64 C47 60, 36 54, 30 39 Z" fill="#FFFFFF"/>
+  <text x="50" y="78" text-anchor="middle" font-family="'Arial Black', sans-serif" font-weight="900" font-size="12" fill="#FFFFFF" letter-spacing="1">ECOBANK</text>
+  <text x="50" y="88" text-anchor="middle" font-family="'Arial', sans-serif" font-weight="700" font-size="6" fill="#00D2D3" letter-spacing="1">GHANA PLC</text>
+</svg>

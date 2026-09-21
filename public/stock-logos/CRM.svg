@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <rect width="100" height="100" rx="20" fill="#FFFFFF"/>
+  <path d="M36 56 C30 56, 26 50, 28 44 C30 38, 38 36, 42 38 C46 30, 58 28, 64 34 C70 32, 78 36, 76 44 C82 46, 82 54, 76 56 Z" fill="#00A1E0"/>
+  <text x="50" y="78" text-anchor="middle" font-family="'Arial Black', sans-serif" font-weight="900" font-size="10" fill="#00A1E0" letter-spacing="0.5">salesforce</text>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <rect width="100" height="100" rx="20" fill="#00857C"/>
+  <circle cx="38" cy="42" r="10" fill="#FFFFFF" opacity="0.9"/>
+  <circle cx="62" cy="42" r="10" fill="#FFFFFF" opacity="0.9"/>
+  <circle cx="38" cy="62" r="10" fill="#FFFFFF" opacity="0.9"/>
+  <circle cx="62" cy="62" r="10" fill="#FFFFFF" opacity="0.9"/>
+  <text x="50" y="84" text-anchor="middle" font-family="'Arial Black', sans-serif" font-weight="900" font-size="13" fill="#FFFFFF" letter-spacing="1">MERCK</text>
+</svg>

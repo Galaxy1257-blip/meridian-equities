@@ -46,7 +46,7 @@ const TOUR_STEPS: TourStep[] = [
       title: 'GHANA STOCK EXCHANGE FLOOR',
       mockBadge: 'MARKET OPEN • 11:42 GMT',
       mockMetrics: [
-        { label: 'GSE-CI', value: '4,512.40 (+1.24%)', highlight: true },
+        { label: 'GSE-CI', value: '14,307.25 (+1.01%)', highlight: true },
         { label: 'USD / GHS', value: 'GH₵ 15.50', highlight: false },
         { label: 'COCOA SPOT', value: '$7,850/t', highlight: false }
       ]

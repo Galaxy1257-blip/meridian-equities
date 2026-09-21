@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <rect width="100" height="100" rx="20" fill="#FFFFFF"/>
+  <path d="M26 30 L50 48 L74 30 L64 30 L50 40 L36 30 Z" fill="#005B94"/>
+  <path d="M26 46 L50 64 L74 46 L64 46 L50 56 L36 46 Z" fill="#E21D38"/>
+  <text x="50" y="82" text-anchor="middle" font-family="'Arial Black', sans-serif" font-weight="900" font-size="11" fill="#005B94" letter-spacing="0.5">CHEVRON</text>
+</svg>
