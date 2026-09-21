@@ -25,6 +25,12 @@ const SECTOR_COLORS: Record<string, string> = {
 
 // Exact official corporate brand image files for Ghana Stock Exchange equities
 export const GSE_LOGO_FILES: Record<string, string> = {
+  SCBPREF: '/stock-logos/SCB.png',
+  ASG: '/stock-logos/ASG.png',
+  ALLGH: '/stock-logos/ALLGH.png',
+  AADS: '/stock-logos/AGA.jpeg',
+  RBGH: '/stock-logos/RBGH.png',
+  KASA: '/stock-logos/KASA.png',
   MTNGH: '/stock-logos/MTNGH.jpeg',
   GCB: '/stock-logos/GCB.jpeg',
   BOPP: '/stock-logos/BOPP.webp',
@@ -34,7 +40,7 @@ export const GSE_LOGO_FILES: Record<string, string> = {
   CAL: '/stock-logos/CAL.png',
   EGH: '/stock-logos/EGH.jpeg',
   ETI: '/stock-logos/ETI.jpeg',
-  GOIL: '/stock-logos/GOIL.svg',
+  GOIL: '/stock-logos/GOIL.png',
   UNIL: '/stock-logos/UNIL.jpeg',
   EGL: '/stock-logos/EGL.jpeg',
   GGBL: '/stock-logos/GGBL.png',
@@ -59,8 +65,8 @@ export const GSE_LOGO_FILES: Record<string, string> = {
   SOGEGH: '/stock-logos/SOGEGH.png',
   TBL: '/stock-logos/TBL.png',
   ZEN: '/stock-logos/ZEN.png',
-  SIC: '/stock-logos/SIC.svg',
-  TLW: '/stock-logos/TLW.svg',
+  SIC: '/stock-logos/SIC.png',
+  TLW: '/stock-logos/TLW.png',
   GLD: '/stock-logos/GLD.svg',
   PZC: '/stock-logos/PZC.svg',
   SWL: '/stock-logos/SWL.svg',
