@@ -359,10 +359,6 @@ export default function App() {
   // UI Navigation & Filters (Bottom Navigation Bar tabs: home, markets, community, portfolio, chat, news)
   const [activeTab, setActiveTabState] = useState<MainNavTab>('home');
   const setActiveTab = (tab: MainNavTab) => {
-    if ((tab === 'portfolio' || tab === 'community' || tab === 'chat') && !firebaseUser) {
-      setIsAuthModalOpen(true);
-      return;
-    }
     setActiveTabState(tab);
   };
   const [stocksSubTab, setStocksSubTab] = useState<'all' | 'watchlist'>('all');
