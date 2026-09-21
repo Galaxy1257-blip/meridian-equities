@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CUSTOM_LOGO_MAP } from './CustomStockLogos';
+import { USER_STOCK_LOGOS } from '../data/userStockLogos';
 
 interface StockLogoProps {
   ticker: string;
@@ -81,8 +82,10 @@ export const StockLogo: React.FC<StockLogoProps> = ({
     setImgFailed(false);
   }, [normTicker]);
 
-  // 1. Primary: Official local corporate brand logo (Matches the exact official brand assets)
-  const gseLogoUrl = GSE_LOGO_FILES[normTicker];
+  // 1. Primary: Inlined authentic official brand logo (Guaranteed 100% available without network requests)
+  const inlinedLogo = USER_STOCK_LOGOS[normTicker];
+  const gseLogoUrl = inlinedLogo || GSE_LOGO_FILES[normTicker];
+
   if (gseLogoUrl && !imgFailed) {
     return (
       <div
