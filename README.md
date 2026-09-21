@@ -136,3 +136,14 @@ Generates production-optimized static files in `dist/`.
 
 ## 📄 License
 Private & Proprietary. All corporate logos and trademarks are the property of their respective company owners.
+
+
+---
+
+## 📱 Google Play Store Submission Package
+
+The repository includes a ready-to-publish Google Play Store submission package in [`playstore/`](playstore):
+- **[`playstore/STORE_LISTING.md`](playstore/STORE_LISTING.md):** Formatted Short & Full store descriptions, tags, category, and declarations.
+- **[`playstore/RELEASE_NOTES.md`](playstore/RELEASE_NOTES.md):** Version 1.0.0 release notes for Google Play Console.
+- **[`playstore/GRAPHIC_ASSETS_GUIDE.md`](playstore/GRAPHIC_ASSETS_GUIDE.md):** Exact specifications for App Icon (512x512), Feature Graphic (1024x500), and store screenshots.
+- **[`docs/PLAYSTORE_SUBMISSION_GUIDE.md`](docs/PLAYSTORE_SUBMISSION_GUIDE.md):** Step-by-step submission walkthrough for Google Play Console.

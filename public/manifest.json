@@ -1,22 +1,22 @@
 {
-  "name": "Apex Equities",
-  "short_name": "Apex",
-  "description": "Global & GSE Stock Terminal",
+  "name": "Apex Equities: GSE Market Intelligence",
+  "short_name": "Apex Equities",
+  "description": "Live Ghana Stock Exchange floor quotes, 5-factor valuation radar, AI market research, and portfolio tracking.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0B1329",
-  "theme_color": "#0B1329",
+  "orientation": "portrait-primary",
+  "theme_color": "#030712",
+  "background_color": "#030712",
+  "categories": [
+    "finance",
+    "business"
+  ],
   "icons": [
     {
       "src": "/favicon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any maskable"
-    },
-    {
-      "src": "/favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
     }
   ]
 }
