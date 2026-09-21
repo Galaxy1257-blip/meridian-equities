@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { CUSTOM_LOGO_MAP } from './CustomStockLogos';
 
 interface StockLogoProps {
@@ -22,48 +22,48 @@ const SECTOR_COLORS: Record<string, string> = {
   Industrials: '#475569',
 };
 
-// Backwards-compatible logo files map pointing to authentic vector SVGs
+// Exact official corporate brand image files for Ghana Stock Exchange equities
 export const GSE_LOGO_FILES: Record<string, string> = {
-  MTNGH: '/stock-logos/MTNGH.svg',
-  GCB: '/stock-logos/GCB.svg',
-  BOPP: '/stock-logos/BOPP.svg',
+  MTNGH: '/stock-logos/MTNGH.jpeg',
+  GCB: '/stock-logos/GCB.jpeg',
+  BOPP: '/stock-logos/BOPP.webp',
   TOTAL: '/stock-logos/TOTAL.svg',
-  FML: '/stock-logos/FML.svg',
-  SCB: '/stock-logos/SCB.svg',
-  CAL: '/stock-logos/CAL.svg',
-  EGH: '/stock-logos/EGH.svg',
+  FML: '/stock-logos/FML.jpeg',
+  SCB: '/stock-logos/SCB.png',
+  CAL: '/stock-logos/CAL.png',
+  EGH: '/stock-logos/EGH.jpeg',
+  ETI: '/stock-logos/ETI.svg',
   GOIL: '/stock-logos/GOIL.svg',
-  UNIL: '/stock-logos/UNIL.svg',
-  EGL: '/stock-logos/EGL.svg',
-  GGBL: '/stock-logos/GGBL.svg',
-  ACCESS: '/stock-logos/ACCESS.svg',
-  ADB: '/stock-logos/ADB.svg',
-  AGA: '/stock-logos/AGA.svg',
-  ALW: '/stock-logos/ALW.svg',
-  CLYD: '/stock-logos/CLYD.svg',
-  CMLT: '/stock-logos/CMLT.svg',
-  CPC: '/stock-logos/CPC.svg',
-  DASPHARMA: '/stock-logos/DASPHARMA.svg',
-  DIGICUT: '/stock-logos/DIGICUT.svg',
-  DGCUT: '/stock-logos/DGCUT.svg',
-  FAB: '/stock-logos/FAB.svg',
-  HORDS: '/stock-logos/HORDS.svg',
-  IIL: '/stock-logos/IIL.svg',
-  MAC: '/stock-logos/MAC.svg',
-  MMH: '/stock-logos/MMH.svg',
-  PBC: '/stock-logos/PBC.svg',
-  SAMBA: '/stock-logos/SAMBA.svg',
-  SOGEGH: '/stock-logos/SOGEGH.svg',
-  TBL: '/stock-logos/TBL.svg',
-  ZEN: '/stock-logos/ZEN.svg',
+  UNIL: '/stock-logos/UNIL.jpeg',
+  EGL: '/stock-logos/EGL.jpeg',
+  GGBL: '/stock-logos/GGBL.png',
+  ACCESS: '/stock-logos/ACCESS.jpeg',
+  ADB: '/stock-logos/ADB.png',
+  AGA: '/stock-logos/AGA.jpeg',
+  ALW: '/stock-logos/ALW.png',
+  CLYD: '/stock-logos/CLYD.jpeg',
+  CMLT: '/stock-logos/CMLT.jpeg',
+  CPC: '/stock-logos/CPC.jpeg',
+  DASPHARMA: '/stock-logos/DASPHARMA.png',
+  AYRTN: '/stock-logos/AYRTN.svg',
+  DIGICUT: '/stock-logos/DIGICUT.jpeg',
+  DGCUT: '/stock-logos/DIGICUT.jpeg',
+  FAB: '/stock-logos/FAB.jpeg',
+  HORDS: '/stock-logos/HORDS.png',
+  IIL: '/stock-logos/IIL.png',
+  MAC: '/stock-logos/MAC.png',
+  MMH: '/stock-logos/MMH.jpeg',
+  PBC: '/stock-logos/PBC.jpeg',
+  SAMBA: '/stock-logos/SAMBA.jpeg',
+  SOGEGH: '/stock-logos/SOGEGH.png',
+  TBL: '/stock-logos/TBL.png',
+  ZEN: '/stock-logos/ZEN.png',
   SIC: '/stock-logos/SIC.svg',
   TLW: '/stock-logos/TLW.svg',
-  ETI: '/stock-logos/ETI.svg',
   GLD: '/stock-logos/GLD.svg',
   PZC: '/stock-logos/PZC.svg',
   SWL: '/stock-logos/SWL.svg',
   GWEB: '/stock-logos/GWEB.svg',
-  AYRTN: '/stock-logos/AYRTN.svg',
 };
 
 export const StockLogo: React.FC<StockLogoProps> = ({
@@ -74,14 +74,40 @@ export const StockLogo: React.FC<StockLogoProps> = ({
   className = '',
 }) => {
   const normTicker = (ticker || '').toUpperCase().trim();
+  const [imgFailed, setImgFailed] = useState(false);
 
-  // 1. Direct authentic vector brand SVG component (Immediate rendering, zero scrapers, zero mockups)
+  // Reset failure state when ticker changes
+  useEffect(() => {
+    setImgFailed(false);
+  }, [normTicker]);
+
+  // 1. Primary: Official local corporate brand logo (Matches the exact official brand assets)
+  const gseLogoUrl = GSE_LOGO_FILES[normTicker];
+  if (gseLogoUrl && !imgFailed) {
+    return (
+      <div
+        className={`rounded-xl overflow-hidden bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-sm shrink-0 flex items-center justify-center p-0.5 ${className}`}
+        style={{ width: size, height: size }}
+        title={`${name || normTicker} (${sector})`}
+      >
+        <img
+          src={gseLogoUrl}
+          alt={`${normTicker} logo`}
+          onError={() => setImgFailed(true)}
+          className="w-full h-full object-contain rounded-lg"
+          loading="eager"
+        />
+      </div>
+    );
+  }
+
+  // 2. Secondary: Authentic vector SVG brand logo for US & Global Equities (AAPL, MSFT, NVDA, etc.)
   const CustomLogo = CUSTOM_LOGO_MAP[normTicker];
   if (CustomLogo) {
     return <CustomLogo size={size} className={className} />;
   }
 
-  // 2. High-aesthetic sector monogram squircle fallback for any custom or unlisted equity
+  // 3. Fallback: Styled sector monogram squircle (Zero external favicon scrapers)
   const bgColor = SECTOR_COLORS[sector] || '#1E293B';
   const initials = normTicker ? normTicker.slice(0, 4) : 'GSE';
   const fontSize = Math.max(9, Math.round(size * 0.28));
